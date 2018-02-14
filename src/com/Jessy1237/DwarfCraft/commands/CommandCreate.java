@@ -3,14 +3,15 @@ package com.Jessy1237.DwarfCraft.commands;
 /**
  * Original Authors: smartaleq, LexManos and RCarretta
  */
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
