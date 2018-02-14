@@ -1,5 +1,8 @@
 package com.Jessy1237.DwarfCraft;
 
+import java.lang.reflect.Array;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -72,6 +75,8 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
     private Permission perms = null;
     private Chat chat = null;
     private TraitInfo trainerTrait;
+    private HashMap<String, Command> normCommands = new HashMap<String, Command>();
+    private HashMap<String, Command> opCommands = new HashMap<String, Command>();
 
     public static int debugMessagesThreshold = 10;
 
@@ -179,6 +184,48 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
         return true;
     }
 
+    private Command getSubCommand( String name )
+    {
+        return ( normCommands.get( name ) == null ? opCommands.get( name ) : normCommands.get( name ) );
+    }
+
+    private void initCommands()
+    {
+        normCommands.put( "skillsheet", new CommandSkillSheet( this ) );
+        normCommands.put( "tutorial", new CommandTutorial( this ) );
+        normCommands.put( "info", new CommandInfo( this ) );
+        normCommands.put( "skillinfo", new CommandSkillInfo( this ) );
+        normCommands.put( "race", new CommandRace( this ) );
+        normCommands.put( "effectinfo", new CommandEffectInfo( this ) );
+        opCommands.put( "debug", new CommandDebug( this ) );
+        opCommands.put( "list", new CommandList( this ) );
+        opCommands.put( "setskill", new CommandSetSkill( this ) );
+        opCommands.put( "create", new CommandCreate( this ) );
+        opCommands.put( "reload", new CommandReload( this ) );
+    }
+
+    /**
+     * Allows companion plugins to add sub commands that require normal permissions
+     * 
+     * @param name The name of the command
+     * @param cmd An instance of the command
+     */
+    public void addNormCommand( String name, Command cmd )
+    {
+        normCommands.put( name, cmd );
+    }
+
+    /**
+     * Allows companion plugins to add sub commands that require admin permissions
+     * 
+     * @param name The name of the command
+     * @param cmd An instance of the command
+     */
+    public void addOpCommand( String name, Command cmd )
+    {
+        opCommands.put( name, cmd );
+    }
+
     @Override
     public boolean onCommand( CommandSender sender, Command command, String commandLabel, String[] args )
     {
@@ -187,7 +234,7 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
         boolean hasNorm = checkPermission( sender, name, "norm" );
         boolean hasOp = checkPermission( sender, name, "op" );
         boolean hasAll = checkPermission( sender, name, "all" );
-        boolean isCmd = true;
+        boolean isOp = false;
         String[] cArgs = new String[0];
 
         if ( name.equalsIgnoreCase( "dwarfcraft" ) )
@@ -201,7 +248,7 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
                 else
                 {
                     // Converts the variables to work with the old command method
-                    name = args[0];
+                    name = args[0].toLowerCase();
                     cArgs = new String[args.length - 1];
                     for ( int i = 1; i < args.length; i++ )
                     {
@@ -223,107 +270,29 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
             return false;
         }
 
-        if ( name.equalsIgnoreCase( "skillsheet" ) )
+        cmd = normCommands.get( name );
+        if ( cmd == null )
         {
-            if ( hasNorm || hasAll )
-            {
-                cmd = new CommandSkillSheet( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "tutorial" ) )
-        {
-            if ( hasNorm || hasAll )
-            {
-                cmd = new CommandTutorial( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "info" ) )
-        {
-            if ( hasNorm || hasAll )
-            {
-                cmd = new CommandInfo( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "skillinfo" ) )
-        {
-            if ( hasNorm || hasAll )
-            {
-                cmd = new CommandSkillInfo( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "race" ) )
-        {
-            if ( hasNorm || hasAll )
-            {
-                cmd = new CommandRace( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "effectinfo" ) )
-        {
-            if ( hasNorm || hasAll )
-            {
-                cmd = new CommandEffectInfo( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "debug" ) )
-        {
-            if ( hasOp || hasAll )
-            {
-                cmd = new CommandDebug( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "list" ) )
-        {
-            if ( hasOp || hasAll )
-            {
-                cmd = new CommandList( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "setskill" ) )
-        {
-            if ( hasOp || hasAll )
-            {
-                cmd = new CommandSetSkill( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "create" ) )
-        {
-            if ( hasOp || hasAll )
-            {
-                cmd = new CommandCreate( this );
-            }
-        }
-        else if ( name.equalsIgnoreCase( "reload" ) )
-        {
-            if ( hasOp || hasAll )
-            {
-                cmd = new CommandReload( this );
-            }
-        }
-        else
-        {
-            isCmd = false;
+            cmd = opCommands.get( name );
+            isOp = true;
         }
 
         if ( cmd == null )
         {
-            if ( isCmd == false )
+            cmd = new CommandHelp( this );
+            return cmd.execute( sender, commandLabel, cArgs );
+        }
+        else
+        {
+            if ( ( ( hasNorm || hasAll ) && !isOp ) || ( isOp && ( hasAll || hasOp ) ) )
             {
-                cmd = new CommandHelp( this );
                 return cmd.execute( sender, commandLabel, cArgs );
             }
             else
             {
-                if ( hasNorm == false || hasOp == false )
-                {
-                    sender.sendMessage( ChatColor.DARK_RED + "You do not have permission to do that." );
-                }
+                sender.sendMessage( ChatColor.DARK_RED + "You do not have permission to do that." );
                 return true;
             }
-        }
-        else
-        {
-            return cmd.execute( sender, commandLabel, cArgs );
         }
     }
 
@@ -333,7 +302,7 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
         if ( !command.getName().equalsIgnoreCase( "dwarfcraft" ) )
             return null;
 
-        List<String> matches;
+        List<String> matches = Collections.emptyList();
 
         if ( args.length <= 1 || args[0].equalsIgnoreCase( "" ) )
         {
@@ -341,26 +310,11 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
         }
         else
         {
-            if ( args[0].equalsIgnoreCase( "debug" ) )
-            {
-                matches = new CommandDebug( this ).onTabComplete( sender, command, alias, args );
-            }
-            else if ( args[0].equalsIgnoreCase( "create" ) )
-            {
-                matches = new CommandCreate( this ).onTabComplete( sender, command, alias, args );
-            }
-            else if ( args[0].equalsIgnoreCase( "skillinfo" ) )
-            {
-                matches = new CommandSkillInfo( this ).onTabComplete( sender, command, alias, args );
-            }
-            else if ( args[0].equalsIgnoreCase( "setskill" ) )
-            {
-                matches = new CommandSetSkill( this ).onTabComplete( sender, command, alias, args );
-            }
-            else
-            {
-                matches = null;
-            }
+            Command cmd = getSubCommand( args[0].toLowerCase() );
+            if ( cmd != null )
+                if ( cmd instanceof TabCompleter )
+                    matches = ( ( TabCompleter ) cmd ).onTabComplete( sender, command, alias, args );
+
         }
 
         return matches;
@@ -474,6 +428,8 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
         {
             System.out.println( "[DwarfCraft] Couldn't find LogBlock!" );
         }
+
+        initCommands();
 
         System.out.println( "[DwarfCraft] " + getDescription().getName() + " version " + getDescription().getVersion() + " is enabled!" );
     }

@@ -26,8 +26,6 @@ public class DwarfTrainerTrait extends Trait
     private int mMaxLevel;
     @Persist( required = true )
     private int mMinLevel;
-    @Persist( required = true )
-    private boolean firstLoad = false;
 
     @Override
     public void load( DataKey key )
@@ -38,28 +36,20 @@ public class DwarfTrainerTrait extends Trait
             this.mMaxLevel = key.getInt( "mMaxLevel" );
         if ( mSkillID == 0 )
             this.mMinLevel = key.getInt( "mMinLevel" );
-        this.firstLoad = key.getBoolean( "firstLoad" );
-        if ( !firstLoad )
-        {
-            load();
-        }
-    }
+        loadHeldItem();
 
-    @Override
-    public void onAttach()
-    {
-        if ( firstLoad )
-        {
-            load();
-            firstLoad = false;
-        }
+        // Adding the trainer to DwarfCraft DB
+        DwarfTrainer trainer = new DwarfTrainer( plugin, ( AbstractNPC ) npc );
+        plugin.getDataManager().trainerList.put( npc.getId(), trainer );
     }
 
     @Override
     public void onSpawn()
     {
         if ( this.mHeldItem != Material.AIR && this.mHeldItem != null )
-            ( ( LivingEntity ) getNPC().getEntity() ).getEquipment().setItemInMainHand( new ItemStack( mHeldItem, 1 ) );
+        {
+            ( ( LivingEntity ) getNPC().getEntity() ).getEquipment().setItemInMainHand( new ItemStack( this.mHeldItem, 1 ) );
+        }
     }
 
     @Override
@@ -81,7 +71,7 @@ public class DwarfTrainerTrait extends Trait
         this.mSkillID = skillID;
         this.mMaxLevel = maxLevel;
         this.mMinLevel = minLevel;
-        this.firstLoad = true;
+        loadHeldItem();
     }
 
     @EventHandler
@@ -125,15 +115,13 @@ public class DwarfTrainerTrait extends Trait
             return Material.AIR;
     }
 
-    private void load()
+    private void loadHeldItem()
     {
-        DwarfTrainer trainer = new DwarfTrainer( plugin, ( AbstractNPC ) getNPC() );
         this.mHeldItem = plugin.getConfigManager().getGenericSkill( getSkillTrained() ).getTrainerHeldMaterial();
 
         if ( this.mHeldItem == null )
         {
             this.mHeldItem = Material.AIR;
         }
-        plugin.getDataManager().trainerList.put( getNPC().getId(), trainer );
     }
 }

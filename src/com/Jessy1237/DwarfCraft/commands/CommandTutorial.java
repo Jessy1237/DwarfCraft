@@ -35,6 +35,8 @@ public class CommandTutorial extends Command
         if ( DwarfCraft.debugMessagesThreshold < 1 )
             System.out.println( "DC1: started command 'tutorial'" );
 
+        final int pageCharLimit = 256; // Page limit is a limitation set by Spigot/Minecraft
+
         // Ensure the command is being run by an in-game player, otherwise the book cannot be given to them
         if ( sender instanceof Player )
         {
@@ -53,6 +55,8 @@ public class CommandTutorial extends Command
             {
                 String page = pageFixed.getMessage();
 
+                if ( isOverPageLimit( bookMeta, sender ) ) break;
+
                 if ( page.startsWith( "{" ) || page.startsWith( "[" ) )
                 {
                     try {
@@ -67,7 +71,33 @@ public class CommandTutorial extends Command
                 }
                 else
                 {
-                    bookMeta.addPage( ChatColor.translateAlternateColorCodes( '&', page ) );
+                    // Handle text overflowing the page by inserting additional pages
+                    if (page.length() > pageCharLimit)
+                    {
+                        int numSplits = page.length() / pageCharLimit;
+                        int remainder = page.length() % pageCharLimit;
+
+                        for ( int i = 0; i < numSplits; i++ )
+                        {
+                            String split = page.substring( i * pageCharLimit, ( i * pageCharLimit ) + pageCharLimit );
+                            bookMeta.addPage( ChatColor.translateAlternateColorCodes('&', split.trim() ) );
+
+                            if ( isOverPageLimit( bookMeta, sender ) ) break;
+                        }
+
+                        if ( remainder > 0 )
+                        {
+                            int finalStart = page.length() - remainder;
+
+                            String split = page.substring( finalStart, page.length() );
+                            bookMeta.addPage( ChatColor.translateAlternateColorCodes('&', split.trim() ) );
+                        }
+
+                        if ( isOverPageLimit( bookMeta, sender ) ) break;
+                    }
+                    else {
+                        bookMeta.addPage( ChatColor.translateAlternateColorCodes('&', page ) );
+                    }
                 }
             }
 
@@ -82,5 +112,17 @@ public class CommandTutorial extends Command
         }
 
         return true;
+    }
+
+    private boolean isOverPageLimit( BookMeta bookMeta, CommandSender sender )
+    {
+        if (bookMeta.getPageCount() >= 50) {
+            plugin.getLogger().log( Level.SEVERE, "The tutorial book cannot support more than 50 pages!" );
+            sender.sendMessage( ChatColor.DARK_RED + "The tutorial book reached the maximum page limit of 50. Skipping all additional pages... " );
+
+            return true;
+        }
+
+        return false;
     }
 }

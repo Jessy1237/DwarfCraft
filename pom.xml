@@ -56,14 +56,14 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>[1.6,)</version>
+            <version>1.6</version>
             <scope>compile</scope>
         </dependency>
         <!--LogBlock API-->
         <dependency>
             <groupId>de.diddiz</groupId>
             <artifactId>logblock</artifactId>
-            <version>[1.12-SNAPSHOT,)</version>
+            <version>1.12-SNAPSHOT</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

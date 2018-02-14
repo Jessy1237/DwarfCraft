@@ -5,6 +5,7 @@ package com.Jessy1237.DwarfCraft.commands;
  */
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -86,6 +87,6 @@ public class CommandDebug extends Command implements TabCompleter
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 }

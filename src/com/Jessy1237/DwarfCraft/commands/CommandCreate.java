@@ -4,16 +4,15 @@ package com.Jessy1237.DwarfCraft.commands;
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import com.Jessy1237.DwarfCraft.CommandException;
 import com.Jessy1237.DwarfCraft.CommandException.Type;
@@ -21,10 +20,10 @@ import com.Jessy1237.DwarfCraft.CommandInformation;
 import com.Jessy1237.DwarfCraft.CommandParser;
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
+import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
 
 import net.citizensnpcs.api.npc.AbstractNPC;
-import org.bukkit.util.StringUtil;
 
 public class CommandCreate extends Command implements TabCompleter
 {
@@ -136,6 +135,13 @@ public class CommandCreate extends Command implements TabCompleter
                 npc.addTrait( new DwarfTrainerTrait( plugin, uid, skill.getId(), maxSkill, minSkill ) );
                 npc.setProtected( true );
                 npc.spawn( p.getLocation() );
+
+                // Don't know why onSpawn doesn't work the first time but works if manually call it
+                npc.getTrait( DwarfTrainerTrait.class ).onSpawn();
+
+                // Adding the trainer to DwarfCraft DB
+                DwarfTrainer trainer = new DwarfTrainer( plugin, ( AbstractNPC ) npc );
+                plugin.getDataManager().trainerList.put( npc.getId(), trainer );
             }
             catch ( CommandException e )
             {
@@ -152,22 +158,45 @@ public class CommandCreate extends Command implements TabCompleter
         if ( !command.getName().equalsIgnoreCase( "dwarfcraft" ) )
             return null;
 
-        if ( args.length == 4 )
+        ArrayList<String> matches = new ArrayList<>();
+        ArrayList<String> completions = new ArrayList<>();
+        switch ( args.length )
         {
-            // Gets a list of all possible skill names
-            Collection<DwarfSkill> skills = plugin.getConfigManager().getAllSkills().values();
-            ArrayList<String> completions = new ArrayList<>();
-            ArrayList<String> matches = new ArrayList<>();
+            case 4:
+                completions.clear();
 
-            for ( DwarfSkill skill : skills )
-            {
-                String skillName = skill.getDisplayName().replaceAll( " ", "_" );
-                completions.add( skillName );
-            }
+                // Gets a list of all possible skill names
+                Collection<DwarfSkill> skills = plugin.getConfigManager().getAllSkills().values();
 
-            return StringUtil.copyPartialMatches( args[3], completions, matches );
+                for ( DwarfSkill skill : skills )
+                {
+                    String skillName = skill.getDisplayName().replaceAll( " ", "_" );
+                    completions.add( skillName.toLowerCase() );
+                }
+
+                return StringUtil.copyPartialMatches( args[3], completions, matches );
+            case 5:
+                matches.add( String.valueOf( plugin.getConfigManager().getMaxSkillLevel() ) );
+                return matches;
+            case 6:
+                matches.add( "0" );
+                return matches;
+            case 7:
+                completions.clear();
+                completions.add( "PLAYER" );
+
+                for ( EntityType type : EntityType.values() )
+                {
+                    if ( type.isAlive() && type.isSpawnable() )
+                    {
+                        completions.add( type.toString() );
+                    }
+                }
+
+                return StringUtil.copyPartialMatches( args[6], completions, matches );
+            default:
+                matches.add( "" );
+                return matches;
         }
-
-        return null;
     }
 }
