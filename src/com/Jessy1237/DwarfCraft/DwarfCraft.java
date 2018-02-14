@@ -1,5 +1,7 @@
 package com.Jessy1237.DwarfCraft;
 
+import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -300,7 +302,7 @@ public class DwarfCraft extends JavaPlugin implements TabCompleter
         if ( !command.getName().equalsIgnoreCase( "dwarfcraft" ) )
             return null;
 
-        List<String> matches = null;
+        List<String> matches = Collections.emptyList();
 
         if ( args.length <= 1 || args[0].equalsIgnoreCase( "" ) )
         {

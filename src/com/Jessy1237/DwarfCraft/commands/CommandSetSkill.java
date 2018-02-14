@@ -6,6 +6,7 @@ package com.Jessy1237.DwarfCraft.commands;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.Jessy1237.DwarfCraft.*;
@@ -152,21 +153,38 @@ public class CommandSetSkill extends Command implements TabCompleter
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
         if ( !command.getName().equalsIgnoreCase( "dwarfcraft" ) ) return null;
 
-        if ( args.length == 3 ) {
+        ArrayList<String> completions = new ArrayList<>();
+        ArrayList<String> matches = new ArrayList<>();
+        if ( args.length == 2 )
+        {
+            completions.clear();
+            matches.clear();
+
+            Object[] onlinePlayers = plugin.getServer().getOnlinePlayers().toArray();
+            for (Object o : onlinePlayers) {
+                Player player = (Player) o;
+                completions.add( player.getDisplayName() );
+            }
+
+            return StringUtil.copyPartialMatches( args[1], completions, matches );
+        }
+        else if ( args.length == 3 )
+        {
+            completions.clear();
+            matches.clear();
+
             // Gets a list of all possible skill names
             Collection<DwarfSkill> skills = plugin.getConfigManager().getAllSkills().values();
-            ArrayList<String> completions = new ArrayList<>();
-            ArrayList<String> matches = new ArrayList<>();
 
             for ( DwarfSkill skill : skills )
             {
                 String skillName = skill.getDisplayName().replaceAll( " ", "_" );
-                completions.add( skillName );
+                completions.add( skillName.toLowerCase() );
             }
 
             return StringUtil.copyPartialMatches( args[2], completions, matches );
         }
 
-        return null;
+        return Collections.emptyList();
     }
 }

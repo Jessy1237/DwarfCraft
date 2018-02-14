@@ -4,15 +4,13 @@ package com.Jessy1237.DwarfCraft.commands;
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
@@ -160,34 +158,45 @@ public class CommandCreate extends Command implements TabCompleter
         if ( !command.getName().equalsIgnoreCase( "dwarfcraft" ) )
             return null;
 
-        ArrayList<String> arg = new ArrayList<String>();
+        ArrayList<String> matches = new ArrayList<>();
+        ArrayList<String> completions = new ArrayList<>();
         switch ( args.length )
         {
             case 4:
+                completions.clear();
+
                 // Gets a list of all possible skill names
                 Collection<DwarfSkill> skills = plugin.getConfigManager().getAllSkills().values();
-                ArrayList<String> completions = new ArrayList<>();
-                ArrayList<String> matches = new ArrayList<>();
 
                 for ( DwarfSkill skill : skills )
                 {
                     String skillName = skill.getDisplayName().replaceAll( " ", "_" );
-                    completions.add( skillName );
+                    completions.add( skillName.toLowerCase() );
                 }
 
                 return StringUtil.copyPartialMatches( args[3], completions, matches );
             case 5:
-                arg.add( "30" );
-                return arg;
+                matches.add( String.valueOf( plugin.getConfigManager().getMaxSkillLevel() ) );
+                return matches;
             case 6:
-                arg.add( "0" );
-                return arg;
+                matches.add( "0" );
+                return matches;
             case 7:
-                arg.add( "PLAYER" );
-                return arg;
+                completions.clear();
+                completions.add( "PLAYER" );
+
+                for ( EntityType type : EntityType.values() )
+                {
+                    if ( type.isAlive() && type.isSpawnable() )
+                    {
+                        completions.add( type.toString() );
+                    }
+                }
+
+                return StringUtil.copyPartialMatches( args[6], completions, matches );
             default:
-                arg.add( "" );
-                return arg;
+                matches.add( "" );
+                return matches;
         }
     }
 }
