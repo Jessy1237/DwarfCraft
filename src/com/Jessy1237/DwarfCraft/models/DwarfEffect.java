@@ -269,7 +269,7 @@ public class DwarfEffect
                 return ( entity instanceof Giant );
             case PIG:
                 return ( entity instanceof Pig );
-            case PIG_ZOMBIE:
+            case ZOMBIFIED_PIGLIN:
                 return ( entity instanceof PigZombie );
             case SHEEP:
                 return ( entity instanceof Sheep );
