@@ -4,8 +4,8 @@
                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.Jessy1237</groupId>
-    <artifactId>DwarfCraft</artifactId>
+    <groupId>com.jessy1237</groupId>
+    <artifactId>dwarfcraft</artifactId>
     <name>DwarfCraft</name>
     <packaging>jar</packaging>
     <version>4.3.0-SNAPSHOT</version>
@@ -70,6 +70,14 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Jessy1237 Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/jessy1237/dwarfcraft</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <defaultGoal>package</defaultGoal>
