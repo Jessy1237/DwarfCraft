@@ -1,16 +1,17 @@
 package com.Jessy1237.DwarfCraft.commands;
 
-import com.Jessy1237.DwarfCraft.DwarfCraft;
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class DwarfCommandExecutor implements CommandExecutor, TabCompleter {
 
@@ -23,12 +24,12 @@ public class DwarfCommandExecutor implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args ) {
         String name = (args.length == 0) ? "help" : args[0];
         DwarfCommand dwarfCommand = plugin.getCommandManager().getCommand( name );
+        String[] newArgs = new String[0];
 
         if (dwarfCommand != null) {
             if ( dwarfCommand.hasPermission(sender) ) {
-                String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
-                String newCommandLabel = args[0];
-                dwarfCommand.execute(sender, newCommandLabel, newArgs);
+                if (args.length > 0) newArgs = Arrays.copyOfRange(args, 1, args.length);
+                dwarfCommand.execute(sender, name, newArgs);
                 return true;
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "You do not have permission to do that.");
