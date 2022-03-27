@@ -26,14 +26,7 @@
       "step": -0.03,
       "step_novice": -0.03,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
       "normal_level": 15,
-      "should_require_tool": true,
       "tools": [
         "WOODEN_SWORD",
         "STONE_SWORD",
@@ -52,14 +45,7 @@
       "step": 0.05,
       "step_novice": 0.0,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
       "normal_level": 5,
-      "should_require_tool": true,
       "tools": [
         "WOODEN_SWORD",
         "STONE_SWORD",
@@ -78,14 +64,7 @@
       "step": 0.03,
       "step_novice": 0.0,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
       "normal_level": 25,
-      "should_require_tool": true,
       "tools": [
         "WOODEN_SWORD",
         "STONE_SWORD",

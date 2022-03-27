@@ -31,17 +31,12 @@
       "step": 0.2,
       "step_novice": 0.0,
       "should_floor": true,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 1.0
       },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -53,17 +48,12 @@
       "step": 0.2,
       "step_novice": 0.0,
       "should_floor": true,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 1.0
       },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -75,17 +65,12 @@
       "step": 0.2,
       "step_novice": 0.0,
       "should_floor": true,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 1.0
       },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -97,17 +82,12 @@
       "step": 0.2,
       "step_novice": 0.0,
       "should_floor": true,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 1.0
       },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -119,17 +99,12 @@
       "step": 0.2,
       "step_novice": 0.0,
       "should_floor": true,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 1.0
       },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     }
   ],
   "held_item": "GOLD_INGOT"

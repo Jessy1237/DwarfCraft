@@ -56,17 +56,26 @@ public class DwarfEffect
 
         JsonObject json = element.getAsJsonObject();
         this.skill_id = skill_id;
-        mBase = json.get( "base" ).getAsDouble();
-        mStep = json.get( "step" ).getAsDouble();
-        mStepNovice = json.get( "step_novice" ).getAsDouble();
-        mMin = json.get( "min" ).getAsInt();
-        mMax = json.get( "max" ).getAsInt();
-        mException = json.get( "should_use_exception" ).getAsBoolean();
-
-        JsonObject exceptionObj = json.get( "exception" ).getAsJsonObject();
-        mExceptionLow = exceptionObj.get( "low" ).getAsInt();
-        mExceptionHigh = exceptionObj.get( "high" ).getAsInt();
-        mExceptionValue = exceptionObj.get( "value" ).getAsDouble();
+        mBase = json.get("base").getAsDouble();
+        mStep = json.get("step").getAsDouble();
+        mStepNovice = json.get("step_novice").getAsDouble();
+        mMin = json.get("min").getAsInt();
+        mMax = json.get("max").getAsInt();
+        mException = false;
+        mRequireTool = false;
+        mFloorResult = false;
+    
+        if (json.has("exception")) {
+            mException = true;
+            JsonObject exceptionObj = json.get("exception").getAsJsonObject();
+            mExceptionLow = exceptionObj.get("low").getAsInt();
+            mExceptionHigh = exceptionObj.get("high").getAsInt();
+            mExceptionValue = exceptionObj.get("value").getAsDouble();
+            
+            if (mExceptionLow == 0 && mExceptionHigh == 0 && mExceptionValue == 0) {
+                mException = false;
+            }
+        }
 
         mNormalLevel = json.get( "normal_level" ).getAsInt();
         mType = DwarfEffectType.getEffectType( json.get( "type" ).getAsString() );
@@ -76,19 +85,21 @@ public class DwarfEffect
         }
         else
         {
-            plugin.getUtil().checkEntityType( json.get( "origin_material" ).getAsString(), skill_id );
-            mCreature = EntityType.valueOf( json.get( "origin_material" ).getAsString() );
+            plugin.getUtil().checkEntityType( json.get("origin_material").getAsString(), skill_id );
+            mCreature = EntityType.valueOf( json.get("origin_material").getAsString() );
         }
-        mResult = plugin.getUtil().getDwarfItemHolder( json, "output_material" );
+        mResult = plugin.getUtil().getDwarfItemHolder(json, "output_material");
+        
+        if (json.has("should_floor") && json.get("should_floor").getAsBoolean()) {
+            mFloorResult = true;
+        }
 
-        mRequireTool = json.get( "should_require_tool" ).getAsBoolean();
-        mFloorResult = json.get( "should_floor" ).getAsBoolean();
-
-        if ( json.get( "tools" ).getAsJsonArray().size() <= 0 )
+        if ( !json.has("tools") || json.get("tools").getAsJsonArray().size() <= 0 )
             mTools = new Material[0];
         else
         {
-            JsonArray toolsArray = json.get( "tools" ).getAsJsonArray();
+            mRequireTool = true;
+            JsonArray toolsArray = json.get("tools").getAsJsonArray();
             mTools = new Material[toolsArray.size()];
             if (toolsArray.size() > 0) {
                 for (int x = 0; x < toolsArray.size(); x++) {

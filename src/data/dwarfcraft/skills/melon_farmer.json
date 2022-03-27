@@ -21,17 +21,7 @@
       "step": 0.2,
       "step_novice": 0.0,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     }
   ],
   "held_item": "MELON"

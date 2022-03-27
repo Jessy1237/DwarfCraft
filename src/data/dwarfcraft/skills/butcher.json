@@ -31,17 +31,12 @@
       "step": 0.1,
       "step_novice": 0.1,
       "should_floor": false,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 0.0
       },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     },
     {
       "type": "SMELT",
@@ -53,17 +48,12 @@
       "step": 0.1,
       "step_novice": 0.1,
       "should_floor": false,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 0.0
       },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     },
     {
       "type": "SMELT",
@@ -75,17 +65,12 @@
       "step": 0.1,
       "step_novice": 0.1,
       "should_floor": false,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 0.0
       },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     },
     {
       "type": "SMELT",
@@ -97,17 +82,12 @@
       "step": 0.1,
       "step_novice": 0.1,
       "should_floor": false,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 0.0
       },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     },
     {
       "type": "SMELT",
@@ -119,17 +99,12 @@
       "step": 0.1,
       "step_novice": 0.1,
       "should_floor": false,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 0.0
       },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     },
     {
       "type": "SMELT",
@@ -141,17 +116,12 @@
       "step": 0.1,
       "step_novice": 0.1,
       "should_floor": false,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 0.0
       },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     }
   ],
   "held_item": "COOKED_PORKCHOP"

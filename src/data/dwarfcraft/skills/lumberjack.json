@@ -21,14 +21,7 @@
       "step": 0.01,
       "step_novice": 0.0,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
       "normal_level": 5,
-      "should_require_tool": false,
       "tools": [
         "WOODEN_AXE",
         "STONE_AXE",
@@ -47,14 +40,7 @@
       "step": 0.06,
       "step_novice": -0.03,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
       "normal_level": 5,
-      "should_require_tool": false,
       "tools": [
         "WOODEN_AXE",
         "STONE_AXE",
@@ -73,17 +59,7 @@
       "step": 0.01,
       "step_novice": 0.0,
       "should_floor": false,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
-      "normal_level": 0,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 0
     }
   ],
   "held_item": "OAK_LOG"

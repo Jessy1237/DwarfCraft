@@ -26,17 +26,7 @@
       "step": 0.2,
       "step_novice": 0.2,
       "should_floor": true,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -48,17 +38,7 @@
       "step": 0.1,
       "step_novice": 0.2,
       "should_floor": true,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -70,17 +50,7 @@
       "step": 0.1,
       "step_novice": 0.0,
       "should_floor": true,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -92,17 +62,12 @@
       "step": 0.06,
       "step_novice": 0.06,
       "should_floor": true,
-      "should_use_exception": true,
       "exception": {
         "low": 0,
         "high": 5,
         "value": 1.0
       },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     },
     {
       "type": "CRAFT",
@@ -114,17 +79,7 @@
       "step": 0.13,
       "step_novice": 0.59,
       "should_floor": true,
-      "should_use_exception": false,
-      "exception": {
-        "low": 0,
-        "high": 0,
-        "value": 0.0
-      },
-      "normal_level": 5,
-      "should_require_tool": false,
-      "tools": [
-        ""
-      ]
+      "normal_level": 5
     }
   ],
   "held_item": "OAK_DOOR"
