@@ -21,29 +21,25 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.Jessy1237.DwarfCraft.data.DataManager;
-import com.Jessy1237.DwarfCraft.models.DwarfItemHolder;
-import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
-import com.Jessy1237.DwarfCraft.models.DwarfRace;
-import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
-import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
-import com.google.gson.JsonObject;
-
 import net.citizensnpcs.api.npc.AbstractNPC;
 import net.citizensnpcs.api.npc.NPC;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import com.Jessy1237.DwarfCraft.data.DataManager;
+import com.Jessy1237.DwarfCraft.models.*;
+import com.google.gson.JsonObject;
+
 public class Util
 {
-    private DwarfCraft plugin;
+    private final DwarfCraft plugin;
 
-    public Util( DwarfCraft plugin )
+    public Util(DwarfCraft plugin)
     {
         this.plugin = plugin;
     }
-
-    public void consoleLog( Level logLevel, String message )
+    
+    public void consoleLog(Level logLevel, String message )
     {
         ChatColor color = ChatColor.WHITE;
 
@@ -55,6 +51,22 @@ public class Util
             color = ChatColor.LIGHT_PURPLE;
 
         plugin.getServer().getConsoleSender().sendMessage( ChatColor.YELLOW + "[" + plugin.getName() + "] " + color + message );
+    }
+    
+    public void debugLog( int debugThreshold, Level logLevel, String message )
+    {
+        if ( DwarfCraft.debugMessagesThreshold < debugThreshold ) {
+            ChatColor color = ChatColor.WHITE;
+    
+            if (logLevel == Level.SEVERE)
+                color = ChatColor.RED;
+            else if (logLevel == Level.WARNING)
+                color = ChatColor.GOLD;
+            else if (logLevel == Level.FINE)
+                color = ChatColor.LIGHT_PURPLE;
+    
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[" + plugin.getName() + "] " + color + message);
+        }
     }
 
     // Stolen from nossr50
@@ -243,12 +255,12 @@ public class Util
 
     public String getPlayerPrefix( DwarfPlayer player )
     {
-        return plugin.getOut().parseColors( plugin.getConfigManager().getPrefix().replace( PlaceholderParser.PlaceHolder.RACE_NAME.getPlaceHolder(), player.getRace().getName() ) + "&f" );
+        return plugin.getOut().parseColors( plugin.getConfigManager().getPrefix().replace( Placeholder.RACE_NAME.value(), player.getRace().getName() ) + "&f" );
     }
 
     public String getPlayerPrefix( String race )
     {
-        return plugin.getOut().parseColors( plugin.getConfigManager().getPrefix().replace( PlaceholderParser.PlaceHolder.RACE_NAME.getPlaceHolder(), race ) + "&f" );
+        return plugin.getOut().parseColors( plugin.getConfigManager().getPrefix().replace( Placeholder.RACE_NAME.value(), race ) + "&f" );
     }
 
     public void removePlayerPrefixes()

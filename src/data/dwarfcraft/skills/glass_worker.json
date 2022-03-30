@@ -12,9 +12,10 @@
   ],
   "effects": [
     {
-      "type": "BLOCKDROPDUPE",
+      "type": "BLOCKDROP",
       "origin_material": "GLASS",
       "output_material": "GLASS",
+      "allow_dupe": true,
       "base": 0.0,
       "min": 0,
       "max": 1,

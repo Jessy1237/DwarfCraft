@@ -23,7 +23,7 @@
   "effects": [
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "PIG",
       "output_material": "PORKCHOP",
       "base": 1.2,
       "min": 0,
@@ -42,7 +42,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "COW",
       "output_material": "LEATHER",
       "base": 1.2,
       "min": 1,
@@ -61,7 +61,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "SHEEP",
       "output_material": "#WOOL",
       "base": 1.25,
       "min": 0,
@@ -80,7 +80,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "CHICKEN",
       "output_material": "FEATHER",
       "base": 1.0,
       "min": 0,
@@ -99,7 +99,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "COW",
       "output_material": "BEEF",
       "base": 1.2,
       "min": 0,
@@ -118,7 +118,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "SHEEP",
       "output_material": "MUTTON",
       "base": 1.2,
       "min": 0,

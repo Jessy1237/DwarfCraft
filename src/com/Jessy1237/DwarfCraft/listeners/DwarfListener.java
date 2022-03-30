@@ -19,7 +19,7 @@ import org.bukkit.event.Listener;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
-import com.Jessy1237.DwarfCraft.PlaceholderParser.PlaceHolder;
+import com.Jessy1237.DwarfCraft.Placeholder;
 import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
 import com.Jessy1237.DwarfCraft.events.DwarfLevelUpEvent;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
@@ -27,7 +27,6 @@ import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 
 public class DwarfListener implements Listener
 {
-
     private final DwarfCraft plugin;
 
     public DwarfListener( final DwarfCraft plugin )
@@ -53,7 +52,7 @@ public class DwarfListener implements Listener
             if (suffix != null)
                 name = name.concat( suffix );
 
-            String message = Messages.announcementMessage.replace( PlaceHolder.PLAYER_NAME.getPlaceHolder(), name ).replace( PlaceHolder.SKILL_NAME.getPlaceHolder(), skill.getDisplayName() ).replace( PlaceHolder.SKILL_LEVEL.getPlaceHolder(), "" + skill.getLevel() ).replace( PlaceHolder.LEVEL.getPlaceHolder(), "" + skill.getLevel() );
+            String message = Messages.announcementMessage.replaceAll( Placeholder.PLAYER_NAME.value(), name ).replaceAll( Placeholder.SKILL_NAME.value(), skill.getDisplayName() ).replaceAll( Placeholder.SKILL_LEVEL.value(), String.valueOf(skill.getLevel()) ).replaceAll( Placeholder.LEVEL.value(), String.valueOf(skill.getLevel()) );
             player.getPlayer().playSound( player.getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 0.5f, 1.0f );
 
             plugin.getServer().broadcastMessage( message );
@@ -64,13 +63,5 @@ public class DwarfListener implements Listener
     @EventHandler
     public void onDwarfEffectEvent( DwarfEffectEvent event )
     {
-        DwarfPlayer player = event.getDwarfPlayer();
-        if ( player == null )
-            return;
-
-//        if ( player.getRace().equalsIgnoreCase( "Vanilla" ) )
-//        {
-//            event.setCancelled( true );
-//        }
     }
 }

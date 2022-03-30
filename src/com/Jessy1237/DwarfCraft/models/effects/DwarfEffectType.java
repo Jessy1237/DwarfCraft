@@ -1,23 +1,21 @@
 /*
- * Copyright (c) 2018.
+ * DwarfEffectType
+ * 3/27/2022
  *
- * DwarfCraft is an RPG plugin that allows players to improve their characters
- * skills and capabilities through training, not experience.
+ * Copyright (c) 2016-2021
+ * Licensed under LGPL 2.1
+ * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
  *
  * Authors: Jessy1237 and Drekryan
- * Original Authors: smartaleq, LexManos and RCarretta
+ * Original Authors: smartaleq, LexManos, and RCarretta
  */
 
-package com.Jessy1237.DwarfCraft.models;
+package com.Jessy1237.DwarfCraft.models.effects;
 
-/**
- * Original Authors: smartaleq, LexManos and RCarretta
- */
 public enum DwarfEffectType
 {
     // IMPLEMENTATION PRIORITY ORDER
     BLOCKDROP,
-    BLOCKDROPDUPE,
     MOBDROP,
     SWORDDURABILITY,
     PVPDAMAGE,
@@ -42,7 +40,7 @@ public enum DwarfEffectType
     BREW,
     SHEAR;
 
-    protected static DwarfEffectType getEffectType( String name )
+    public static DwarfEffectType getEffectType( String name )
     {
         for ( DwarfEffectType effectType : DwarfEffectType.values() )
         {

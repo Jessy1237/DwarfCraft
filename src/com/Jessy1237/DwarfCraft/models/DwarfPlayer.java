@@ -23,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.Placeholder;
 
 public class DwarfPlayer
 {
@@ -365,7 +366,7 @@ public class DwarfPlayer
                 String playerPosition = player.getLocation().getX() + " " + player.getLocation().getY() + " " + player.getLocation().getZ();
 
                 command = command.replaceAll( "<player.pos>", playerPosition ).replaceAll( "<world.name>", player.getWorld().getName() );
-                command = plugin.getPlaceHolderParser().parseByDwarfPlayerAndDwarfSkill( command, this, skill );
+                command = skill.description( command, this );
                 command = ChatColor.translateAlternateColorCodes( '&', command );
 
                 plugin.getServer().dispatchCommand( plugin.getServer().getConsoleSender(), command );
@@ -373,5 +374,11 @@ public class DwarfPlayer
 
             commands.clear();
         }
+    }
+    
+    public String toString( String text )
+    {
+        return text.replaceAll( Placeholder.PLAYER_LEVEL.value(), "" + this.getDwarfLevel() ).replaceAll( Placeholder.PLAYER_NAME.value(), this.getPlayer().getDisplayName() )
+                .replaceAll( Placeholder.PLAYER_RACE.value(), this.getRace().getName());
     }
 }

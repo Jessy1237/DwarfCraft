@@ -28,11 +28,12 @@ import org.bukkit.inventory.ItemStack;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
-import com.Jessy1237.DwarfCraft.models.DwarfEffect;
-import com.Jessy1237.DwarfCraft.models.DwarfEffectType;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfVehicle;
+import com.Jessy1237.DwarfCraft.models.effects.VehicleDropEffect;
 
 public class DwarfVehicleListener implements Listener
 {
@@ -70,18 +71,18 @@ public class DwarfVehicleListener implements Listener
                 {
                     for ( DwarfEffect effect : skill.getEffects() )
                     {
-                        if ( effect.getEffectType() == DwarfEffectType.VEHICLEDROP )
+                        if ( effect.getEffectType() == DwarfEffectType.VEHICLEDROP && effect instanceof VehicleDropEffect )
                         {
-                            ItemStack drop = effect.getResult( dwarfPlayer );
+                            VehicleDropEffect vehicleDropEffect = (VehicleDropEffect) effect;
+                            //todo cast effect until we get an effect registry
+                            ItemStack drop = vehicleDropEffect.getOutput( dwarfPlayer );
 
                             DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, effect, new ItemStack[] { new ItemStack( Material.OAK_BOAT, 1 ) }, new ItemStack[] { drop }, null, null, null, null, event.getVehicle().getVehicle(), null, null );
                             plugin.getServer().getPluginManager().callEvent( ev );
 
-                            if ( ev.isCancelled() )
-                                return;
+                            if ( ev.isCancelled() ) return;
 
-                            if ( DwarfCraft.debugMessagesThreshold < 6 )
-                                plugin.getUtil().consoleLog( Level.FINE, "Debug: dropped " + drop.toString() );
+                            plugin.getUtil().debugLog( 6, Level.FINE, "Debug: dropped " + drop.toString() );
 
                             for ( ItemStack i : ev.getAlteredItems() )
                             {

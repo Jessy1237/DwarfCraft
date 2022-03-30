@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -23,13 +22,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
-import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
-import com.Jessy1237.DwarfCraft.DwarfCraft;
-import com.Jessy1237.DwarfCraft.Messages;
-import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
-
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
+
+import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.Messages;
+import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
+import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 
 public class CommandTutorial extends DwarfCommand
 {
@@ -108,7 +108,7 @@ public class CommandTutorial extends DwarfCommand
         for ( String readPage : Messages.tutorial )
         {
 
-            String page = plugin.getOut().parseColors( plugin.getPlaceHolderParser().parseByDwarfPlayer( readPage, dwarfPlayer ) );
+            String page = plugin.getOut().parseColors( dwarfPlayer.toString( readPage ) );
 
             if ( isOverPageLimit( bookMeta, dwarfPlayer.getPlayer() ) )
                 break;

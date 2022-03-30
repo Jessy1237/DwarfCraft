@@ -10,11 +10,14 @@
 
 package com.Jessy1237.DwarfCraft.models;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+
+import org.bukkit.Material;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
-import org.bukkit.Material;
+import com.Jessy1237.DwarfCraft.Placeholder;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 
 public class DwarfSkill implements Cloneable
 {
@@ -27,6 +30,8 @@ public class DwarfSkill implements Cloneable
     private final Material mHeldItem;
     private final DwarfTrainingItem mItem1, mItem2, mItem3;
     private int mDeposit1, mDeposit2, mDeposit3;
+    
+    private final Map<Placeholder,String> replacements = new HashMap<>();
 
     public DwarfSkill(final DwarfCraft plugin, String id, String displayName, LinkedHashMap<String, DwarfRace> races, int level, List<DwarfEffect> effects, DwarfTrainingItem item1, DwarfTrainingItem item2, DwarfTrainingItem item3, Material trainerHeldMaterial )
     {
@@ -71,6 +76,14 @@ public class DwarfSkill implements Cloneable
     public List<DwarfEffect> getEffects()
     {
         return mEffects;
+    }
+    
+    public List<DwarfEffect> getEffectsOfType(DwarfEffectType type) {
+        List<DwarfEffect> effectList = new ArrayList<>();
+        for ( DwarfEffect effect : this.getEffects() ) {
+            if (effect.getEffectType() == type) effectList.add(effect);
+        }
+        return effectList;
     }
 
     public String getId()
@@ -142,5 +155,27 @@ public class DwarfSkill implements Cloneable
         int maxLevel = plugin.getConfigManager().getMaxSkillLevel();
         int raceLevel = plugin.getConfigManager().getRaceLevelLimit();
         return doesSpecialize(dcPlayer.getRace() ) ? maxLevel : raceLevel;
+    }
+    
+    public String description( String text )
+    {
+        text = Placeholder.generalParse(text, plugin);
+    
+        replacements.put( Placeholder.SKILL_ID, String.valueOf(this.getId()) );
+        replacements.put( Placeholder.SKILL_NAME, this.getDisplayName() );
+        replacements.put( Placeholder.SKILL_LEVEL_NEXT, String.valueOf(this.getLevel() + 1) );
+        for(Placeholder placeholder : replacements.keySet()) {
+            text = text.replaceAll(placeholder.value(), replacements.get(placeholder));
+        }
+        
+        return text;
+    }
+    
+    public String description( String text, DwarfPlayer dwarfPlayer )
+    {
+        // Calculate max level limit for skill. Checks to see if the players race specializes in the skill to see if skill should be locked to level cap.
+        int levelLimit = this.getMaxLevel( dwarfPlayer );
+        replacements.put( Placeholder.SKILL_LEVEL, String.valueOf( dwarfPlayer.getSkillLevel( getId() ) ) );
+        return description( dwarfPlayer.toString( text.replaceAll(Placeholder.SKILL_MAX_LEVEL.value(), String.valueOf( levelLimit ) ) ) );
     }
 }

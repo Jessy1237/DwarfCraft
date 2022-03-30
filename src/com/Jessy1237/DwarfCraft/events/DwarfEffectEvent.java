@@ -17,7 +17,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
-import com.Jessy1237.DwarfCraft.models.DwarfEffect;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 
 public class DwarfEffectEvent extends Event implements Cancellable

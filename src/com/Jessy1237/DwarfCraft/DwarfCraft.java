@@ -13,7 +13,6 @@ package com.Jessy1237.DwarfCraft;
 import java.util.Objects;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.listeners.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -27,6 +26,7 @@ import net.milkbowl.vault.chat.Chat;
 
 import com.Jessy1237.DwarfCraft.commands.*;
 import com.Jessy1237.DwarfCraft.data.DataManager;
+import com.Jessy1237.DwarfCraft.listeners.*;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
 
 public class DwarfCraft extends JavaPlugin
@@ -40,7 +40,6 @@ public class DwarfCraft extends JavaPlugin
     private RaceManager race_manager;
     private Out out;
     private Util util;
-    private PlaceholderParser placeHolderParser;
     private Chat chat = null;
     private TraitInfo trainerTrait;
     public boolean isAuraActive = false;
@@ -89,12 +88,7 @@ public class DwarfCraft extends JavaPlugin
     {
         return util;
     }
-
-    public PlaceholderParser getPlaceHolderParser()
-    {
-        return placeHolderParser;
-    }
-
+    
     public DwarfEntityListener getDwarfEntityListener()
     {
         return entityListener;
@@ -164,9 +158,7 @@ public class DwarfCraft extends JavaPlugin
 
         command_manager = new CommandManager( this );
         out = new Out( this );
-
-        placeHolderParser = new PlaceholderParser( this );
-
+        
         // Creates the citizen trait for the DwarfTrainers
         if ( !reload )
         {
@@ -239,8 +231,7 @@ public class DwarfCraft extends JavaPlugin
 
         if ( pm.getPlugin( "PlaceholderAPI" ) != null )
         {
-            PlaceholderParser parser = new PlaceholderParser( this );
-            parser.new PlaceholderExpansionHook().register();
+            new PlaceholderHook().register();
             getUtil().consoleLog( Level.INFO, ChatColor.GREEN + "Success! Hooked into PlaceholderAPI!" );
         }
 

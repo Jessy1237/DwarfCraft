@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,6 +21,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import net.md_5.bungee.api.ChatMessageType;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
@@ -48,7 +49,7 @@ public class TrainerGUI extends DwarfGUI
     public void init()
     {
         DwarfSkill skill = dwarfPlayer.getSkill( trainer.getSkillTrained() );
-        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( plugin.getPlaceHolderParser().parseByDwarfPlayerAndDwarfSkill( Messages.trainerGUITitle, dwarfPlayer, skill ) ) );
+        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( skill.description( Messages.trainerGUITitle, dwarfPlayer ) ) );
         inventory.clear();
 
         List<List<ItemStack>> costs = dwarfPlayer.calculateTrainingCost( skill );
@@ -196,7 +197,7 @@ public class TrainerGUI extends DwarfGUI
     {
         DwarfSkill skill = dwarfPlayer.getSkill( trainer.getSkillTrained() );
         dwarfPlayer.getPlayer().closeInventory();
-        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( plugin.getPlaceHolderParser().parseByDwarfPlayerAndDwarfSkill( Messages.trainerGUITitle, dwarfPlayer, skill ) ) );
+        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( skill.description( Messages.trainerGUITitle, dwarfPlayer ) ) );
         plugin.getDwarfInventoryListener().addDwarfGUI( dwarfPlayer.getPlayer(), this );
     }
 

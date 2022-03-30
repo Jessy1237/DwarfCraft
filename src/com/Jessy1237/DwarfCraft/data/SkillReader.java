@@ -4,12 +4,7 @@ import java.io.File;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -17,11 +12,11 @@ import org.bukkit.Material;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.SkillManager;
-import com.Jessy1237.DwarfCraft.models.DwarfEffect;
 import com.Jessy1237.DwarfCraft.models.DwarfItemHolder;
 import com.Jessy1237.DwarfCraft.models.DwarfRace;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainingItem;
+import com.Jessy1237.DwarfCraft.models.effects.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -128,7 +123,59 @@ class SkillReader
             plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "No effects provided for skill: " + skill_id );
         } else {
             for (JsonElement effect : effects) {
-                DwarfEffect dcEffect = new DwarfEffect( effect, skill_id, plugin );
+                DwarfEffect dcEffect = null;
+                
+                DwarfEffectType type = DwarfEffectType.getEffectType( effect.getAsJsonObject().get("type").getAsString() ); //todo remove when we have a effect registry
+                if (type == null) continue;
+                
+                switch ( type ) {
+                    case PLOW:
+                    case DIGTIME:
+                    case BLOCKDROP:
+                        dcEffect = new BlockEffect( effect, skill_id, plugin );
+                        break;
+                    case SHEAR:
+                    case MOBDROP:
+                        dcEffect = new MobEffect( effect, skill_id, plugin );
+                        break;
+                    case SWORDDURABILITY:
+                    case PLOWDURABILITY:
+                    case RODDURABILITY:
+                    case TOOLDURABILITY:
+                    case PVPDAMAGE:
+                    case PVEDAMAGE:
+                        dcEffect = new ToolEffect( effect, skill_id, plugin );
+                        break;
+                    case EAT:
+                        dcEffect = new EatEffect( effect, skill_id, plugin );
+                        break;
+                    case CRAFT:
+                    case SMELT:
+                        dcEffect = new CraftEffect( effect, skill_id, plugin );
+                        break;
+                    case VEHICLEDROP:
+                        dcEffect = new VehicleDropEffect( effect, skill_id, plugin );
+                        break;
+                    case VEHICLEMOVE:
+                        dcEffect = new VehicleMoveEffect( effect, skill_id, plugin );
+                        break;
+                    case FISH:
+                        dcEffect = new FishEffect( effect, skill_id, plugin );
+                        break;
+                    case FALLDAMAGE:
+                    case BOWATTACK:
+                    case FALLTHRESHOLD:
+                    case EXPLOSIONDAMAGE:
+                    case FIREDAMAGE:
+                    case BREW:
+                    case SPECIAL:
+                        dcEffect = new DwarfEffect( effect, skill_id, plugin );
+                        break;
+                    default:
+                        plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Unsupported effect type " + type + " for skill: " + skill_id );
+                        break;
+                }
+                
                 effectList.add( dcEffect );
             }
         }

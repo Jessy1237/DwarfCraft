@@ -13,40 +13,29 @@ package com.Jessy1237.DwarfCraft.listeners;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.commands.CommandTutorial;
-import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerFishEvent.State;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
 import com.Jessy1237.DwarfCraft.Util;
+import com.Jessy1237.DwarfCraft.commands.CommandTutorial;
 import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
-import com.Jessy1237.DwarfCraft.models.DwarfEffect;
-import com.Jessy1237.DwarfCraft.models.DwarfEffectType;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
+import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
+import com.Jessy1237.DwarfCraft.models.effects.*;
 
 public class DwarfPlayerListener implements Listener
 {
@@ -119,12 +108,12 @@ public class DwarfPlayerListener implements Listener
             {
                 for ( DwarfSkill s : skills.values() )
                 {
-                    for ( DwarfEffect effect : s.getEffects() )
+                    for ( DwarfEffect effect : s.getEffectsOfType(DwarfEffectType.PLOWDURABILITY) )
                     {
-                        if ( effect.getEffectType() == DwarfEffectType.PLOWDURABILITY && effect.checkTool( item ) )
+                        ToolEffect toolEffect = (ToolEffect) effect;
+                        if ( toolEffect.checkTool( item ) )
                         {
-                            effect.damageTool( dwarfPlayer, 1, item );
-                            // block.setTypeId(60);
+                            toolEffect.damageTool( dwarfPlayer, 1, item );
                         }
                     }
                 }
@@ -136,14 +125,14 @@ public class DwarfPlayerListener implements Listener
         // EffectType.EAT
         if ( event.getAction() == Action.RIGHT_CLICK_BLOCK )
         {
-            for ( DwarfSkill s : skills.values() )
+            for ( DwarfSkill skill : skills.values() )
             {
-                for ( DwarfEffect e : s.getEffects() )
+                for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.EAT) )
                 {
-                    if ( e.getEffectType() == DwarfEffectType.EAT && e.checkInitiator( block.getType() ) )
+                    EatEffect eatEffect = (EatEffect) effect;
+                    if ( eatEffect.checkFood( block.getType() ) )
                     {
-
-                        int foodLevel = plugin.getUtil().randomAmount( ( e.getEffectAmount( dwarfPlayer ) ) );
+                        int foodLevel = plugin.getUtil().randomAmount( ( eatEffect.getEffectAmount( dwarfPlayer ) ) );
 
                         if ( block.getType() == Material.CAKE )
                         {
@@ -154,7 +143,7 @@ public class DwarfPlayerListener implements Listener
                                 return;
                             }
 
-                            DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, e, null, null, 2, foodLevel, null, null, null, block, null );
+                            DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, eatEffect, null, null, 2, foodLevel, null, null, null, block, null );
                             plugin.getServer().getPluginManager().callEvent( ev );
 
                             if ( ev.isCancelled() )
@@ -193,15 +182,16 @@ public class DwarfPlayerListener implements Listener
             return;
         }
 
-        for ( DwarfSkill s : skills.values() )
+        for ( DwarfSkill skill : skills.values() )
         {
-            for ( DwarfEffect e : s.getEffects() )
+            for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.EAT) )
             {
-                if ( e.getEffectType() == DwarfEffectType.EAT && e.checkInitiator( item ) )
+                EatEffect eatEffect = (EatEffect) effect;
+                if ( eatEffect.checkFood( item.getType() ) )
                 {
-                    int foodLevel = plugin.getUtil().randomAmount( ( e.getEffectAmount( dwarfPlayer ) ) );
+                    int foodLevel = plugin.getUtil().randomAmount( ( eatEffect.getEffectAmount( dwarfPlayer ) ) );
 
-                    DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, e, null, null, lvl, foodLevel, null, null, null, null, item );
+                    DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, eatEffect, null, null, lvl, foodLevel, null, null, null, null, item );
                     plugin.getServer().getPluginManager().callEvent( ev );
 
                     if ( ev.isCancelled() )
@@ -232,68 +222,26 @@ public class DwarfPlayerListener implements Listener
         HashMap<String, DwarfSkill> skills = dwarfPlayer.getSkills();
         boolean changed = false;
 
-        for ( DwarfSkill s : skills.values() )
+        for ( DwarfSkill skill : skills.values() )
         {
-            for ( DwarfEffect e : s.getEffects() )
+            for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.SHEAR) )
             {
-                if ( e.getEffectType() == DwarfEffectType.SHEAR )
+                MobEffect shearEffect = (MobEffect) effect;
+                if ( entity.getType() == EntityType.SHEEP && ( entity.getType() == shearEffect.getEntity() ) )
                 {
-                    if ( entity.getType() == EntityType.SHEEP && ( entity.getType() == e.getCreature() ) )
+                    Sheep sheep = ( Sheep ) entity;
+                    if ( !sheep.isSheared() )
                     {
-                        Sheep sheep = ( Sheep ) entity;
-                        if ( !sheep.isSheared() )
+                        if ( sheep.isAdult() )
                         {
-                            if ( sheep.isAdult() )
-                            {
 
-                                ItemStack item = e.getResult( dwarfPlayer );
+                            ItemStack item = shearEffect.getOutput( dwarfPlayer );
 
-                                DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, e, new ItemStack[] { new ItemStack( item.getType(), 2 ) }, new ItemStack[] { item }, null, null, null, null, entity, null, player.getEquipment().getItemInMainHand() );
-                                plugin.getServer().getPluginManager().callEvent( ev );
-
-                                if ( ev.isCancelled() )
-                                    return;
-
-                                for ( ItemStack i : ev.getAlteredItems() )
-                                {
-                                    if ( i != null )
-                                    {
-                                        if ( i.getAmount() > 0 )
-                                        {
-                                            entity.getWorld().dropItemNaturally( entity.getLocation(), i );
-                                        }
-                                    }
-                                }
-
-                                sheep.setSheared( true );
-                                changed = true;
-                            }
-                        }
-                    }
-                    else if ( entity.getType() == EntityType.MUSHROOM_COW && ( entity.getType() == e.getCreature() ) )
-                    {
-                        MushroomCow mooshroom = ( MushroomCow ) entity;
-                        if ( mooshroom.isAdult() )
-                        {
-                            ItemStack item = e.getResult( dwarfPlayer );
-
-                            DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, e, new ItemStack[] { new ItemStack( Material.RED_MUSHROOM, 5 ) }, new ItemStack[] { item }, null, null, null, null, entity, null, player.getEquipment().getItemInMainHand() );
+                            DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, shearEffect, new ItemStack[] { new ItemStack( item.getType(), 2 ) }, new ItemStack[] { item }, null, null, null, null, entity, null, player.getEquipment().getItemInMainHand() );
                             plugin.getServer().getPluginManager().callEvent( ev );
 
                             if ( ev.isCancelled() )
                                 return;
-
-                            Entity newE = entity.getWorld().spawnEntity( entity.getLocation(), EntityType.COW );
-                            Cow cow = ( Cow ) newE;
-                            cow.setAge( mooshroom.getAge() );
-                            cow.setAdult();
-                            cow.setBreed( mooshroom.canBreed() );
-                            cow.setAgeLock( mooshroom.getAgeLock() );
-                            cow.setHealth( mooshroom.getHealth() );
-                            cow.setCustomName( mooshroom.getCustomName() );
-                            cow.setCustomNameVisible( mooshroom.isCustomNameVisible() );
-                            cow.setTicksLived( mooshroom.getTicksLived() );
-                            cow.setTarget( mooshroom.getTarget() );
 
                             for ( ItemStack i : ev.getAlteredItems() )
                             {
@@ -305,10 +253,50 @@ public class DwarfPlayerListener implements Listener
                                     }
                                 }
                             }
-                            changed = true;
 
-                            entity.remove();
+                            sheep.setSheared( true );
+                            changed = true;
                         }
+                    }
+                }
+                else if ( entity.getType() == EntityType.MUSHROOM_COW && ( entity.getType() == shearEffect.getEntity() ) )
+                {
+                    MushroomCow mooshroom = ( MushroomCow ) entity;
+                    if ( mooshroom.isAdult() )
+                    {
+                        ItemStack item = shearEffect.getOutput( dwarfPlayer );
+
+                        DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, shearEffect, new ItemStack[] { new ItemStack( Material.RED_MUSHROOM, 5 ) }, new ItemStack[] { item }, null, null, null, null, entity, null, player.getEquipment().getItemInMainHand() );
+                        plugin.getServer().getPluginManager().callEvent( ev );
+
+                        if ( ev.isCancelled() )
+                            return;
+
+                        Entity newE = entity.getWorld().spawnEntity( entity.getLocation(), EntityType.COW );
+                        Cow cow = ( Cow ) newE;
+                        cow.setAge( mooshroom.getAge() );
+                        cow.setAdult();
+                        cow.setBreed( mooshroom.canBreed() );
+                        cow.setAgeLock( mooshroom.getAgeLock() );
+                        cow.setHealth( mooshroom.getHealth() );
+                        cow.setCustomName( mooshroom.getCustomName() );
+                        cow.setCustomNameVisible( mooshroom.isCustomNameVisible() );
+                        cow.setTicksLived( mooshroom.getTicksLived() );
+                        cow.setTarget( mooshroom.getTarget() );
+
+                        for ( ItemStack i : ev.getAlteredItems() )
+                        {
+                            if ( i != null )
+                            {
+                                if ( i.getAmount() > 0 )
+                                {
+                                    entity.getWorld().dropItemNaturally( entity.getLocation(), i );
+                                }
+                            }
+                        }
+                        changed = true;
+
+                        entity.remove();
                     }
                 }
             }
@@ -345,49 +333,44 @@ public class DwarfPlayerListener implements Listener
                 tool = player.getPlayer().getInventory().getItemInOffHand();
             }
 
-            if ( item.getType() == Material.COD )
-            {
+            
                 for ( DwarfSkill skill : player.getSkills().values() )
                 {
-                    for ( DwarfEffect effect : skill.getEffects() )
-                    {
-                        if ( effect.getEffectType() == DwarfEffectType.FISH )
-                        {
-                            ItemStack drop = effect.getResult( player );
-
-                            DwarfEffectEvent ev = new DwarfEffectEvent( player, effect, new ItemStack[] { item }, new ItemStack[] { drop }, null, null, null, null, null, null, tool );
-                            plugin.getServer().getPluginManager().callEvent( ev );
-
-                            if ( ev.isCancelled() )
+                    for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.FISH) ) {
+                        FishEffect fishEffect = (FishEffect) effect;
+                        if ( fishEffect.checkFish( item.getType() ) ) {
+                            ItemStack drop = fishEffect.getOutput(player);
+    
+                            DwarfEffectEvent ev = new DwarfEffectEvent(player, fishEffect, new ItemStack[]{item}, new ItemStack[]{drop}, null, null, null, null, null, null, tool);
+                            plugin.getServer().getPluginManager().callEvent(ev);
+    
+                            if (ev.isCancelled())
                                 return;
-
-                            for ( ItemStack i : ev.getAlteredItems() )
-                            {
-                                if ( i != null )
-                                {
-                                    if ( i.getAmount() > 0 )
-                                    {
-                                        loc.getWorld().dropItemNaturally( loc, i );
+    
+                            for (ItemStack i : ev.getAlteredItems()) {
+                                if (i != null) {
+                                    if (i.getAmount() > 0) {
+                                        loc.getWorld().dropItemNaturally(loc, i);
                                     }
                                 }
                             }
-                            item.setAmount( 0 );
+                            item.setAmount(0);
                         }
                     }
                 }
 
                 if ( tool != null && tool.getType().getMaxDurability() > 0 )
                 {
-                    for ( DwarfSkill s : player.getSkills().values() )
+                    for ( DwarfSkill skill : player.getSkills().values() )
                     {
-                        for ( DwarfEffect e : s.getEffects() )
+                        for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.RODDURABILITY) )
                         {
-                            if ( e.getEffectType() == DwarfEffectType.RODDURABILITY && e.checkTool( tool ) )
-                                e.damageTool( player, 1, tool );
+                            ToolEffect toolEffect = (ToolEffect) effect;
+                            if ( toolEffect.getEffectType() == DwarfEffectType.RODDURABILITY && toolEffect.checkTool( tool ) )
+                                toolEffect.damageTool( player, 1, tool );
                         }
                     }
                 }
-            }
         }
     }
 }

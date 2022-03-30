@@ -18,7 +18,7 @@
   "effects": [
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "CREEPER",
       "output_material": "GUNPOWDER",
       "base": 1.0,
       "min": 0,
@@ -37,7 +37,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "SKELETON",
       "output_material": "ARROW",
       "base": 1.25,
       "min": 0,
@@ -56,7 +56,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "SKELETON",
       "output_material": "BONE",
       "base": 1.25,
       "min": 0,
@@ -75,7 +75,7 @@
     },
     {
       "type": "MOBDROP",
-      "origin_material": "AIR",
+      "origin_material": "SPIDER",
       "output_material": "STRING",
       "base": 1.0,
       "min": 0,

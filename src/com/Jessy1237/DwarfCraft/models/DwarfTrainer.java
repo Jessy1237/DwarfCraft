@@ -13,24 +13,20 @@ package com.Jessy1237.DwarfCraft.models;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.Damageable;
+
+import net.citizensnpcs.api.npc.AbstractNPC;
+import net.md_5.bungee.api.ChatMessageType;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
 import com.Jessy1237.DwarfCraft.events.DwarfDepositEvent;
 import com.Jessy1237.DwarfCraft.events.DwarfLevelUpEvent;
 import com.Jessy1237.DwarfCraft.guis.TrainerGUI;
-
-import net.citizensnpcs.api.npc.AbstractNPC;
-import net.md_5.bungee.api.ChatMessageType;
 
 public final class DwarfTrainer implements Comparable<DwarfTrainer>
 {
@@ -418,17 +414,17 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
             else
             {
                 hasMatsOrDeposits[0] = false;
-                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getPlaceHolderParser().parseForTrainCosts( Messages.moreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
+                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( Messages.moreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
                 return hasMatsOrDeposits;
             }
 
             if ( costStack.getAmount() == 0 )
             {
-                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getPlaceHolderParser().parseForTrainCosts( Messages.noMoreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
+                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( Messages.noMoreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
             }
             else
             {
-                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getPlaceHolderParser().parseForTrainCosts( Messages.moreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
+                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( Messages.moreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
                 hasMatsOrDeposits[0] = false;
                 hasMatsOrDeposits[1] = true;
             }
