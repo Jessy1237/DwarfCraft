@@ -321,21 +321,25 @@ public class DwarfBlockListener implements Listener
                 }
             }
         }
-//
-//        if ( tool.getType().getMaxDurability() > 0 )
-//        {
-//            for ( DwarfSkill s : skills.values() )
-//            {
-//                for ( DwarfEffect e : s.getEffects() )
-//                {
-//                    if ( e.getEffectType() == DwarfEffectType.SWORDDURABILITY && e.checkTool( tool ) )
-//                        e.damageTool( player, 2, tool, !blockDropChange );
-//
-//                    if ( e.getEffectType() == DwarfEffectType.TOOLDURABILITY && e.checkTool( tool ) )
-//                        e.damageTool( player, 1, tool, !blockDropChange );
-//                }
-//            }
-//        }
+
+        if ( tool.getType().getMaxDurability() > 0 )
+        {
+            for ( DwarfSkill s : skills.values() )
+            {
+                for ( DwarfEffect e : s.getEffects() )
+                {
+                    if (e instanceof ToolEffect) {
+                        ToolEffect toolEffect = (ToolEffect) e;
+                        
+                        if (e.getEffectType() == DwarfEffectType.SWORDDURABILITY && toolEffect.checkTool(tool))
+                            toolEffect.damageTool(player, 2, tool, !blockDropChange);
+    
+                        if (e.getEffectType() == DwarfEffectType.TOOLDURABILITY && toolEffect.checkTool(tool))
+                            toolEffect.damageTool(player, 1, tool, !blockDropChange);
+                    }
+                }
+            }
+        }
 
         if ( blockDropChange )
         {
