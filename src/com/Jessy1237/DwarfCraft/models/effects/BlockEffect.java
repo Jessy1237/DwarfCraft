@@ -12,11 +12,15 @@
 
 package com.Jessy1237.DwarfCraft.models.effects;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
+import com.Jessy1237.DwarfCraft.Placeholder;
 import com.Jessy1237.DwarfCraft.models.DwarfItemHolder;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.google.gson.JsonElement;
@@ -28,6 +32,7 @@ public class BlockEffect extends ToolEffect {
     protected DwarfItemHolder blockDrop = null;
     private boolean hasDrop = false;
     protected boolean allowDupe = false;
+    private final Map<Placeholder,String> replacements = new HashMap<>();
     
     public BlockEffect(JsonElement element, String skill_id, DwarfCraft plugin) {
         super(element, skill_id, plugin);
@@ -77,22 +82,43 @@ public class BlockEffect extends ToolEffect {
     public String description( DwarfPlayer dCPlayer )
     {
         if ( dCPlayer == null ) return "An unknown error has occurred";
-        String out;
+        String description;
         
         switch ( mType )
         {
             case BLOCKDROP:
-                out = Messages.describeLevelBlockdrop;
+                description = Messages.describeLevelBlockdrop;
                 break;
             case PLOW:
-                out = Messages.describeLevelPlow;
+                description = Messages.describeLevelPlow;
                 break;
             case DIGTIME:
-                out = Messages.describeLevelDigTime;
+                description = Messages.describeLevelDigTime;
                 break;
-            default: out = "&6This Effect description is not yet implemented: " + this.getEffectType().toString();
+            default: description = "&6This Effect description is not yet implemented: " + this.getEffectType().toString();
         }
-        
-        return out;
+    
+        String initiator = plugin.getUtil().getCleanName( getBlock() );
+        double effectAmount = getEffectAmount( dCPlayer );
+        double minorAmount = getEffectAmount( getNormalLevel(), null );
+        double effectAmountLow = getEffectAmount( 0, dCPlayer );
+        double effectAmountHigh = getEffectAmount( plugin.getConfigManager().getMaxSkillLevel(), dCPlayer );
+        String minorAmountStr = String.format( "%.2f", minorAmount );
+    
+        replacements.put(Placeholder.EFFECT_INITIATOR, initiator );
+        replacements.put(Placeholder.EFFECT_LEVEL_COLOR, effectLevelColor( dCPlayer.getSkillLevel( getSkillId() ) ) );
+        replacements.put(Placeholder.EFFECT_AMOUNT, String.format( "%.2f", getEffectAmount(dCPlayer) ) );
+        replacements.put(Placeholder.EFFECT_AMOUNT_MINOR, minorAmountStr );
+        replacements.put(Placeholder.EFFECT_AMOUNT_LOW, String.format( "%.2f", effectAmountLow ) );
+        replacements.put(Placeholder.EFFECT_AMOUNT_HIGH, String.format( "%.2f", effectAmountHigh ) );
+        replacements.put(Placeholder.EFFECT_AMOUNT_NORMAL, String.valueOf(this.getNormalLevel() ) );
+        replacements.put(Placeholder.EFFECT_OUTPUT, plugin.getUtil().getCleanName( getOutput(dCPlayer) ) );
+    
+        for(Placeholder placeholder : replacements.keySet()) {
+            description = description.replaceAll(placeholder.value(), replacements.get(placeholder));
+        }
+    
+    
+        return description;
     }
 }
