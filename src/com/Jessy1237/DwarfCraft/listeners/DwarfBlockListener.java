@@ -129,6 +129,8 @@ public class DwarfBlockListener implements Listener
             {
                 if (effect instanceof BlockEffect) {
                     BlockEffect blockEffect = (BlockEffect) effect;
+                    if (!blockEffect.checkBlock(blockMat)) return;
+                    
                     // Check if the block was placed by a player and prevent additional drops if the effect type is not "BLOCKDROPDUPE"
                     if (blockEffect.isAllowDupe() && event.getBlock().hasMetadata("playerPlaced")) return;
 

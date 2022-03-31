@@ -23,6 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class BlockEffect extends ToolEffect {
+    private final DwarfCraft plugin;
     protected DwarfItemHolder block;
     protected DwarfItemHolder blockDrop = null;
     private boolean hasDrop = false;
@@ -30,6 +31,7 @@ public class BlockEffect extends ToolEffect {
     
     public BlockEffect(JsonElement element, String skill_id, DwarfCraft plugin) {
         super(element, skill_id, plugin);
+        this.plugin = plugin;
         JsonObject json = element.getAsJsonObject();
         if (!json.has("origin_material")) return;
         
