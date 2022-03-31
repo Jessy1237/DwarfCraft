@@ -18,8 +18,8 @@
   "effects": [
     {
       "type": "BLOCKDROP",
-      "origin_material": "POTATO",
-      "output_material": "POTATOES",
+      "origin_material": "POTATOES",
+      "output_material": "POTATO",
       "base": 1.5,
       "min": 0,
       "max": 100,
@@ -30,8 +30,8 @@
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "CARROT",
-      "output_material": "CARROTS",
+      "origin_material": "CARROTS",
+      "output_material": "CARROT",
       "base": 1.5,
       "min": 0,
       "max": 100,
