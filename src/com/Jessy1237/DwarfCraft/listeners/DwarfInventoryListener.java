@@ -32,7 +32,6 @@ import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
 import com.Jessy1237.DwarfCraft.guis.DwarfGUI;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
-import com.Jessy1237.DwarfCraft.models.effects.CraftEffect;
 import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
 import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 
@@ -61,12 +60,11 @@ public class DwarfInventoryListener implements Listener
         {
             for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.SMELT) )
             {
-                CraftEffect smeltEffect = (CraftEffect) effect;
-                if ( smeltEffect.checkItem( result.getType() ) )
+                if ( effect.checkInitiator( result.getType() ) )
                 {
-                    final ItemStack output = smeltEffect.getOutput( dCPlayer );
+                    final ItemStack output = effect.getOutput( dCPlayer );
 
-                    DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, smeltEffect, new ItemStack[] { result }, new ItemStack[] { output }, null, null, null, null, null, null, null );
+                    DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, effect, new ItemStack[] { result }, new ItemStack[] { output }, null, null, null, null, null, null, null );
                     plugin.getServer().getPluginManager().callEvent( ev );
 
                     if ( ev.isCancelled() )
@@ -139,14 +137,13 @@ public class DwarfInventoryListener implements Listener
         {
             for ( DwarfEffect effect : skill.getEffectsOfType(DwarfEffectType.CRAFT) )
             {
-                CraftEffect craftEffect = (CraftEffect) effect;
-                if ( craftEffect.checkItem( result.getType() ) )
+                if ( effect.checkInitiator( result.getType() ) )
                 {
-                    final ItemStack output = craftEffect.getOutput( dCPlayer );
+                    final ItemStack output = effect.getOutput( dCPlayer );
                     int itemsChecked = 0;
                     int possibleCrafts = 1; // the number of possible crafting operations on a shift click craft
 
-                    DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, craftEffect, new ItemStack[] { result }, new ItemStack[] { output }, null, null, null, null, null, null, null );
+                    DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, effect, new ItemStack[] { result }, new ItemStack[] { output }, null, null, null, null, null, null, null );
                     plugin.getServer().getPluginManager().callEvent( ev );
 
                     if ( ev.isCancelled() )

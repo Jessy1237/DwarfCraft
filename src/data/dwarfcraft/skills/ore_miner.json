@@ -43,7 +43,7 @@
     {
       "type": "BLOCKDROP",
       "origin_material": "IRON_ORE",
-      "output_material": "IRON_ORE",
+      "output_material": "RAW_IRON",
       "base": 0.7,
       "min": 0,
       "max": 6,
@@ -60,7 +60,7 @@
     {
       "type": "BLOCKDROP",
       "origin_material": "GOLD_ORE",
-      "output_material": "GOLD_ORE",
+      "output_material": "RAW_GOLD",
       "base": 0.7,
       "min": 0,
       "max": 6,
@@ -76,7 +76,7 @@
     {
       "type": "BLOCKDROP",
       "origin_material": "GOLD_ORE",
-      "output_material": "GOLD_ORE",
+      "output_material": "RAW_GOLD",
       "base": 0.7,
       "min": 0,
       "max": 1,

@@ -33,7 +33,6 @@ import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfVehicle;
-import com.Jessy1237.DwarfCraft.models.effects.VehicleDropEffect;
 
 public class DwarfVehicleListener implements Listener
 {
@@ -71,11 +70,9 @@ public class DwarfVehicleListener implements Listener
                 {
                     for ( DwarfEffect effect : skill.getEffects() )
                     {
-                        if ( effect.getEffectType() == DwarfEffectType.VEHICLEDROP && effect instanceof VehicleDropEffect )
+                        if ( effect.getEffectType() == DwarfEffectType.VEHICLEDROP )
                         {
-                            VehicleDropEffect vehicleDropEffect = (VehicleDropEffect) effect;
-                            //todo cast effect until we get an effect registry
-                            ItemStack drop = vehicleDropEffect.getOutput( dwarfPlayer );
+                            ItemStack drop = effect.getOutput( dwarfPlayer );
 
                             DwarfEffectEvent ev = new DwarfEffectEvent( dwarfPlayer, effect, new ItemStack[] { new ItemStack( Material.OAK_BOAT, 1 ) }, new ItemStack[] { drop }, null, null, null, null, event.getVehicle().getVehicle(), null, null );
                             plugin.getServer().getPluginManager().callEvent( ev );

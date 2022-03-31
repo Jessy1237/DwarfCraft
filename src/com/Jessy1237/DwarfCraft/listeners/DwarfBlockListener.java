@@ -125,69 +125,56 @@ public class DwarfBlockListener implements Listener
         boolean blockDropChange = false;
         for ( DwarfSkill s : skills.values() )
         {
-            for ( DwarfEffect effect : s.getEffects() )
-            {
-                if (effect instanceof BlockEffect) {
-                    BlockEffect blockEffect = (BlockEffect) effect;
-                    if (!blockEffect.checkBlock(blockMat)) return;
-                    
+            for ( DwarfEffect effect : s.getEffects() ) {
+                if ((effect.getEffectType() == DwarfEffectType.BLOCKDROP) && effect.checkInitiator(blockMat)) {
+        
                     // Check if the block was placed by a player and prevent additional drops if the effect type is not "BLOCKDROPDUPE"
-                    if (blockEffect.isAllowDupe() && event.getBlock().hasMetadata("playerPlaced")) return;
-
+                    //todo: add support for dupe
+                    //if (effect.isAllowDupe() && event.getBlock().hasMetadata("playerPlaced")) return;
+        
                     //Checks for any ageable block to make sure we are only acting when it is fully aged
-                    if ( block.getBlockData() instanceof Ageable )
-                    {
-                        Ageable a = ( Ageable ) block.getBlockData();
-                        if ( a.getAge() != a.getMaximumAge() )
+                    if (block.getBlockData() instanceof Ageable) {
+                        Ageable a = (Ageable) block.getBlockData();
+                        if (a.getAge() != a.getMaximumAge())
                             return;
                     }
-
+        
                     // Checks for cactus/sugar cane blocks above the one
                     // broken to apply the dwarfcraft blocks in the block physics
                     // event.
-                    if ( block.getType() == Material.CACTUS )
-                    {
-                        for ( int i = 1; block.getWorld().getBlockAt( block.getX(), block.getY() + i, block.getZ() ).getType() == Material.CACTUS; i++ )
-                        {
-                            crops.put( block.getWorld().getBlockAt( block.getX(), block.getY() + i, block.getZ() ), event.getPlayer() );
+                    if (block.getType() == Material.CACTUS) {
+                        for (int i = 1; block.getWorld().getBlockAt(block.getX(), block.getY() + i, block.getZ()).getType() == Material.CACTUS; i++) {
+                            crops.put(block.getWorld().getBlockAt(block.getX(), block.getY() + i, block.getZ()), event.getPlayer());
                         }
                     }
-
-                    if ( block.getType() == Material.SUGAR_CANE )
-                    {
-                        for ( int i = 1; block.getWorld().getBlockAt( block.getX(), block.getY() + i, block.getZ() ).getType() == Material.SUGAR_CANE; i++ )
-                        {
-                            crops.put( block.getWorld().getBlockAt( block.getX(), block.getY() + i, block.getZ() ), event.getPlayer() );
+        
+                    if (block.getType() == Material.SUGAR_CANE) {
+                        for (int i = 1; block.getWorld().getBlockAt(block.getX(), block.getY() + i, block.getZ()).getType() == Material.SUGAR_CANE; i++) {
+                            crops.put(block.getWorld().getBlockAt(block.getX(), block.getY() + i, block.getZ()), event.getPlayer());
                         }
                     }
-
-                    if ( blockEffect.checkTool( tool ) )
-                    {
-                        ItemStack item = blockEffect.getOutput( player );
+        
+                    if (effect.checkTool(tool)) {
+                        ItemStack item = effect.getOutput(player);
                         ItemStack item1 = null;
-
+            
                         // Gives the 2% to drop poisonous potatoes when
                         // potatoes are broken
-                        if ( blockEffect.getBlock().getItemStack().getType() == Material.POTATO && item.getType() == Material.POTATO )
-                        {
+                        if (effect.getInitiator().getItemStack().getType() == Material.POTATO && item.getType() == Material.POTATO) {
                             Random r = new Random();
-                            final int i = r.nextInt( 100 );
-                            if ( i == 0 || i == 1 )
-                            {
-                                loc.getWorld().dropItem( loc, new ItemStack( Material.POISONOUS_POTATO, 1 ) );
+                            final int i = r.nextInt(100);
+                            if (i == 0 || i == 1) {
+                                loc.getWorld().dropItem(loc, new ItemStack(Material.POISONOUS_POTATO, 1));
                             }
                         }
-
-                        if ( tool.containsEnchantment( Enchantment.SILK_TOUCH ) )
-                        {
+            
+                        if (tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
                             // If enabled in the config, silk touch block
                             // replaces one of the items drop in the stack, if
                             // not acts as vanilla and no DC drops
-                            if ( plugin.getConfigManager().silkTouch )
-                            {
-                                item.setAmount( item.getAmount() - plugin.getUtil().randomAmount( effect.getEffectAmount( effect.getNormalLevel(), player ) ) );
-                                switch ( block.getType() )
-                                {
+                            if (plugin.getConfigManager().silkTouch) {
+                                item.setAmount(item.getAmount() - plugin.getUtil().randomAmount(effect.getEffectAmount(effect.getNormalLevel(), player)));
+                                switch (block.getType()) {
                                     case STONE:
                                     case DIAMOND_ORE:
                                     case EMERALD_ORE:
@@ -197,16 +184,13 @@ public class DwarfBlockListener implements Listener
                                     case GLOWSTONE:
                                     case GRASS:
                                     case LAPIS_ORE:
-                                        item1 = new ItemStack( block.getType(), 1 );
+                                        item1 = new ItemStack(block.getType(), 1);
                                         break;
                                     default:
                                         break;
                                 }
-                            }
-                            else
-                            {
-                                switch ( block.getType() )
-                                {
+                            } else {
+                                switch (block.getType()) {
                                     case STONE:
                                     case DIAMOND_ORE:
                                     case EMERALD_ORE:
@@ -216,55 +200,43 @@ public class DwarfBlockListener implements Listener
                                     case GLOWSTONE:
                                     case GRASS:
                                     case LAPIS_ORE:
-                                        item = new ItemStack( block.getType(), 1 );
+                                        item = new ItemStack(block.getType(), 1);
                                         break;
                                     default:
                                         break;
                                 }
                             }
                         }
-
+            
                         // Checks for Fortune tools and adds it to the
                         // Dwarfcraft drops
                         Material type = block.getType();
-                        if ( type == Material.DIAMOND_ORE || type == Material.COAL_ORE || type == Material.REDSTONE_ORE || type == Material.EMERALD_ORE || type == Material.NETHER_QUARTZ_ORE || type == Material.GRASS || type == Material.STONE || type == Material.LAPIS_ORE
-                                || type == Material.GLOWSTONE )
-                        {
-                            if ( tool.containsEnchantment( Enchantment.LOOT_BONUS_BLOCKS ) )
-                            {
-                                int lvl = tool.getEnchantmentLevel( Enchantment.LOOT_BONUS_BLOCKS );
+                        if (type == Material.DIAMOND_ORE || type == Material.COAL_ORE || type == Material.REDSTONE_ORE || type == Material.EMERALD_ORE || type == Material.NETHER_QUARTZ_ORE || type == Material.GRASS || type == Material.STONE || type == Material.LAPIS_ORE
+                                || type == Material.GLOWSTONE) {
+                            if (tool.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                                int lvl = tool.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
                                 Random r = new Random();
-                                int num = r.nextInt( 99 ) + 1;
-                                switch ( lvl )
-                                {
+                                int num = r.nextInt(99) + 1;
+                                switch (lvl) {
                                     case 1:
-                                        if ( 1 <= num && num <= 33 )
-                                        {
-                                            item.setAmount( item.getAmount() + 1 );
+                                        if (1 <= num && num <= 33) {
+                                            item.setAmount(item.getAmount() + 1);
                                         }
                                         break;
                                     case 2:
-                                        if ( 1 <= num && num <= 25 )
-                                        {
-                                            item.setAmount( item.getAmount() + 1 );
-                                        }
-                                        else if ( 26 <= num && num <= 50 )
-                                        {
-                                            item.setAmount( item.getAmount() + 2 );
+                                        if (1 <= num && num <= 25) {
+                                            item.setAmount(item.getAmount() + 1);
+                                        } else if (26 <= num && num <= 50) {
+                                            item.setAmount(item.getAmount() + 2);
                                         }
                                         break;
                                     case 3:
-                                        if ( 1 <= num && num <= 20 )
-                                        {
-                                            item.setAmount( item.getAmount() + 1 );
-                                        }
-                                        else if ( 21 <= num && num <= 40 )
-                                        {
-                                            item.setAmount( item.getAmount() + 2 );
-                                        }
-                                        else if ( 41 <= num && num <= 60 )
-                                        {
-                                            item.setAmount( item.getAmount() + 2 );
+                                        if (1 <= num && num <= 20) {
+                                            item.setAmount(item.getAmount() + 1);
+                                        } else if (21 <= num && num <= 40) {
+                                            item.setAmount(item.getAmount() + 2);
+                                        } else if (41 <= num && num <= 60) {
+                                            item.setAmount(item.getAmount() + 2);
                                         }
                                         break;
                                     default:
@@ -274,52 +246,46 @@ public class DwarfBlockListener implements Listener
                         }
                         DwarfEffectEvent e;
                         ItemStack[] altered = new ItemStack[2];
-
-                        if ( item.getAmount() > 0 )
+            
+                        if (item.getAmount() > 0)
                             altered[0] = item;
-                        if ( item1 != null )
+                        if (item1 != null)
                             altered[1] = item1;
-
+            
                         ItemStack[] orig = new ItemStack[block.getDrops().size()];
-                        block.getDrops().toArray( orig );
-
-                        e = new DwarfEffectEvent( player, effect, orig, altered, null, null, null, null, null, block, null );
-                        plugin.getServer().getPluginManager().callEvent( e );
-
-                        if ( e.isCancelled() )
+                        block.getDrops().toArray(orig);
+            
+                        e = new DwarfEffectEvent(player, effect, orig, altered, null, null, null, null, null, block, null);
+                        plugin.getServer().getPluginManager().callEvent(e);
+            
+                        if (e.isCancelled())
                             return;
-
-                        if ( DwarfCraft.debugMessagesThreshold < 6 )
-                            plugin.getUtil().consoleLog( Level.FINE, "Debug: dropped " + item.toString() );
-
-                        for ( ItemStack i : e.getAlteredItems() )
-                        {
-                            if ( i != null )
-                            {
-                                if ( i.getAmount() > 0 )
-                                {
-                                    loc.getWorld().dropItem( loc.add( 0.5, 0, 0.5 ), i ).setVelocity( new Vector( 0, 0.15, 0 ) );
+            
+                        if (DwarfCraft.debugMessagesThreshold < 6)
+                            plugin.getUtil().consoleLog(Level.FINE, "Debug: dropped " + item.toString());
+            
+                        for (ItemStack i : e.getAlteredItems()) {
+                            if (i != null) {
+                                if (i.getAmount() > 0) {
+                                    loc.getWorld().dropItem(loc.add(0.5, 0, 0.5), i).setVelocity(new Vector(0, 0.15, 0));
                                 }
                             }
                         }
-
-                        if ( event.getExpToDrop() != 0 )
-                        {
-                            ( loc.getWorld().spawn( loc, ExperienceOrb.class ) ).setExperience( event.getExpToDrop() );
+            
+                        if (event.getExpToDrop() != 0) {
+                            (loc.getWorld().spawn(loc, ExperienceOrb.class)).setExperience(event.getExpToDrop());
                         }
-
+            
                         blockDropChange = true;
                     }
-                }
-    
-                if ( tool.getType().getMaxDurability() > 0 && effect instanceof ToolEffect)
-                {
-                    ToolEffect toolEffect = (ToolEffect) effect;
-                    if ( effect.getEffectType() == DwarfEffectType.SWORDDURABILITY && toolEffect.checkTool( tool ) )
-                        toolEffect.damageTool( player, 2, tool, !blockDropChange );
-    
-                    if ( effect.getEffectType() == DwarfEffectType.TOOLDURABILITY && toolEffect.checkTool( tool ) )
-                        toolEffect.damageTool( player, 1, tool, !blockDropChange );
+        
+                    if (tool.getType().getMaxDurability() > 0) {
+                        if (effect.getEffectType() == DwarfEffectType.SWORDDURABILITY && effect.checkTool(tool))
+                            effect.damageTool(player, 2, tool, !blockDropChange);
+            
+                        if (effect.getEffectType() == DwarfEffectType.TOOLDURABILITY && effect.checkTool(tool))
+                            effect.damageTool(player, 1, tool, !blockDropChange);
+                    }
                 }
             }
         }
@@ -330,15 +296,11 @@ public class DwarfBlockListener implements Listener
             {
                 for ( DwarfEffect e : s.getEffects() )
                 {
-                    if (e instanceof ToolEffect) {
-                        ToolEffect toolEffect = (ToolEffect) e;
-                        
-                        if (e.getEffectType() == DwarfEffectType.SWORDDURABILITY && toolEffect.checkTool(tool))
-                            toolEffect.damageTool(player, 2, tool, !blockDropChange);
-    
-                        if (e.getEffectType() == DwarfEffectType.TOOLDURABILITY && toolEffect.checkTool(tool))
-                            toolEffect.damageTool(player, 1, tool, !blockDropChange);
-                    }
+                    if (e.getEffectType() == DwarfEffectType.SWORDDURABILITY && e.checkTool(tool))
+                        e.damageTool(player, 2, tool, !blockDropChange);
+
+                    if (e.getEffectType() == DwarfEffectType.TOOLDURABILITY && e.checkTool(tool))
+                        e.damageTool(player, 1, tool, !blockDropChange);
                 }
             }
         }
@@ -374,19 +336,18 @@ public class DwarfBlockListener implements Listener
         {
             for ( DwarfEffect effect : skill.getEffectsOfType( DwarfEffectType.DIGTIME ) )
             {
-                BlockEffect instamineEffect = (BlockEffect) effect;
-                if ( instamineEffect.checkBlock( mat ) && instamineEffect.checkTool( tool ) )
+                if ( effect.checkInitiator( mat ) && effect.checkTool( tool ) )
                 {
                     if ( DwarfCraft.debugMessagesThreshold < 2 )
                         plugin.getUtil().consoleLog( Level.FINE, "DC2: started instamine check" );
 
-                    if ( plugin.getUtil().randomAmount( instamineEffect.getEffectAmount( dCPlayer ) ) == 0 )
+                    if ( plugin.getUtil().randomAmount( effect.getEffectAmount( dCPlayer ) ) == 0 )
                         return;
 
                     if ( DwarfCraft.debugMessagesThreshold < 3 )
                         plugin.getUtil().consoleLog( Level.FINE, "DC3: Insta-mine occured. Block: " + mat );
 
-                    DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, instamineEffect, null, null, null, null, null, null, null, event.getBlock(), null );
+                    DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, effect, null, null, null, null, null, null, null, event.getBlock(), null );
                     plugin.getServer().getPluginManager().callEvent( ev );
 
                     if ( ev.isCancelled() )
@@ -451,9 +412,8 @@ public class DwarfBlockListener implements Listener
                                 for ( DwarfSkill skill : dCPlayer.getSkills().values() )
                                 {
                                     for ( DwarfEffect effect : skill.getEffectsOfType( DwarfEffectType.BLOCKDROP ) ) {
-                                        BlockEffect blockEffect = (BlockEffect) effect;
-                                        if ( blockEffect.checkBlock( Material.CACTUS ) ) {
-                                            int amount = plugin.getUtil().randomAmount(blockEffect.getEffectAmount(dCPlayer));
+                                        if ( effect.checkInitiator( Material.CACTUS ) ) {
+                                            int amount = plugin.getUtil().randomAmount(effect.getEffectAmount(dCPlayer));
                                             if (amount != 0) {
         
                                                 DwarfEffectEvent ev;
@@ -463,7 +423,7 @@ public class DwarfBlockListener implements Listener
                                                 ItemStack[] orig = new ItemStack[event.getBlock().getDrops().size()];
                                                 event.getBlock().getDrops().toArray(orig);
         
-                                                ev = new DwarfEffectEvent(dCPlayer, blockEffect, orig, altered, null, null, null, null, null, event.getBlock(), null);
+                                                ev = new DwarfEffectEvent(dCPlayer, effect, orig, altered, null, null, null, null, null, event.getBlock(), null);
                                                 plugin.getServer().getPluginManager().callEvent(ev);
         
                                                 if (ev.isCancelled())
@@ -525,29 +485,26 @@ public class DwarfBlockListener implements Listener
                             for ( DwarfSkill s : dCPlayer.getSkills().values() )
                             {
                                 for ( DwarfEffect e : s.getEffects() ) {
-                                    if (e instanceof BlockEffect) {
-                                        BlockEffect blockEffect = (BlockEffect) e;
-                                        if (blockEffect.getEffectType() == DwarfEffectType.BLOCKDROP && blockEffect.checkBlock( Material.SUGAR_CANE )) {
-                                            int amount = plugin.getUtil().randomAmount(e.getEffectAmount(dCPlayer));
-                                            if (amount != 0) {
-                                                DwarfEffectEvent ev;
-                                                ItemStack[] altered = new ItemStack[1];
-                                                altered[0] = new ItemStack(Material.CACTUS, amount);
-            
-                                                ItemStack[] orig = new ItemStack[event.getBlock().getDrops().size()];
-                                                event.getBlock().getDrops().toArray(orig);
-            
-                                                ev = new DwarfEffectEvent(dCPlayer, e, orig, altered, null, null, null, null, null, event.getBlock(), null);
-                                                plugin.getServer().getPluginManager().callEvent(ev);
-            
-                                                if (ev.isCancelled())
-                                                    return;
-            
-                                                for (ItemStack i : ev.getAlteredItems()) {
-                                                    if (i != null) {
-                                                        if (i.getAmount() > 0) {
-                                                            world.dropItemNaturally(loc, i);
-                                                        }
+                                    if (e.getEffectType() == DwarfEffectType.BLOCKDROP && e.checkInitiator( Material.SUGAR_CANE )) {
+                                        int amount = plugin.getUtil().randomAmount(e.getEffectAmount(dCPlayer));
+                                        if (amount != 0) {
+                                            DwarfEffectEvent ev;
+                                            ItemStack[] altered = new ItemStack[1];
+                                            altered[0] = new ItemStack(Material.CACTUS, amount);
+        
+                                            ItemStack[] orig = new ItemStack[event.getBlock().getDrops().size()];
+                                            event.getBlock().getDrops().toArray(orig);
+        
+                                            ev = new DwarfEffectEvent(dCPlayer, e, orig, altered, null, null, null, null, null, event.getBlock(), null);
+                                            plugin.getServer().getPluginManager().callEvent(ev);
+        
+                                            if (ev.isCancelled())
+                                                return;
+        
+                                            for (ItemStack i : ev.getAlteredItems()) {
+                                                if (i != null) {
+                                                    if (i.getAmount() > 0) {
+                                                        world.dropItemNaturally(loc, i);
                                                     }
                                                 }
                                             }

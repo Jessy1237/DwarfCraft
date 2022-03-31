@@ -132,36 +132,20 @@ class SkillReader
                     case PLOW:
                     case DIGTIME:
                     case BLOCKDROP:
-                        dcEffect = new BlockEffect( effect, skill_id, plugin );
-                        break;
                     case SHEAR:
                     case MOBDROP:
-                        dcEffect = new MobEffect( effect, skill_id, plugin );
-                        break;
                     case SWORDDURABILITY:
                     case PLOWDURABILITY:
                     case RODDURABILITY:
                     case TOOLDURABILITY:
                     case PVPDAMAGE:
                     case PVEDAMAGE:
-                        dcEffect = new ToolEffect( effect, skill_id, plugin );
-                        break;
                     case EAT:
-                        dcEffect = new EatEffect( effect, skill_id, plugin );
-                        break;
                     case CRAFT:
                     case SMELT:
-                        dcEffect = new CraftEffect( effect, skill_id, plugin );
-                        break;
                     case VEHICLEDROP:
-                        dcEffect = new VehicleDropEffect( effect, skill_id, plugin );
-                        break;
                     case VEHICLEMOVE:
-                        dcEffect = new VehicleMoveEffect( effect, skill_id, plugin );
-                        break;
                     case FISH:
-                        dcEffect = new FishEffect( effect, skill_id, plugin );
-                        break;
                     case FALLDAMAGE:
                     case BOWATTACK:
                     case FALLTHRESHOLD:
