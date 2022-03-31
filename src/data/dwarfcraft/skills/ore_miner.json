@@ -18,6 +18,11 @@
       "id": "GOLD_INGOT",
       "base": 0.67,
       "max": 128
+    },
+    {
+      "id": "COPPER_INGOT",
+      "base": 0.85,
+      "max": 256
     }
   ],
   "effects": [
@@ -59,8 +64,8 @@
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "GOLD_ORE",
-      "output_material": "RAW_GOLD",
+      "origin_material": "COPPER_ORE",
+      "output_material": "RAW_COPPER",
       "base": 0.7,
       "min": 0,
       "max": 6,
@@ -79,25 +84,9 @@
       "output_material": "RAW_GOLD",
       "base": 0.7,
       "min": 0,
-      "max": 1,
-      "step": 0.06,
-      "step_novice": 0.0,
-      "should_floor": false,
-      "normal_level": 0,
-      "tools": [
-        "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
-      ]
-    },
-    {
-      "type": "BLOCKDROP",
-      "origin_material": "GOLD_ORE",
-      "output_material": "GOLD_INGOT",
-      "base": 0.7,
-      "min": 0,
       "max": 6,
-      "step": 0.18,
-      "step_novice": 0.0,
+      "step": 0.16,
+      "step_novice": -0.1,
       "should_floor": false,
       "normal_level": 0,
       "tools": [
