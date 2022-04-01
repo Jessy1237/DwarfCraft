@@ -208,6 +208,30 @@ public class DwarfEffect
         return false;
     }
     
+    public String toolType()
+    {
+        for ( Material mat : tools )
+        {
+            if ( mat == Material.IRON_SWORD )
+                return "swords";
+            if ( mat == Material.IRON_HOE )
+                return "hoes";
+            if ( mat == Material.IRON_AXE )
+                return "axes";
+            if ( mat == Material.WOODEN_PICKAXE )
+                return "pickaxes";
+            if ( mat == Material.IRON_PICKAXE )
+                return "most picks";
+            if ( mat == Material.DIAMOND_PICKAXE )
+                return "high picks";
+            if ( mat == Material.IRON_SHOVEL )
+                return "shovels";
+            if ( mat == Material.FISHING_ROD )
+                return "fishing rod";
+        }
+        return "any tool";
+    }
+    
     public void damageTool( DwarfPlayer player, int base, ItemStack tool )
     {
         damageTool( player, base, tool, true );
@@ -422,6 +446,7 @@ public class DwarfEffect
         replacements.put(Placeholder.EFFECT_DAMAGE_TAKEN, String.valueOf( effectAmount * 100 ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_DIG, String.format( "%.0f", +( effectAmount * 100 ) ) );
         replacements.put(Placeholder.EFFECT_OUTPUT, plugin.getUtil().getCleanName( getOutput(dCPlayer) ) );
+        replacements.put(Placeholder.EFFECT_TOOL_TYPE, toolType());
     
         for(Placeholder placeholder : replacements.keySet()) {
             description = description.replaceAll(placeholder.value(), replacements.get(placeholder));

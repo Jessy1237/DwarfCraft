@@ -28,7 +28,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
-      "origin_material": "COAL_ORE",
+      "origin_material": "#COAL_ORES",
       "output_material": "COAL",
       "base": 0.7,
       "min": 0,
@@ -42,12 +42,13 @@
         "STONE_PICKAXE",
         "IRON_PICKAXE",
         "GOLDEN_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "IRON_ORE",
+      "origin_material": "#IRON_ORES",
       "output_material": "RAW_IRON",
       "base": 0.7,
       "min": 0,
@@ -59,12 +60,13 @@
       "tools": [
         "STONE_PICKAXE",
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "COPPER_ORE",
+      "origin_material": "#COPPER_ORES",
       "output_material": "RAW_COPPER",
       "base": 0.7,
       "min": 0,
@@ -75,12 +77,13 @@
       "normal_level": 0,
       "tools": [
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "GOLD_ORE",
+      "origin_material": "#GOLD_ORES",
       "output_material": "RAW_GOLD",
       "base": 0.7,
       "min": 0,
@@ -91,7 +94,8 @@
       "normal_level": 0,
       "tools": [
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     }
   ],

@@ -16,10 +16,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
@@ -268,6 +265,7 @@ public class DwarfBlockListener implements Listener
                         if (i != null) {
                             if (i.getAmount() > 0) {
                                 loc.getWorld().dropItem(loc.add(0.5, 0, 0.5), i).setVelocity(new Vector(0, 0.15, 0));
+                                loc.getWorld().playEffect(loc.add(0.5, 0, 0.5), Effect.BONE_MEAL_USE, 5);
                             }
                         }
                     }

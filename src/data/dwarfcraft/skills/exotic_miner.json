@@ -23,7 +23,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
-      "origin_material": "DIAMOND_ORE",
+      "origin_material": "#DIAMOND_ORES",
       "output_material": "DIAMOND",
       "base": 1.0,
       "min": 0,
@@ -39,12 +39,13 @@
       "normal_level": 3,
       "tools": [
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "EMERALD_ORE",
+      "origin_material": "#EMERALD_ORES",
       "output_material": "EMERALD",
       "base": 1.0,
       "min": 0,
@@ -60,12 +61,13 @@
       "normal_level": 3,
       "tools": [
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "REDSTONE_ORE",
+      "origin_material": "#REDSTONE_ORES",
       "output_material": "REDSTONE",
       "base": 3.0,
       "min": 0,
@@ -77,12 +79,13 @@
       "should_require_tool": true,
       "tools": [
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
       "type": "BLOCKDROP",
-      "origin_material": "LAPIS_ORE",
+      "origin_material": "#LAPIS_ORES",
       "output_material": "LAPIS_LAZULI",
       "base": 3.0,
       "min": 0,
@@ -93,7 +96,8 @@
       "normal_level": 5,
       "tools": [
         "IRON_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     }
   ],
