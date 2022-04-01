@@ -63,9 +63,9 @@ public class DwarfEntityListener implements Listener
         if ( ( event.getCause() == DamageCause.BLOCK_EXPLOSION || event.getCause() == DamageCause.ENTITY_EXPLOSION || event.getCause() == DamageCause.FALL || event.getCause() == DamageCause.SUFFOCATION || event.getCause() == DamageCause.FIRE || event.getCause() == DamageCause.FIRE_TICK
                 || event.getCause() == DamageCause.LAVA || event.getCause() == DamageCause.DROWNING || event.getCause() == DamageCause.CONTACT || event.getCause() == DamageCause.FALLING_BLOCK ) )
         {
-            if ( DwarfCraft.debugMessagesThreshold < -1 && !event.isCancelled() )
+            if ( !event.isCancelled() )
             {
-                plugin.getUtil().consoleLog( Level.FINE, "DC-1: Damage Event: " + event.getCause() );
+                plugin.getUtil().debugLog( -1, Level.FINE, "Damage Event: " + event.getCause() );
             }
             onEntityDamagedByEnvirons( event );
 
@@ -385,8 +385,7 @@ public class DwarfEntityListener implements Listener
                     {
                         if ( event.getDamage() <= e.getEffectAmount( dCPlayer ) )
                         {
-                            if ( DwarfCraft.debugMessagesThreshold < 1 )
-                                plugin.getUtil().consoleLog( Level.FINE, "DC1: Damage less than fall threshold" );
+                            plugin.getUtil().debugLog( 1, Level.FINE, "Damage less than fall threshold" );
                             event.setCancelled( true );
                         }
                     }
@@ -403,10 +402,7 @@ public class DwarfEntityListener implements Listener
                     damage = ev.getAlteredDamage();
                 }
             }
-            if ( DwarfCraft.debugMessagesThreshold < 1 )
-            {
-                plugin.getUtil().consoleLog( Level.FINE, String.format( "DC1: environment damage type: %s base damage: %f new damage: %.2f\r\n", event.getCause(), event.getDamage(), damage ) );
-            }
+            plugin.getUtil().debugLog( 1, Level.FINE, String.format( "Environment damage type: %s base damage: %f new damage: %.2f\r\n", event.getCause(), event.getDamage(), damage ) );
             event.setDamage( damage );
             if ( damage == 0 )
                 event.setCancelled( true );

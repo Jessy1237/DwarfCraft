@@ -14,16 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
+import net.milkbowl.vault.permission.Permission;
+
 import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
 import com.Jessy1237.DwarfCraft.events.DwarfRaceChangeEvent;
 import com.Jessy1237.DwarfCraft.guis.RaceGUI;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 
 public class CommandRace extends DwarfCommand
@@ -37,8 +38,7 @@ public class CommandRace extends DwarfCommand
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'race'" );
+        plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'race'" );
 
         try
         {

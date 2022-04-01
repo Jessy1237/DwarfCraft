@@ -69,8 +69,7 @@ public class DwarfPlayer
 
         // Creates an ordered list of skill levels and finds where in that
         // list the skill is (what quartile)
-        if ( DwarfCraft.debugMessagesThreshold < 0 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC0: starting skill ordering for quartiles" );
+        plugin.getUtil().debugLog( 0, Level.FINE, "Starting skill ordering for quartiles" );
         for ( DwarfSkill s : getSkills().values() )
         {
             if ( s.getLevel() > plugin.getConfigManager().getRaceLevelLimit() )

@@ -13,13 +13,13 @@ package com.Jessy1237.DwarfCraft.commands;
 import java.util.Collection;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.guis.ListGUI;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
@@ -35,11 +35,9 @@ public class CommandList extends DwarfCommand
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'list'" );
+        plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'list'" );
 
         int page = 1;
-
         Collection<DwarfTrainer> col = plugin.getDataManager().trainerList.values();
         DwarfTrainer[] trainers = new DwarfTrainer[col.size()];
         col.toArray( trainers );

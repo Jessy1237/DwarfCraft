@@ -65,7 +65,8 @@ public class Util
             else if (logLevel == Level.FINE)
                 color = ChatColor.LIGHT_PURPLE;
     
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[" + plugin.getName() + "] " + color + message);
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[" + plugin.getName() + "] [DEBUG] "
+                    + color + message + ChatColor.ITALIC + " (set to " + debugThreshold + " to silence.)");
         }
     }
 

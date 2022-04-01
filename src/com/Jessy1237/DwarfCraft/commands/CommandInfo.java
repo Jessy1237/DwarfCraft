@@ -12,10 +12,10 @@ package com.Jessy1237.DwarfCraft.commands;
 
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import org.bukkit.command.CommandSender;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandInfo extends DwarfCommand
 {
@@ -28,8 +28,7 @@ public class CommandInfo extends DwarfCommand
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'info'" );
+        plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'info'" );
 
         plugin.getOut().info( sender );
         return true;

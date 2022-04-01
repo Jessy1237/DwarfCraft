@@ -138,11 +138,8 @@ public class DwarfEffect
             if ( exception && skillLevel <= exceptionHigh && skillLevel >= exceptionLow && !( skillLevel == plugin.getConfigManager().getRaceLevelLimit() && !plugin.getSkillManager().getSkill( this.skillId).doesSpecialize( dCPlayer.getRace() ) ) )
                 effectAmount = exceptionValue;
         
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-        {
-            plugin.getUtil().consoleLog( Level.FINE, String.format( "DC1: GetEffectAmmount Level: %d Base: %.2f Increase: %.2f Novice: %.2f Max: %.2f Min: %.2f "
-                    + "Exception: %s Exctpion Low: %.2f Exception High: %.2f Exception Value: %.2f Floor Result: %s", skillLevel, base, step, stepNovice, max, min, exception, exceptionLow, exceptionHigh, exceptionValue, floor) );
-        }
+        plugin.getUtil().debugLog( 1, Level.FINE, String.format( "Effect Triggered - Level: %d Base: %.2f Increase: %.2f Novice: %.2f Max: %.2f Min: %.2f "
+                    + "Exception: %s Exception Low: %.2f Exception High: %.2f Exception Value: %.2f Floor Result: %s", skillLevel, base, step, stepNovice, max, min, exception, exceptionLow, exceptionHigh, exceptionValue, floor) );
         
         return ( floor ? Math.floor( effectAmount ) : effectAmount );
     }
@@ -222,7 +219,7 @@ public class DwarfEffect
     {
         short wear = ( short ) ( plugin.getUtil().randomAmount( getEffectAmount( player ) ) * base );
     
-        if ( DwarfCraft.debugMessagesThreshold < 2 ) plugin.getUtil().consoleLog( Level.FINE, String.format( "DC2: Affected durability of a \"%s\" - Old: %d Base: %d Wear: %d", plugin.getUtil().getCleanName( tool ), tool.getDurability(), base, wear ) );
+        plugin.getUtil().debugLog( 2, Level.FINE, String.format( "Affected durability of a \"%s\" - Old: %d Base: %d Wear: %d", plugin.getUtil().getCleanName( tool ), tool.getDurability(), base, wear ) );
         
         // Some code taken from net.minecraft.server.ItemStack line 165.
         // Checks to see if damage should be skipped.

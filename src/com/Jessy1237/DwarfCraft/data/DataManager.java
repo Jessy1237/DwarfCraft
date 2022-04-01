@@ -12,12 +12,7 @@ package com.Jessy1237.DwarfCraft.data;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 import org.bukkit.Chunk;
@@ -25,15 +20,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 
-import com.Jessy1237.DwarfCraft.ConfigManager;
-import com.Jessy1237.DwarfCraft.DwarfCraft;
-import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
-import com.Jessy1237.DwarfCraft.models.DwarfSkill;
-import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
-import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
-import com.Jessy1237.DwarfCraft.models.DwarfVehicle;
-
 import net.citizensnpcs.api.npc.NPC;
+
+import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.models.*;
 
 public class DataManager
 {
@@ -235,8 +225,7 @@ public class DataManager
             if ( i == v.getEntityId() )
             {
                 id = i;
-                if ( DwarfCraft.debugMessagesThreshold < 5 )
-                    plugin.getUtil().consoleLog( Level.FINE, "DC5:Removed DwarfVehicle from vehicleList" );
+                plugin.getUtil().debugLog( 5, Level.FINE, "Removed DwarfVehicle from vehicleList" );
             }
         }
         if ( id != -1 )

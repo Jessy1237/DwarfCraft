@@ -10,14 +10,9 @@
 
 package com.Jessy1237.DwarfCraft.commands;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -25,13 +20,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
+import net.citizensnpcs.api.npc.AbstractNPC;
+
 import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
-
-import net.citizensnpcs.api.npc.AbstractNPC;
 
 public class CommandCreate extends DwarfCommand implements TabCompleter
 {
@@ -44,8 +40,7 @@ public class CommandCreate extends DwarfCommand implements TabCompleter
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'create'" );
+        plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'create'" );
 
         if ( args.length == 0 || args[0].equals( null ) )
         {

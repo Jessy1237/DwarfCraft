@@ -44,8 +44,7 @@ public class CommandTutorial extends DwarfCommand
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'tutorial'" );
+        plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'tutorial'" );
 
         try
         {

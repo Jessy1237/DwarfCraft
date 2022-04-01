@@ -16,13 +16,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandDebug extends DwarfCommand implements TabCompleter
 {
@@ -51,8 +51,7 @@ public class CommandDebug extends DwarfCommand implements TabCompleter
                 List<Object> desiredArguments = new ArrayList<Object>();
                 List<Object> outputList = null;
 
-                if ( DwarfCraft.debugMessagesThreshold < 1 )
-                    plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'debug'" );
+                plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'debug'" );
 
                 Integer i = 0;
                 desiredArguments.add( i );

@@ -115,8 +115,7 @@ public class DwarfVehicleListener implements Listener
         if ( !( event.getVehicle() instanceof Boat ) )
             return;
         plugin.getDataManager().addVehicle( new DwarfVehicle( event.getVehicle() ) );
-        if ( DwarfCraft.debugMessagesThreshold < 6 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC6:Added DwarfVehicle to vehicleList" );
+        plugin.getUtil().debugLog( 6, Level.FINE, "Added DwarfVehicle to vehicleList" );
     }
 
     @EventHandler( priority = EventPriority.NORMAL )

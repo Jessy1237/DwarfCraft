@@ -336,16 +336,12 @@ public class DwarfBlockListener implements Listener
         {
             if ( effect.checkInitiator( mat ) && effect.checkTool( tool ) )
             {
-                if ( effect.checkInitiator( mat ) && effect.checkTool( tool ) )
-                {
-                    if ( DwarfCraft.debugMessagesThreshold < 2 )
-                        plugin.getUtil().consoleLog( Level.FINE, "DC2: started instamine check" );
+                plugin.getUtil().debugLog( 2, Level.FINE, "Started instamine check" );
 
                 if ( plugin.getUtil().randomAmount( effect.getEffectAmount( dCPlayer ) ) == 0 )
                     return;
 
-                    if ( DwarfCraft.debugMessagesThreshold < 3 )
-                        plugin.getUtil().consoleLog( Level.FINE, "DC3: Insta-mine occured. Block: " + mat );
+                plugin.getUtil().debugLog( 3, Level.FINE, "Insta-mine occured. Block: " + mat );
 
                 DwarfEffectEvent ev = new DwarfEffectEvent( dCPlayer, effect, null, null, null, null, null, null, null, event.getBlock(), null );
                 plugin.getServer().getPluginManager().callEvent( ev );

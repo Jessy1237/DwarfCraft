@@ -11,13 +11,11 @@
 package com.Jessy1237.DwarfCraft.commands;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -26,9 +24,10 @@ import org.bukkit.util.StringUtil;
 
 import net.md_5.bungee.api.ChatColor;
 
-import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
 import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
+import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 
@@ -43,8 +42,7 @@ public class CommandSkill extends DwarfCommand implements TabCompleter
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
-        if ( DwarfCraft.debugMessagesThreshold < 1 )
-            plugin.getUtil().consoleLog( Level.FINE, "DC1: started command 'skill'" );
+        plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'skill'" );
 
         if ( args.length == 0 || args == null )
         {
