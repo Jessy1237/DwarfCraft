@@ -49,5 +49,14 @@ public enum DwarfEffectType
         }
         return null;
     }
-
+    
+    public static boolean has( String name )
+    {
+        for ( DwarfEffectType effectType : DwarfEffectType.values() )
+        {
+            if ( effectType.toString().equalsIgnoreCase( name ) )
+                return true;
+        }
+        return false;
+    }
 }

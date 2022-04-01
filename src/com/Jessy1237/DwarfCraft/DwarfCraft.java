@@ -37,6 +37,7 @@ public class DwarfCraft extends JavaPlugin
     private DataManager data_manager;
     private CommandManager command_manager;
     private SkillManager skill_manager;
+    private EffectRegistry effect_registry;
     private RaceManager race_manager;
     private Out out;
     private Util util;
@@ -87,6 +88,11 @@ public class DwarfCraft extends JavaPlugin
     public Util getUtil()
     {
         return util;
+    }
+    
+    public EffectRegistry getEffectRegistry()
+    {
+        return effect_registry;
     }
     
     public DwarfEntityListener getDwarfEntityListener()
@@ -144,6 +150,7 @@ public class DwarfCraft extends JavaPlugin
         pm = getServer().getPluginManager();
         util = new Util( this ); //Need to initialise Util earlier if going to use it in the enabling method
         race_manager = new RaceManager( this );
+        effect_registry = new EffectRegistry( this );
         skill_manager = new SkillManager( this );
 
         if ( !checkDependencies() ) onDisable();

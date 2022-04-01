@@ -128,39 +128,14 @@ class SkillReader
                 DwarfEffectType type = DwarfEffectType.getEffectType( effect.getAsJsonObject().get("type").getAsString() ); //todo remove when we have a effect registry
                 if (type == null) continue;
                 
-                switch ( type ) {
-                    case PLOW:
-                    case DIGTIME:
-                    case BLOCKDROP:
-                    case SHEAR:
-                    case MOBDROP:
-                    case SWORDDURABILITY:
-                    case PLOWDURABILITY:
-                    case RODDURABILITY:
-                    case TOOLDURABILITY:
-                    case PVPDAMAGE:
-                    case PVEDAMAGE:
-                    case EAT:
-                    case CRAFT:
-                    case SMELT:
-                    case VEHICLEDROP:
-                    case VEHICLEMOVE:
-                    case FISH:
-                    case FALLDAMAGE:
-                    case BOWATTACK:
-                    case FALLTHRESHOLD:
-                    case EXPLOSIONDAMAGE:
-                    case FIREDAMAGE:
-                    case BREW:
-                    case SPECIAL:
-                        dcEffect = new DwarfEffect( effect, skill_id, plugin );
-                        break;
-                    default:
-                        plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Unsupported effect type " + type + " for skill: " + skill_id );
-                        break;
+                if ( !DwarfEffectType.has( type.toString() ) ) {
+                    plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Unsupported effect type " + type + " for skill: " + skill_id );
+                    continue;
                 }
-                
+    
+                dcEffect = new DwarfEffect( effect, skill_id, plugin );
                 effectList.add( dcEffect );
+                plugin.getEffectRegistry().registerEffect( type, dcEffect );
             }
         }
         return effectList;
