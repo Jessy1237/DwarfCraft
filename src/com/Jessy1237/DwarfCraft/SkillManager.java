@@ -46,8 +46,9 @@ class SkillManager
         for ( String file_name : Registration.getSkillFiles() )
         {
             String path = "data/dwarfcraft/skills/" + file_name;
+            File destFile = new File( plugin.getDataFolder() + File.separator + path );
             InputStream source = plugin.getResource( path );
-            if ( source != null && file_name.endsWith( ".json" ) )
+            if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
             {
                 plugin.saveResource( path, true );
                 plugin.getUtil().consoleLog( Level.INFO, "Writing data file: " + ChatColor.AQUA + path );

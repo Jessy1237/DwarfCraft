@@ -1,14 +1,15 @@
 package com.Jessy1237.DwarfCraft;
 
-import com.Jessy1237.DwarfCraft.data.RaceReader;
-import com.Jessy1237.DwarfCraft.events.DwarfLoadRacesEvent;
-import com.Jessy1237.DwarfCraft.models.DwarfRace;
-import org.bukkit.ChatColor;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.logging.Level;
+
+import org.bukkit.ChatColor;
+
+import com.Jessy1237.DwarfCraft.data.RaceReader;
+import com.Jessy1237.DwarfCraft.events.DwarfLoadRacesEvent;
+import com.Jessy1237.DwarfCraft.models.DwarfRace;
 
 public
 class RaceManager
@@ -45,8 +46,9 @@ class RaceManager
         for ( String file_name : Registration.getRaceFiles() )
         {
             String path = "data/dwarfcraft/races/" + file_name;
+            File destFile = new File( plugin.getDataFolder() + File.separator + path );
             InputStream source = plugin.getResource( path );
-            if ( source != null && file_name.endsWith( ".json" ) )
+            if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
             {
                 plugin.saveResource( path, true );
                 plugin.getUtil().consoleLog( Level.INFO, "Writing data file: " + ChatColor.AQUA + path );
