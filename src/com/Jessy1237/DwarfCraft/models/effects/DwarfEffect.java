@@ -1,9 +1,6 @@
 package com.Jessy1237.DwarfCraft.models.effects;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Level;
 
 import org.bukkit.Material;
@@ -35,6 +32,8 @@ public class DwarfEffect
     private DwarfItemHolder initiator, output;
     private boolean exception, requireTool, floor;
     private Material[] tools;
+    private boolean hasDescription = false;
+    private String description;
     
     private EntityType entity;
     private final Map<Placeholder,String> replacements = new HashMap<>();
@@ -53,6 +52,13 @@ public class DwarfEffect
         exception = false;
         requireTool = false;
         floor = false;
+    
+        if (json.has("description")) {
+            hasDescription = true;
+            description = json.get("description").getAsString();
+        } else {
+            plugin.getUtil().consoleLog(Level.WARNING, "Effect is missing `description` for Skill ID `" + skillId.toUpperCase() + "`");
+        }
         
         if (json.has("exception")) {
             exception = true;
@@ -277,108 +283,102 @@ public class DwarfEffect
     public String description( DwarfPlayer dCPlayer )
     {
         if ( dCPlayer == null ) return "An unknown error has occurred";
-        String description;
+        String output;
         
-        switch (type)
-        {
-            case BLOCKDROP:
-                description = Messages.describeLevelBlockdrop;
-                break;
-            case MOBDROP:
-                if ( getEntity() != null )
-                {
-                    description = Messages.describeLevelMobdrop;
+        if (hasDescription) {
+            output = this.description;
+        } else {
+            switch (type) {
+                case BLOCKDROP:
+                    output = Messages.describeLevelBlockdrop;
                     break;
-                }
-                description = Messages.describeLevelMobdropNoCreature;
-                break;
-            case SWORDDURABILITY:
-                description = Messages.describeLevelSwordDurability;
-                break;
-            case PVPDAMAGE:
-                description = Messages.describeLevelPVPDamage;
-                break;
-            case PVEDAMAGE:
-                description = Messages.describeLevelPVEDamage;
-                break;
-            case EXPLOSIONDAMAGE:
-                if ( getEffectAmount( dCPlayer ) > 1 )
-                {
-                    description = Messages.describeLevelExplosionDamageMore;
+                case MOBDROP:
+                    if (getEntity() != null) {
+                        output = Messages.describeLevelMobdrop;
+                        break;
+                    }
+                    output = Messages.describeLevelMobdropNoCreature;
                     break;
-                }
-                else
-                {
-                    description = Messages.describeLevelExplosionDamageLess;
+                case SWORDDURABILITY:
+                    output = Messages.describeLevelSwordDurability;
                     break;
-                }
-            case FIREDAMAGE:
-                if ( getEffectAmount( dCPlayer ) > 1 )
-                {
-                    description = Messages.describeLevelFireDamageMore;
-                }
-                else
-                {
-                    description = Messages.describeLevelFireDamageLess;
-                }
-                break;
-            case FALLDAMAGE:
-                if ( getEffectAmount( dCPlayer ) > 1 )
-                {
-                    description = Messages.describeLevelFallingDamageMore;
-                }
-                else
-                {
-                    description = Messages.describeLevelFallingDamageLess;
-                }
-                break;
-            case FALLTHRESHOLD:
-                description = Messages.describeLevelFallThreshold;
-                break;
-            case PLOWDURABILITY:
-                description = Messages.describeLevelPlowDurability;
-                break;
-            case TOOLDURABILITY:
-                description = Messages.describeLevelToolDurability;
-                break;
-            case RODDURABILITY:
-                description = Messages.describeLevelRodDurability;
-                break;
-            case EAT:
-                description = Messages.describeLevelEat;
-                break;
-            case CRAFT:
-                description = Messages.describeLevelCraft;
-                break;
-            case PLOW:
-                description = Messages.describeLevelPlow;
-                break;
-            case FISH:
-                description = Messages.describeLevelFish;
-                break;
-            case BREW:
-                description = Messages.describeLevelBrew;
-                break;
-            case DIGTIME:
-                description = Messages.describeLevelDigTime;
-                break;
-            case BOWATTACK:
-                description = Messages.describeLevelBowAttack;
-                break;
-            case VEHICLEDROP:
-                description = Messages.describeLevelVehicleDrop;
-                break;
-            case VEHICLEMOVE:
-                description = Messages.describeLevelVehicleMove;
-                break;
-            case SMELT:
-                description = Messages.describeLevelSmelt;
-                break;
-            case SHEAR:
-                description = Messages.describeLevelShear;
-                break;
-            case SPECIAL:
-            default: description = "&6This Effect description is not yet implemented: " + this.getEffectType().toString();
+                case PVPDAMAGE:
+                    output = Messages.describeLevelPVPDamage;
+                    break;
+                case PVEDAMAGE:
+                    output = Messages.describeLevelPVEDamage;
+                    break;
+                case EXPLOSIONDAMAGE:
+                    if (getEffectAmount(dCPlayer) > 1) {
+                        output = Messages.describeLevelExplosionDamageMore;
+                        break;
+                    } else {
+                        output = Messages.describeLevelExplosionDamageLess;
+                        break;
+                    }
+                case FIREDAMAGE:
+                    if (getEffectAmount(dCPlayer) > 1) {
+                        output = Messages.describeLevelFireDamageMore;
+                    } else {
+                        output = Messages.describeLevelFireDamageLess;
+                    }
+                    break;
+                case FALLDAMAGE:
+                    if (getEffectAmount(dCPlayer) > 1) {
+                        output = Messages.describeLevelFallingDamageMore;
+                    } else {
+                        output = Messages.describeLevelFallingDamageLess;
+                    }
+                    break;
+                case FALLTHRESHOLD:
+                    output = Messages.describeLevelFallThreshold;
+                    break;
+                case PLOWDURABILITY:
+                    output = Messages.describeLevelPlowDurability;
+                    break;
+                case TOOLDURABILITY:
+                    output = Messages.describeLevelToolDurability;
+                    break;
+                case RODDURABILITY:
+                    output = Messages.describeLevelRodDurability;
+                    break;
+                case EAT:
+                    output = Messages.describeLevelEat;
+                    break;
+                case CRAFT:
+                    output = Messages.describeLevelCraft;
+                    break;
+                case PLOW:
+                    output = Messages.describeLevelPlow;
+                    break;
+                case FISH:
+                    output = Messages.describeLevelFish;
+                    break;
+                case BREW:
+                    output = Messages.describeLevelBrew;
+                    break;
+                case DIGTIME:
+                    output = Messages.describeLevelDigTime;
+                    break;
+                case BOWATTACK:
+                    output = Messages.describeLevelBowAttack;
+                    break;
+                case VEHICLEDROP:
+                    output = Messages.describeLevelVehicleDrop;
+                    break;
+                case VEHICLEMOVE:
+                    output = Messages.describeLevelVehicleMove;
+                    break;
+                case SMELT:
+                    output = Messages.describeLevelSmelt;
+                    break;
+                case SHEAR:
+                    output = Messages.describeLevelShear;
+                    break;
+                case SPECIAL:
+                default:
+                    output = "&6This Effect description is not yet implemented: " + this.getEffectType().toString();
+            }
         }
     
         String origFoodLevel = "";
@@ -407,7 +407,7 @@ public class DwarfEffect
         String minorAmountStr = String.format( "%.2f", minorAmount );
         
         // Replace placeholders
-        description = Placeholder.generalParse(description, plugin);
+        output = Placeholder.generalParse(output, plugin);
         replacements.put(Placeholder.EFFECT_INITIATOR, initiator );
         replacements.put(Placeholder.EFFECT_LEVEL_COLOR, effectLevelColor( dCPlayer.getSkillLevel( getSkillId() ) ) );
         replacements.put(Placeholder.EFFECT_AMOUNT, String.format( "%.2f", getEffectAmount(dCPlayer) ) );
@@ -424,10 +424,10 @@ public class DwarfEffect
         replacements.put(Placeholder.EFFECT_OUTPUT, plugin.getUtil().getCleanName( getOutput(dCPlayer) ) );
     
         for(Placeholder placeholder : replacements.keySet()) {
-            description = description.replaceAll(placeholder.value(), replacements.get(placeholder));
+            output = output.replaceAll(placeholder.value(), replacements.get(placeholder));
         }
         
-        return description;
+        return output;
     }
     
 }
