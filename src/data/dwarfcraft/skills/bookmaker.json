@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "BOOK",
       "output_material": "BOOK",
       "base": 1.5,

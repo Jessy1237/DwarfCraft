@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "BLAZE",
       "output_material": "BLAZE_ROD",
       "base": 0.4,
@@ -32,6 +33,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GHAST",
       "output_material": "GHAST_TEAR",
       "base": 0.4,
@@ -44,6 +46,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "MAGMA_CUBE",
       "output_material": "MAGMA_CREAM",
       "base": 0.4,
@@ -63,6 +66,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "ZOMBIFIED_PIGLIN",
       "output_material": "GOLD_NUGGET",
       "base": 0.4,

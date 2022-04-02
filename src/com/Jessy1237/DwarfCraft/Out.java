@@ -283,7 +283,7 @@ public class Out
     private String lastColor( String currentLine )
     {
         String lastColor = "";
-        int lastIndex = currentLine.lastIndexOf( "&" );
+        int lastIndex = Math.max( currentLine.lastIndexOf( "&" ), currentLine.lastIndexOf( "§" ) );
         if ( lastIndex == currentLine.length() )
             return "";
         if ( lastIndex != -1 )

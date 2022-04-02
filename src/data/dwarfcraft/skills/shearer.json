@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "SHEAR",
+      "description": "Shear a <effect.creature.name> and <effect.level.color><effect.amount> <effect.output> are dropped instead of <effect.minor.amount>",
       "origin_material": "SHEEP",
       "output_material": "#WOOL",
       "base": 1.0,
@@ -30,6 +31,7 @@
     },
     {
       "type": "SHEAR",
+      "description": "Shear a <effect.creature.name> and <effect.level.color><effect.amount> <effect.output> are dropped instead of <effect.minor.amount>",
       "origin_material": "MUSHROOM_COW",
       "output_material": "RED_MUSHROOM",
       "base": 4.0,

@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "SPAWNER",
       "output_material": "LAPIS_BLOCK",
       "base": 0.02,
@@ -25,6 +26,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "SPAWNER",
       "output_material": "GOLD_BLOCK",
       "base": 0.02,
@@ -37,6 +39,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "SPAWNER",
       "output_material": "DIAMOND_BLOCK",
       "base": 0.01,
@@ -49,6 +52,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "SPAWNER",
       "output_material": "IRON_BLOCK",
       "base": 0.02,

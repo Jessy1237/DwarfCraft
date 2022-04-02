@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "BRICK",
       "output_material": "BRICK",
       "base": 1.5,

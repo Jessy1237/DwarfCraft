@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "ZOMBIE",
       "output_material": "FEATHER",
       "base": 0.0,
@@ -37,6 +38,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "ZOMBIE",
       "output_material": "ARROW",
       "base": 0.0,
@@ -56,6 +58,7 @@
     },
     {
       "type": "BOWATTACK",
+      "description": "Your Arrows (Fully Charge Bow) do <effect.level.color><effect.damage.bow> hp damage (half hearts)",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 2.75,

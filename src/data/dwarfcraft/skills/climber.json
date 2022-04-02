@@ -25,6 +25,7 @@
     },
     {
       "type": "FALLTHRESHOLD",
+      "description": "Fall damage less than <effect.level.color><effect.amount.int> does not affect you.",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 0.0,

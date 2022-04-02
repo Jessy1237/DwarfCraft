@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "WHEAT",
       "output_material": "WHEAT_SEEDS",
       "base": 0.25,
@@ -30,6 +31,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "WHEAT",
       "output_material": "WHEAT",
       "base": 0.2,

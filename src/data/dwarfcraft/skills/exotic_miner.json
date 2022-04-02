@@ -23,6 +23,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "#DIAMOND_ORES",
       "output_material": "DIAMOND",
       "base": 1.0,
@@ -45,6 +46,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "#EMERALD_ORES",
       "output_material": "EMERALD",
       "base": 1.0,
@@ -67,6 +69,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "#REDSTONE_ORES",
       "output_material": "REDSTONE",
       "base": 3.0,
@@ -85,6 +88,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "#LAPIS_ORES",
       "output_material": "LAPIS_LAZULI",
       "base": 3.0,

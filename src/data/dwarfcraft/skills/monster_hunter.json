@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "CREEPER",
       "output_material": "GUNPOWDER",
       "base": 1.0,
@@ -37,6 +38,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "SKELETON",
       "output_material": "ARROW",
       "base": 1.25,
@@ -56,6 +58,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "SKELETON",
       "output_material": "BONE",
       "base": 1.25,
@@ -75,6 +78,7 @@
     },
     {
       "type": "MOBDROP",
+      "description": "<effect.creature.name> drop about <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "SPIDER",
       "output_material": "STRING",
       "base": 1.0,

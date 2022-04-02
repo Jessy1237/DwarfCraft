@@ -23,6 +23,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "NETHER_QUARTZ_ORE",
       "output_material": "QUARTZ",
       "base": 0.7,
@@ -42,6 +43,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "GLOWSTONE",
       "output_material": "GLOWSTONE_DUST",
       "base": 2.0,
@@ -54,6 +56,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "NETHERRACK",
       "output_material": "NETHERRACK",
       "base": 0.55,

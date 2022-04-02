@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "DIGTIME",
+      "description": "<effect.amount.dig>% of the time <effect.tool.type> break <effect.initiator> instantly",
       "origin_material": "DIRT",
       "output_material": "AIR",
       "base": 0.0,
@@ -32,6 +33,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "DIRT",
       "output_material": "DIRT",
       "base": 0.5,
@@ -51,6 +53,7 @@
     },
     {
       "type": "DIGTIME",
+      "description": "<effect.amount.dig>% of the time <effect.tool.type> break <effect.initiator> instantly",
       "origin_material": "GRASS_BLOCK",
       "output_material": "AIR",
       "base": 0.0,
@@ -70,6 +73,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "GRASS_BLOCK",
       "output_material": "DIRT",
       "base": 0.5,

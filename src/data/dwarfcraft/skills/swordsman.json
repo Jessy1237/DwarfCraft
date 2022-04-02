@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "SWORDDURABILITY",
+      "description": "Using a sword removes about <effect.level.color><effect.amount> durability",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 1.5,
@@ -37,6 +38,7 @@
     },
     {
       "type": "PVEDAMAGE",
+      "description": "You do <effect.level.color><effect.damage>% of normal <effect.tool.type> damage when fighting mobs",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 0.75,
@@ -56,6 +58,7 @@
     },
     {
       "type": "PVPDAMAGE",
+      "description": "You do <effect.level.color><effect.damage>% of normal <effect.tool.type> damage when fighting players",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 0.38,

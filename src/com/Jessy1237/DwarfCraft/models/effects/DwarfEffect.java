@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
-import com.Jessy1237.DwarfCraft.Messages;
 import com.Jessy1237.DwarfCraft.Placeholder;
 import com.Jessy1237.DwarfCraft.Util;
 import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
@@ -35,6 +35,8 @@ public class DwarfEffect
     private DwarfItemHolder initiator, output;
     private boolean exception, requireTool, floor;
     private Material[] tools;
+    private boolean hasDescription = false;
+    private String description, descriptionMore, descriptionLess;
     
     private EntityType entity;
     private final Map<Placeholder,String> replacements = new HashMap<>();
@@ -53,6 +55,18 @@ public class DwarfEffect
         exception = false;
         requireTool = false;
         floor = false;
+    
+        if (json.has("description") || json.has("description_more") || json.has("description_less")) {
+            hasDescription = true;
+            if ( json.has("description_more") && json.has("description_less") ) {
+                descriptionMore = json.get("descriptionMore").getAsString();
+                descriptionLess = json.get("descriptionLess").getAsString();
+            } else {
+                description = json.get("description").getAsString();
+            }
+        } else {
+            plugin.getUtil().consoleLog("Effect is missing `description` for Skill ID `" + skillId.toUpperCase() + "`", Level.WARNING);
+        }
         
         if (json.has("exception")) {
             exception = true;
@@ -112,11 +126,11 @@ public class DwarfEffect
     public String effectLevelColor( int skillLevel )
     {
         if ( skillLevel > normalLevel)
-            return Messages.effectLevelColorGreaterThanNormal;
+            return ChatColor.GREEN.toString();
         else if ( skillLevel == normalLevel)
-            return Messages.effectLevelColorEqualToNormal;
+            return ChatColor.YELLOW.toString();
         else
-            return Messages.effectLevelColorLessThanNormal;
+            return ChatColor.RED.toString();
     }
     
     public double getEffectAmount( DwarfPlayer dCPlayer )
@@ -301,108 +315,24 @@ public class DwarfEffect
     public String description( DwarfPlayer dCPlayer )
     {
         if ( dCPlayer == null ) return "An unknown error has occurred";
-        String description;
+        String output;
         
-        switch (type)
-        {
-            case BLOCKDROP:
-                description = Messages.describeLevelBlockdrop;
-                break;
-            case MOBDROP:
-                if ( getEntity() != null )
-                {
-                    description = Messages.describeLevelMobdrop;
+        if (hasDescription) {
+            switch (type) {
+                case EXPLOSIONDAMAGE:
+                case FIREDAMAGE:
+                case FALLDAMAGE:
+                    if (this.descriptionMore == null || this.descriptionLess == null ) {
+                        //log error
+                    }
+                    output = ( getEffectAmount(dCPlayer) > 1 ) ? this.descriptionMore : this.descriptionLess;
                     break;
-                }
-                description = Messages.describeLevelMobdropNoCreature;
-                break;
-            case SWORDDURABILITY:
-                description = Messages.describeLevelSwordDurability;
-                break;
-            case PVPDAMAGE:
-                description = Messages.describeLevelPVPDamage;
-                break;
-            case PVEDAMAGE:
-                description = Messages.describeLevelPVEDamage;
-                break;
-            case EXPLOSIONDAMAGE:
-                if ( getEffectAmount( dCPlayer ) > 1 )
-                {
-                    description = Messages.describeLevelExplosionDamageMore;
+                default:
+                    output = this.description;
                     break;
-                }
-                else
-                {
-                    description = Messages.describeLevelExplosionDamageLess;
-                    break;
-                }
-            case FIREDAMAGE:
-                if ( getEffectAmount( dCPlayer ) > 1 )
-                {
-                    description = Messages.describeLevelFireDamageMore;
-                }
-                else
-                {
-                    description = Messages.describeLevelFireDamageLess;
-                }
-                break;
-            case FALLDAMAGE:
-                if ( getEffectAmount( dCPlayer ) > 1 )
-                {
-                    description = Messages.describeLevelFallingDamageMore;
-                }
-                else
-                {
-                    description = Messages.describeLevelFallingDamageLess;
-                }
-                break;
-            case FALLTHRESHOLD:
-                description = Messages.describeLevelFallThreshold;
-                break;
-            case PLOWDURABILITY:
-                description = Messages.describeLevelPlowDurability;
-                break;
-            case TOOLDURABILITY:
-                description = Messages.describeLevelToolDurability;
-                break;
-            case RODDURABILITY:
-                description = Messages.describeLevelRodDurability;
-                break;
-            case EAT:
-                description = Messages.describeLevelEat;
-                break;
-            case CRAFT:
-                description = Messages.describeLevelCraft;
-                break;
-            case PLOW:
-                description = Messages.describeLevelPlow;
-                break;
-            case FISH:
-                description = Messages.describeLevelFish;
-                break;
-            case BREW:
-                description = Messages.describeLevelBrew;
-                break;
-            case DIGTIME:
-                description = Messages.describeLevelDigTime;
-                break;
-            case BOWATTACK:
-                description = Messages.describeLevelBowAttack;
-                break;
-            case VEHICLEDROP:
-                description = Messages.describeLevelVehicleDrop;
-                break;
-            case VEHICLEMOVE:
-                description = Messages.describeLevelVehicleMove;
-                break;
-            case SMELT:
-                description = Messages.describeLevelSmelt;
-                break;
-            case SHEAR:
-                description = Messages.describeLevelShear;
-                break;
-            case SPECIAL:
-            default: description = "&6This Effect description is not yet implemented: " + this.getEffectType().toString();
+            }
+        } else {
+            output = "Effect description not specified in data file";
         }
     
         String origFoodLevel = "";
@@ -431,28 +361,30 @@ public class DwarfEffect
         String minorAmountStr = String.format( "%.2f", minorAmount );
         
         // Replace placeholders
-        description = Placeholder.generalParse(description, plugin);
-        replacements.put(Placeholder.EFFECT_INITIATOR, initiator );
+        output = Placeholder.generalParse(output, plugin);
+        replacements.put(Placeholder.EFFECT_INITIATOR, ChatColor.DARK_GREEN + initiator );
         replacements.put(Placeholder.EFFECT_LEVEL_COLOR, effectLevelColor( dCPlayer.getSkillLevel( getSkillId() ) ) );
         replacements.put(Placeholder.EFFECT_AMOUNT, String.format( "%.2f", getEffectAmount(dCPlayer) ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_MINOR, minorAmountStr );
         replacements.put(Placeholder.EFFECT_AMOUNT_LOW, String.format( "%.2f", effectAmountLow ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_HIGH, String.format( "%.2f", effectAmountHigh ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_NORMAL, String.valueOf(this.getNormalLevel() ) );
-        replacements.put( Placeholder.EFFECT_AMOUNT_FOOD_ORIGINAL, origFoodLevel );
+        replacements.put(Placeholder.EFFECT_AMOUNT_FOOD_ORIGINAL, origFoodLevel );
         replacements.put(Placeholder.EFFECT_AMOUNT_FOOD, String.format( "%.2f", ( effectAmount / 2.0 ) ) );
         replacements.put(Placeholder.EFFECT_DAMAGE, String.valueOf ( effectAmount * 100 ) );
         replacements.put(Placeholder.EFFECT_DAMAGE_BOW, String.format( "%.0f", ( effectAmount + 2 ) ) );
         replacements.put(Placeholder.EFFECT_DAMAGE_TAKEN, String.valueOf( effectAmount * 100 ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_DIG, String.format( "%.0f", +( effectAmount * 100 ) ) );
-        replacements.put(Placeholder.EFFECT_OUTPUT, plugin.getUtil().getCleanName( getOutput(dCPlayer) ) );
+        replacements.put(Placeholder.EFFECT_OUTPUT, ChatColor.DARK_GREEN + plugin.getUtil().getCleanName( getOutput(dCPlayer) ) );
         replacements.put(Placeholder.EFFECT_TOOL_TYPE, toolType());
     
         for(Placeholder placeholder : replacements.keySet()) {
-            description = description.replaceAll(placeholder.value(), replacements.get(placeholder));
+            String replacement = replacements.get(placeholder);
+            if (placeholder != Placeholder.EFFECT_LEVEL_COLOR) replacement += ChatColor.GOLD;
+            output = output.replaceAll(placeholder.value(), replacement);
         }
-        
-        return description;
+    
+        return ChatColor.GOLD + output;
     }
     
 }

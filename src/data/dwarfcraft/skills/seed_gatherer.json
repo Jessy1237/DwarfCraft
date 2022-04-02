@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "PLOWDURABILITY",
+      "description": "Using <effect.tool.type> removes about <effect.level.color><effect.amount> durability",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 1.0,
@@ -27,11 +28,13 @@
         "STONE_HOE",
         "IRON_HOE",
         "GOLDEN_HOE",
-        "DIAMOND_HOE"
+        "DIAMOND_HOE",
+        "NETHERITE_HOE"
       ]
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break <effect.initiator> with a hoe and <effect.level.color><effect.amount> <effect.output> are dropped",
       "origin_material": "#GRASS",
       "output_material": "WHEAT_SEEDS",
       "base": 0.6,
@@ -40,7 +43,15 @@
       "step": 0.1,
       "step_novice": 0.0,
       "should_floor": false,
-      "normal_level": 5
+      "normal_level": 5,
+      "tools": [
+        "WOODEN_HOE",
+        "STONE_HOE",
+        "IRON_HOE",
+        "GOLDEN_HOE",
+        "DIAMOND_HOE",
+        "NETHERITE_HOE"
+      ]
     }
   ],
   "held_item": "WHEAT_SEEDS"

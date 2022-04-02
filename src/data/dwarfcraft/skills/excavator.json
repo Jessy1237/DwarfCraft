@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "DIGTIME",
+      "description": "<effect.amount.dig>% of the time <effect.tool.type> break <effect.initiator> instantly",
       "origin_material": "COBBLESTONE",
       "output_material": "AIR",
       "base": 0.0,
@@ -33,6 +34,7 @@
     },
     {
       "type": "DIGTIME",
+      "description": "<effect.amount.dig>% of the time <effect.tool.type> break <effect.initiator> instantly",
       "origin_material": "STONE",
       "output_material": "AIR",
       "base": 0.0,

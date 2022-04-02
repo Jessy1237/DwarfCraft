@@ -23,6 +23,7 @@
   "effects": [
     {
       "type": "FISH",
+      "description": "You catch <effect.level.color><effect.amount> fish, when you fish",
       "origin_material": "AIR",
       "output_material": "#FISHES",
       "base": 0.5,
@@ -35,6 +36,7 @@
     },
     {
       "type": "RODDURABILITY",
+      "description": "Using a fishing rod removes about <effect.level.color><effect.amount> durability",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 1.2,
