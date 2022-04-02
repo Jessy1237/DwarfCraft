@@ -34,8 +34,7 @@ public final class ConfigManager
     public String database;
     public String username;
     public String password;
-
-    private String dbpath;
+    
     private Integer trainDelay;
     private Integer announcementInterval;
     private ArrayList<String> skillLevelCommands;
@@ -158,7 +157,6 @@ public final class ConfigManager
     private boolean readLocaleFile()
     {
         plugin.getUtil().consoleLog( Level.INFO, "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/dwarfcraft/locale/" + "en_US.yml" );
-
         FileConfiguration localeConfig = YamlConfiguration.loadConfiguration( new File( plugin.getDataFolder() + "/data/dwarfcraft/locale/en_US.yml" ));
 
         // Welcome Messages
@@ -175,12 +173,10 @@ public final class ConfigManager
         // Skill Info Messages
         Messages.skillInfoHeader = localeConfig.getString( "Skill Info.Header" );
         Messages.skillInfoMinorHeader = localeConfig.getString( "Skill Info.Subheader" );
-        // SkillInfo EffectID Prefix
         Messages.skillInfoMaxSkillLevel = localeConfig.getString( "Skill Info.Max Skill Level" );
         Messages.skillInfoAtTrainerLevel = localeConfig.getString( "Skill Info.Max Trainer Level" );
         Messages.skillInfoTrainCostHeader = localeConfig.getString( "Skill Info.Train Cost Header" );
         Messages.skillInfoTrainCost = localeConfig.getString( "Skill Info.Train Cost" );
-        // EffectInfo prefix
 
         // Race Messages
         Messages.raceCheck = localeConfig.getString( "Race Messages.Race Info" );
@@ -208,39 +204,14 @@ public final class ConfigManager
 
         // Effect Messages
         Messages.describeGeneral = localeConfig.getString( "Effect Descriptions.General" );
-        Messages.describeLevelBlockdrop = localeConfig.getString( "Effect Descriptions.Block Drop" );
-        Messages.describeLevelMobdrop = localeConfig.getString( "Effect Descriptions.Mob Drop" );
-        Messages.describeLevelMobdropNoCreature = localeConfig.getString( "Effect Descriptions.Mob Drop (no creature)" );
-        Messages.describeLevelSwordDurability = localeConfig.getString( "Effect Descriptions.Sword Durability" );
-        Messages.describeLevelPVPDamage = localeConfig.getString( "Effect Descriptions.PVP Damage" );
-        Messages.describeLevelPVEDamage = localeConfig.getString( "Effect Descriptions.PVE Damage" );
         Messages.describeLevelExplosionDamageMore = localeConfig.getString( "Effect Descriptions.Explosion Damage (more)" );
         Messages.describeLevelExplosionDamageLess = localeConfig.getString( "Effect Descriptions.Explosion Damage (less)" );
         Messages.describeLevelFireDamageMore = localeConfig.getString( "Effect Descriptions.Fire Damage (more)" );
         Messages.describeLevelFireDamageLess = localeConfig.getString( "Effect Descriptions.Fire Damage (less)" );
         Messages.describeLevelFallingDamageMore = localeConfig.getString( "Effect Descriptions.Fall Damage (more)" );
         Messages.describeLevelFallingDamageLess = localeConfig.getString( "Effect Descriptions.Fall Damage (less)" );
-        Messages.describeLevelFallThreshold = localeConfig.getString( "Effect Descriptions.Fall Threshold" );
-        Messages.describeLevelPlowDurability = localeConfig.getString( "Effect Descriptions.Hoe Durability" );
-        Messages.describeLevelToolDurability = localeConfig.getString( "Effect Descriptions.Tool Durability" );
-        Messages.describeLevelRodDurability = localeConfig.getString( "Effect Descriptions.Rod Durability" );
-        Messages.describeLevelEat = localeConfig.getString( "Effect Descriptions.Eat" );
-        Messages.describeLevelCraft = localeConfig.getString( "Effect Descriptions.Craft" );
-        Messages.describeLevelPlow = localeConfig.getString( "Effect Descriptions.Hoe" );
-        Messages.describeLevelFish = localeConfig.getString( "Effect Descriptions.Fish" );
-        Messages.describeLevelBrew = localeConfig.getString( "Effect Descriptions.Brew" );
-        Messages.describeLevelDigTime = localeConfig.getString( "Effect Descriptions.Dig Time" );
-        Messages.describeLevelBowAttack = localeConfig.getString( "Effect Descriptions.Bow Attack" );
-        Messages.describeLevelVehicleDrop = localeConfig.getString( "Effect Descriptions.Vehicle Drop" );
-        Messages.describeLevelVehicleMove = localeConfig.getString( "Effect Descriptions.Vehicle Move" );
-        Messages.describeLevelSmelt = localeConfig.getString( "Effect Descriptions.Smelt" );
-        Messages.describeLevelShear = localeConfig.getString( "Effect Descriptions.Shear" );
-        Messages.effectLevelColorGreaterThanNormal = localeConfig.getString( "Effect Descriptions.Level Color (greater)" );
-        Messages.effectLevelColorEqualToNormal = localeConfig.getString( "Effect Descriptions.Level Color (equal)" );
-        Messages.effectLevelColorLessThanNormal = localeConfig.getString( "Effect Descriptions.Level Color (less)" );
 
         List<String> tutorialPages = localeConfig.getStringList( "Tutorial Pages" );
-
         // If there is at least one tutorial page, reset default messages and add custom messages
         if ( tutorialPages.size() > 0 )
         {

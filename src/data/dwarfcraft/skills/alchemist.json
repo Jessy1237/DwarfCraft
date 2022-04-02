@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "BREW",
+      "description": "You brew <effect.level.color><effect.amount> potion(s) when you're brewing potions",
       "origin_material": "POTION",
       "output_material": "POTION",
       "base": 1.0,
@@ -25,6 +26,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "NETHER_WART",
       "output_material": "NETHER_WART",
       "base": 1.5,

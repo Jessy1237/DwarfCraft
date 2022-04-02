@@ -28,6 +28,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "COAL_ORE",
       "output_material": "COAL",
       "base": 0.7,
@@ -47,6 +48,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "IRON_ORE",
       "output_material": "RAW_IRON",
       "base": 0.7,
@@ -64,6 +66,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "COPPER_ORE",
       "output_material": "RAW_COPPER",
       "base": 0.7,
@@ -80,6 +83,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "GOLD_ORE",
       "output_material": "RAW_GOLD",
       "base": 0.7,

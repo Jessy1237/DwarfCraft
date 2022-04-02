@@ -19,6 +19,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "DIAMOND_HELMET",
       "output_material": "DIAMOND_HELMET",
       "base": 1.0,
@@ -36,6 +37,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "DIAMOND_CHESTPLATE",
       "output_material": "DIAMOND_CHESTPLATE",
       "base": 1.0,
@@ -53,6 +55,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "DIAMOND_LEGGINGS",
       "output_material": "DIAMOND_LEGGINGS",
       "base": 1.0,
@@ -70,6 +73,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "DIAMOND_BOOTS",
       "output_material": "DIAMOND_BOOTS",
       "base": 1.0,
@@ -87,6 +91,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_HELMET",
       "output_material": "GOLDEN_HELMET",
       "base": 1.0,
@@ -104,6 +109,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_CHESTPLATE",
       "output_material": "GOLDEN_CHESTPLATE",
       "base": 1.0,
@@ -121,6 +127,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_LEGGINGS",
       "output_material": "GOLDEN_LEGGINGS",
       "base": 1.0,
@@ -138,6 +145,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_BOOTS",
       "output_material": "GOLDEN_BOOTS",
       "base": 1.0,

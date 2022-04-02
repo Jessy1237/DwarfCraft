@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "LADDER",
       "output_material": "LADDER",
       "base": 1.0,
@@ -30,6 +31,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "#WOODEN_FENCES",
       "output_material": "#WOODEN_FENCES",
       "base": 1.5,
@@ -42,6 +44,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "#WOODEN_STAIRS",
       "output_material": "#WOODEN_STAIRS",
       "base": 3.5,
@@ -54,6 +57,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "#WOODEN_DOORS",
       "output_material": "#WOODEN_DOORS",
       "base": 1.0,
@@ -71,6 +75,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "#WOODEN_SLABS",
       "output_material": "#WOODEN_SLABS",
       "base": 2.4,

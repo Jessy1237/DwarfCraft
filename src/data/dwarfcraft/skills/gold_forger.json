@@ -23,6 +23,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_SWORD",
       "output_material": "GOLDEN_SWORD",
       "base": 1.0,
@@ -40,6 +41,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_SHOVEL",
       "output_material": "GOLDEN_SHOVEL",
       "base": 1.0,
@@ -57,6 +59,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_PICKAXE",
       "output_material": "GOLDEN_PICKAXE",
       "base": 1.0,
@@ -74,6 +77,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_AXE",
       "output_material": "GOLDEN_AXE",
       "base": 1.0,
@@ -91,6 +95,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "GOLDEN_HOE",
       "output_material": "GOLDEN_HOE",
       "base": 1.0,

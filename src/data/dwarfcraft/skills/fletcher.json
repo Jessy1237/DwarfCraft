@@ -23,6 +23,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "ARROW",
       "output_material": "ARROW",
       "base": 4.0,

@@ -13,6 +13,7 @@
   "effects": [
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "IRON_HELMET",
       "output_material": "IRON_HELMET",
       "base": 1.0,
@@ -30,6 +31,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "IRON_CHESTPLATE",
       "output_material": "IRON_CHESTPLATE",
       "base": 1.0,
@@ -47,6 +49,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "IRON_LEGGINGS",
       "output_material": "IRON_LEGGINGS",
       "base": 1.0,
@@ -64,6 +67,7 @@
     },
     {
       "type": "CRAFT",
+      "description": "You craft <effect.level.color><effect.amount> <effect.output>",
       "origin_material": "IRON_BOOTS",
       "output_material": "IRON_BOOTS",
       "base": 1.0,

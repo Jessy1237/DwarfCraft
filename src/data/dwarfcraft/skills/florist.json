@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "SUNFLOWER",
       "output_material": "SUNFLOWER",
       "base": 0.95,
@@ -30,6 +31,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "RED_TULIP",
       "output_material": "RED_TULIP",
       "base": 0.95,

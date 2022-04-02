@@ -18,6 +18,7 @@
   "effects": [
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "POTATOES",
       "output_material": "POTATO",
       "base": 1.5,
@@ -30,6 +31,7 @@
     },
     {
       "type": "BLOCKDROP",
+      "description": "Break a <effect.initiator> and <effect.level.color><effect.amount> <effect.output> are created",
       "origin_material": "CARROTS",
       "output_material": "CARROT",
       "base": 1.5,
