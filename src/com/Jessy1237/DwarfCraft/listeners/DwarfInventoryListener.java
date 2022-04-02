@@ -37,13 +37,13 @@ import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 
 public class DwarfInventoryListener implements Listener
 {
-    private DwarfCraft plugin;
-    private HashMap<Location, BrewerInventory> stands = new HashMap<>();
-    private HashMap<Player, DwarfGUI> dwarfGUIs = new HashMap<>();
+    private final DwarfCraft plugin;
+    private final HashMap<Location, BrewerInventory> stands = new HashMap<>();
+    private final HashMap<Player, DwarfGUI> dwarfGUIs = new HashMap<>();
 
-    public DwarfInventoryListener( final DwarfCraft plugin )
+    public DwarfInventoryListener()
     {
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
     }
 
     @EventHandler( priority = EventPriority.NORMAL )

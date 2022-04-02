@@ -1,19 +1,22 @@
 package com.Jessy1237.DwarfCraft.models;
 
-import com.Jessy1237.DwarfCraft.DwarfCraft;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import net.milkbowl.vault.permission.Permission;
+
+import com.Jessy1237.DwarfCraft.DwarfCraft;
+
 public class DwarfCommand extends Command {
-
     protected final DwarfCraft plugin;
-
-    public DwarfCommand( final DwarfCraft plugin, String name) {
+    protected String name;
+    
+    public DwarfCommand(String name) {
         super(name);
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
+        this.name = name;
     }
 
     @Override

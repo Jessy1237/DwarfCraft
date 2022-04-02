@@ -43,9 +43,9 @@ public class DwarfBlockListener implements Listener
     private final DwarfCraft plugin;
     private HashMap<Block, Player> crops = new HashMap<Block, Player>();
 
-    public DwarfBlockListener( final DwarfCraft plugin )
+    public DwarfBlockListener()
     {
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
     }
 
     @EventHandler( priority = EventPriority.HIGH )

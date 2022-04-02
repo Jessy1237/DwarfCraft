@@ -26,9 +26,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
 
 public class CommandList extends DwarfCommand
 {
-    public CommandList( final DwarfCraft plugin, String name )
+    public CommandList( String name )
     {
-        super( plugin, name );
+        super( name );
         setDescription("Displays a list of trainers on the server.");
     }
 

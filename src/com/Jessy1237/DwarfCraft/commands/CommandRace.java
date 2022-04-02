@@ -29,9 +29,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 
 public class CommandRace extends DwarfCommand
 {
-    public CommandRace( final DwarfCraft plugin, String name )
+    public CommandRace( String name )
     {
-        super( plugin, name );
+        super( name );
         setDescription("Displays the DwarfCraft Race GUI which displays a players race information, or changes it.");
     }
 

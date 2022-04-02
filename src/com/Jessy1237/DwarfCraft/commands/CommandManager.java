@@ -5,6 +5,7 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
@@ -18,6 +19,8 @@ public class CommandManager {
     public CommandManager( DwarfCraft plugin ) {
         this.plugin = plugin;
 
+    public CommandManager() {
+        plugin = JavaPlugin.getPlugin(DwarfCraft.class);
         try
         {
             if ( setupPermissions() )

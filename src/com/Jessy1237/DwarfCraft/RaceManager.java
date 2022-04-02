@@ -17,8 +17,8 @@ class RaceManager
     private final DwarfCraft plugin;
     private HashMap<String, DwarfRace> races = new HashMap<>();
 
-    public RaceManager(DwarfCraft plugin) {
-        this.plugin = plugin;
+    public RaceManager() {
+        this.plugin = DwarfCraft.getInstance();
     }
 
     @SuppressWarnings( "unchecked" )

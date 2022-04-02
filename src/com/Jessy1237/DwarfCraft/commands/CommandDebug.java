@@ -26,9 +26,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandDebug extends DwarfCommand implements TabCompleter
 {
-    public CommandDebug( final DwarfCraft plugin, String name )
+    public CommandDebug( String name )
     {
-        super( plugin, name );
+        super( name );
         setDescription("Sets the debug message threshold in console, from -10(everthing) to +10(critical only).");
     }
 

@@ -26,9 +26,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandHelp extends DwarfCommand implements TabCompleter
 {
-    public CommandHelp( final DwarfCraft plugin, String name )
+    public CommandHelp( String name )
     {
-        super( plugin, name );
+        super( name );
     }
 
     @Override

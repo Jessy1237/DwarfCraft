@@ -17,8 +17,8 @@ class SkillManager
     private final DwarfCraft plugin;
     private HashMap<String, DwarfSkill> skills = new HashMap<>();
 
-    public SkillManager(DwarfCraft plugin) {
-        this.plugin = plugin;
+    public SkillManager() {
+        this.plugin = DwarfCraft.getInstance();
     }
 
     @SuppressWarnings( "unchecked" )

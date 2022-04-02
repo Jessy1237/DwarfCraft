@@ -20,11 +20,9 @@ import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
 import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 
 public class EffectRegistry {
-    private final DwarfCraft plugin;
     HashMap<DwarfEffectType, List<DwarfEffect>> registry;
     
-    public EffectRegistry( DwarfCraft plugin ) {
-        this.plugin = plugin;
+    public EffectRegistry() {
         this.registry = new HashMap<>();
     }
     

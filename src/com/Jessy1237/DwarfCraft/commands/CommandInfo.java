@@ -19,17 +19,15 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandInfo extends DwarfCommand
 {
-
-    public CommandInfo( final DwarfCraft plugin, String name )
+    public CommandInfo( String name )
     {
-        super( plugin, name );
+        super( name );
     }
 
     @Override
     public boolean execute( CommandSender sender, String commandLabel, String[] args )
     {
         plugin.getUtil().debugLog( 1, Level.FINE, "Started command 'info'" );
-
         plugin.getOut().info( sender );
         return true;
     }

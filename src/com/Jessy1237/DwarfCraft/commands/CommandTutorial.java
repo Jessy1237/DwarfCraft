@@ -35,9 +35,9 @@ public class CommandTutorial extends DwarfCommand
 {
     final int pageCharLimit = 256;
 
-    public CommandTutorial( final DwarfCraft plugin, String name )
+    public CommandTutorial( String name )
     {
-        super( plugin, name );
+        super( name );
         setDescription("Gives the player the DwarfCraft Pocket Guide");
     }
 

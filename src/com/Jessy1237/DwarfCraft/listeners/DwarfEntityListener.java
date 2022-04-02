@@ -35,7 +35,9 @@ import com.Jessy1237.DwarfCraft.Messages;
 import com.Jessy1237.DwarfCraft.Placeholder;
 import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
 import com.Jessy1237.DwarfCraft.guis.TrainerGUI;
-import com.Jessy1237.DwarfCraft.models.*;
+import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
+import com.Jessy1237.DwarfCraft.models.DwarfSkill;
+import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
 import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
 import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 import com.Jessy1237.DwarfCraft.schedules.InitTrainerGUISchedule;
@@ -45,9 +47,9 @@ public class DwarfEntityListener implements Listener
     private final DwarfCraft plugin;
     private final HashMap<Entity, DwarfPlayer> killMap;
 
-    public DwarfEntityListener( DwarfCraft plugin )
+    public DwarfEntityListener()
     {
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
         killMap = new HashMap<>();
     }
 

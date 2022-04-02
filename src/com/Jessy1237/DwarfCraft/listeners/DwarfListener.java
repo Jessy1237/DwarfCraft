@@ -29,9 +29,9 @@ public class DwarfListener implements Listener
 {
     private final DwarfCraft plugin;
 
-    public DwarfListener( final DwarfCraft plugin )
+    public DwarfListener()
     {
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
     }
 
     @EventHandler( priority = EventPriority.NORMAL, ignoreCancelled = true )

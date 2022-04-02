@@ -35,15 +35,16 @@ import com.Jessy1237.DwarfCraft.events.DwarfEffectEvent;
 import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainer;
-import com.Jessy1237.DwarfCraft.models.effects.*;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 
 public class DwarfPlayerListener implements Listener
 {
     private final DwarfCraft plugin;
 
-    public DwarfPlayerListener( final DwarfCraft plugin )
+    public DwarfPlayerListener()
     {
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
     }
 
     /**
@@ -67,7 +68,7 @@ public class DwarfPlayerListener implements Listener
             DwarfPlayer dcPlayer = plugin.getDataManager().find( event.getPlayer() );
 
             // Add Written Book to Players Inventory
-            CommandTutorial commandTutorial = new CommandTutorial( plugin, "tutorial" );
+            CommandTutorial commandTutorial = new CommandTutorial( "tutorial" );
             HashMap<Integer, ItemStack> overflow = dcPlayer.getPlayer().getInventory().addItem( commandTutorial.createTutorialBook( dcPlayer ) );
             commandTutorial.dropBookIfInventoryFull( dcPlayer.getPlayer(), overflow );
 

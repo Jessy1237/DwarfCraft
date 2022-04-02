@@ -33,10 +33,10 @@ import com.google.gson.JsonObject;
 public class Util
 {
     private final DwarfCraft plugin;
-
-    public Util(DwarfCraft plugin)
+    
+    public Util()
     {
-        this.plugin = plugin;
+        this.plugin = DwarfCraft.getInstance();
     }
     
     public void consoleLog(Level logLevel, String message )
