@@ -39,35 +39,46 @@ public class Util
         this.plugin = DwarfCraft.getInstance();
     }
     
-    public void consoleLog(Level logLevel, String message )
+    public void consoleLog(String message)
     {
-        ChatColor color = ChatColor.WHITE;
-
-        if ( logLevel == Level.SEVERE )
-            color = ChatColor.RED;
-        else if ( logLevel == Level.WARNING )
-            color = ChatColor.GOLD;
-        else if ( logLevel == Level.FINE )
-            color = ChatColor.LIGHT_PURPLE;
-
-        plugin.getServer().getConsoleSender().sendMessage( ChatColor.YELLOW + "[" + plugin.getName() + "] " + color + message );
+        consoleLog(message, Level.INFO);
+    }
+    
+    public void consoleLog(String message, ChatColor color)
+    {
+        consoleLog( color + message, Level.INFO);
+    }
+    
+    public void consoleLog(String message, Level logLevel)
+    {
+        String prefix = ChatColor.YELLOW + "[" + plugin.getName() + "] ";
+        ChatColor color = chatColorForLogLevel(logLevel);
+        plugin.getServer().getConsoleSender().sendMessage( prefix + color + message );
     }
     
     public void debugLog( int debugThreshold, Level logLevel, String message )
     {
+        String prefix = ChatColor.YELLOW + "[" + plugin.getName() + "] [DEBUG] ";
+        String suffix = ChatColor.ITALIC + " (set to " + debugThreshold + " to silence.)";
         if ( DwarfCraft.debugMessagesThreshold < debugThreshold ) {
-            ChatColor color = ChatColor.WHITE;
-    
-            if (logLevel == Level.SEVERE)
-                color = ChatColor.RED;
-            else if (logLevel == Level.WARNING)
-                color = ChatColor.GOLD;
-            else if (logLevel == Level.FINE)
-                color = ChatColor.LIGHT_PURPLE;
-    
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[" + plugin.getName() + "] [DEBUG] "
-                    + color + message + ChatColor.ITALIC + " (set to " + debugThreshold + " to silence.)");
+            ChatColor color = chatColorForLogLevel(logLevel);
+            plugin.getServer().getConsoleSender().sendMessage(prefix + color + message + suffix);
         }
+    }
+    
+    private ChatColor chatColorForLogLevel(Level level) {
+        if ( level == Level.INFO )
+            return ChatColor.WHITE;
+        if (level == Level.CONFIG)
+            return ChatColor.GREEN;
+        if ( level == Level.SEVERE )
+            return ChatColor.RED;
+        else if ( level == Level.WARNING )
+            return ChatColor.GOLD;
+        else if ( level == Level.FINE )
+            return ChatColor.LIGHT_PURPLE;
+        
+        return ChatColor.WHITE;
     }
 
     // Stolen from nossr50
@@ -318,11 +329,9 @@ public class Util
         
         if ( plugin.isChatEnabled() )
         {
+            String prefix = plugin.getChat().getPlayerPrefix( player );
             if ( plugin.getConfigManager().prefix )
             {
-                
-                String prefix = plugin.getChat().getPlayerPrefix( player );
-                
                 if ( prefix != null )
                 {
                     if ( !prefix.equals( "" ) )
@@ -343,8 +352,7 @@ public class Util
             }
             else
             {
-                String prefix = plugin.getChat().getPlayerPrefix( player );
-                
+    
                 if ( prefix != null )
                     if ( !prefix.equals( "" ) )
                         while ( plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
@@ -546,9 +554,9 @@ public class Util
             Material mat = Material.getMaterial( material );
             if (mat == null) {
                 if (!skill_id.isEmpty())
-                    plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Warning: Invalid material id '" + material + "' for skill " + skill_id );
+                    plugin.getUtil().consoleLog( "Invalid material id '" + material + "' for skill " + skill_id, Level.WARNING );
                 else
-                    plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Warning: Invalid material id '" + material + "'" );
+                    plugin.getUtil().consoleLog( "Invalid material id '" + material + "'", Level.WARNING);
             }
         }
     }
@@ -564,6 +572,6 @@ public class Util
         }
 
         if (type == null && !entityType.equals("AIR"))
-            plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Warning: Invalid entity type " + entityType + "' for skill " + skill_id );
+            plugin.getUtil().consoleLog( "Invalid entity type " + entityType + "' for skill " + skill_id, Level.WARNING );
     }
 }

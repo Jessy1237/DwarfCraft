@@ -1,34 +1,31 @@
 package com.Jessy1237.DwarfCraft.commands;
 
-import com.Jessy1237.DwarfCraft.DwarfCraft;
-import com.Jessy1237.DwarfCraft.models.DwarfCommand;
-import net.milkbowl.vault.permission.Permission;
-import org.bukkit.ChatColor;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 
-public class CommandManager {
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
+import net.milkbowl.vault.permission.Permission;
+
+import com.Jessy1237.DwarfCraft.DwarfCraft;
+import com.Jessy1237.DwarfCraft.models.DwarfCommand;
+
+public class CommandManager {
     private final DwarfCraft plugin;
     private Permission perms = null;
     private final LinkedHashMap<String, DwarfCommand> commands = new LinkedHashMap<>();
 
-    public CommandManager( DwarfCraft plugin ) {
-        this.plugin = plugin;
-
     public CommandManager() {
-        plugin = JavaPlugin.getPlugin(DwarfCraft.class);
+        plugin = DwarfCraft.getInstance();
         try
         {
             if ( setupPermissions() )
-                plugin.getUtil().consoleLog( Level.INFO, ChatColor.GREEN + "Success! Hooked into a Vault permissions plugin!" );
+                plugin.getUtil().consoleLog( "Success! Hooked into a Vault permissions plugin!", ChatColor.GREEN );
         }
         catch ( Exception e )
         {
-            plugin.getUtil().consoleLog( Level.SEVERE, "Something went wrong! Unable to find a permissions plugin." );
+            plugin.getUtil().consoleLog( "Something went wrong! Unable to find a permissions plugin.", Level.SEVERE );
             plugin.onDisable();
         }
     }

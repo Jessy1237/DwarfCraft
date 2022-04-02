@@ -69,7 +69,7 @@ public final class ConfigManager
 
         if ( !readLocaleFile() )
         {
-            plugin.getUtil().consoleLog( Level.SEVERE, "Failed to Enable DwarfCraft configs" );
+            plugin.getUtil().consoleLog( "Failed to read locale file", Level.SEVERE );
             plugin.getServer().getPluginManager().disablePlugin( plugin );
         }
     }
@@ -90,7 +90,7 @@ public final class ConfigManager
             plugin.saveDefaultConfig();
             if ( !readConfigFile() )
             {
-                plugin.getUtil().consoleLog( Level.SEVERE, "Failed to Enable DwarfCraft configs" );
+                plugin.getUtil().consoleLog( "Failed to read config file", Level.SEVERE );
                 plugin.getServer().getPluginManager().disablePlugin( plugin );
             }
 
@@ -101,14 +101,14 @@ public final class ConfigManager
         }
         catch ( Exception e )
         {
-            plugin.getUtil().consoleLog( Level.SEVERE, "Could not verify files: " + e.toString() );
+            plugin.getUtil().consoleLog( "Could not verify files: " + e, Level.SEVERE );
             e.printStackTrace();
         }
     }
 
     private boolean readConfigFile()
     {
-        plugin.getUtil().consoleLog( Level.INFO, "Reading config File: " + ChatColor.AQUA + configDirectory + "config.yml" );
+        plugin.getUtil().consoleLog( String.format("Reading config file: %sconfig.yml", ChatColor.AQUA + configDirectory) );
 
         skillLevelCommands = new ArrayList<>();
         skillMasteryCommands = new ArrayList<>();
@@ -157,7 +157,7 @@ public final class ConfigManager
 
     private boolean readLocaleFile()
     {
-        plugin.getUtil().consoleLog( Level.INFO, "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/dwarfcraft/locale/" + "en_US.yml" );
+        plugin.getUtil().consoleLog( "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/dwarfcraft/locale/" + "en_US.yml" );
 
         FileConfiguration localeConfig = YamlConfiguration.loadConfiguration( new File( plugin.getDataFolder() + "/data/dwarfcraft/locale/en_US.yml" ));
 

@@ -3,9 +3,9 @@ package com.Jessy1237.DwarfCraft;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.Jessy1237.DwarfCraft.data.RaceReader;
 import com.Jessy1237.DwarfCraft.events.DwarfLoadRacesEvent;
@@ -28,7 +28,7 @@ class RaceManager
         DwarfLoadRacesEvent e = new DwarfLoadRacesEvent( ( HashMap<String, DwarfRace> ) races.clone() );
         plugin.getServer().getPluginManager().callEvent( e );
         races = getAllRaces();
-        plugin.getUtil().consoleLog( Level.INFO, "Loaded " + ChatColor.AQUA + races.values().size() + ChatColor.WHITE + " Races(s)");
+        plugin.getUtil().consoleLog( "Loaded " + ChatColor.AQUA + races.values().size() + ChatColor.WHITE + " Races(s)" );
     }
 
     private
@@ -51,7 +51,7 @@ class RaceManager
             if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
             {
                 plugin.saveResource( path, true );
-                plugin.getUtil().consoleLog( Level.INFO, "Writing data file: " + ChatColor.AQUA + path );
+                plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
             }
         }
 

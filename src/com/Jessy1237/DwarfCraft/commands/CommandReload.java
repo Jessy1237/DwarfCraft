@@ -20,10 +20,8 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandReload extends DwarfCommand
 {
-    public CommandReload( final DwarfCraft plugin, String name )
     public CommandReload( String name )
     {
-        super( plugin, name );
         super( name );
         setDescription("Reloads the DwarfCraft plugin.");
     }
@@ -44,7 +42,7 @@ public class CommandReload extends DwarfCommand
 
             if ( sender instanceof Player )
                 plugin.getOut().sendMessage( sender, "&aReloading DwarfCraft..." );
-            plugin.getUtil().consoleLog( Level.FINE, "Reloading..." );
+            plugin.getUtil().consoleLog( "Reloading...", Level.FINE );
 
             plugin.getConfigManager().clearCommands();
             plugin.onDisable();
@@ -53,7 +51,7 @@ public class CommandReload extends DwarfCommand
 
             if ( sender instanceof Player )
                 plugin.getOut().sendMessage( sender, "&aReload complete" );
-            plugin.getUtil().consoleLog( Level.FINE, "Reload complete" );
+            plugin.getUtil().consoleLog( "Reload complete", Level.FINE );
         }
         return true;
     }

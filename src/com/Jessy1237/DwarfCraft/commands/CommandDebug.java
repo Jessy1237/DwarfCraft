@@ -58,7 +58,7 @@ public class CommandDebug extends DwarfCommand implements TabCompleter
                 outputList = parser.parse( desiredArguments, false );
 
                 DwarfCraft.debugMessagesThreshold = ( Integer ) outputList.get( 0 );
-                plugin.getUtil().consoleLog( Level.FINE, "*** DC DEBUG LEVEL CHANGED TO " + DwarfCraft.debugMessagesThreshold + " ***" );
+                plugin.getUtil().consoleLog( "*** DC DEBUG LEVEL CHANGED TO " + DwarfCraft.debugMessagesThreshold + " ***", Level.FINE );
                 if ( sender instanceof Player )
                     plugin.getOut().sendMessage( sender, "Debug messaging level set to " + DwarfCraft.debugMessagesThreshold );
             }

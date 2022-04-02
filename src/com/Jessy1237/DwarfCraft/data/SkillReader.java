@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Level;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.Jessy1237.DwarfCraft.DwarfCraft;
@@ -16,7 +15,8 @@ import com.Jessy1237.DwarfCraft.models.DwarfItemHolder;
 import com.Jessy1237.DwarfCraft.models.DwarfRace;
 import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 import com.Jessy1237.DwarfCraft.models.DwarfTrainingItem;
-import com.Jessy1237.DwarfCraft.models.effects.*;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffect;
+import com.Jessy1237.DwarfCraft.models.effects.DwarfEffectType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -78,14 +78,12 @@ class SkillReader
                         if ( dcRace != null )
                             races.put( race_id, dcRace );
                         else
-                            plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Invalid race id " +
-                                    race_id + " given for race specialization for skill " + skill_id );
+                            plugin.getUtil().consoleLog( "Invalid race id " + race_id + " given for race specialization for skill " + skill_id, Level.WARNING );
                     }
 
                     if (race_ids.size() <= 0) {
                         // Warn for no race specializations
-                        plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "No race specializations " +
-                                "were provided for skill " + skill_id );
+                        plugin.getUtil().consoleLog( "No race specializations were provided for skill " + skill_id, Level.WARNING );
                     }
 
                     // Effects
@@ -120,7 +118,7 @@ class SkillReader
 
         if ( effects.size() <= 0 ) {
             //Warn for no effects provided
-            plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "No effects provided for skill: " + skill_id );
+            plugin.getUtil().consoleLog( "No effects provided for skill: " + skill_id, Level.WARNING );
         } else {
             for (JsonElement effect : effects) {
                 DwarfEffect dcEffect = null;
@@ -129,7 +127,7 @@ class SkillReader
                 if (type == null) continue;
                 
                 if ( !DwarfEffectType.has( type.toString() ) ) {
-                    plugin.getUtil().consoleLog( Level.WARNING, ChatColor.YELLOW + "Unsupported effect type " + type + " for skill: " + skill_id );
+                    plugin.getUtil().consoleLog( "Unsupported effect type " + type + " for skill: " + skill_id, Level.WARNING );
                     continue;
                 }
     

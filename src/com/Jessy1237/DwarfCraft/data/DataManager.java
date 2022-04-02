@@ -50,7 +50,7 @@ public class DataManager
             {
                 if ( !database.createNewFile() && type.equalsIgnoreCase( "sqlite" ) )
                 {
-                    plugin.getUtil().consoleLog( Level.SEVERE, "Failed to create database! Disabling..." );
+                    plugin.getUtil().consoleLog( "Failed to create database! Disabling...", Level.SEVERE );
                     plugin.onDisable();
                     return;
                 }

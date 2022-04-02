@@ -197,39 +197,40 @@ public class DwarfCraft extends JavaPlugin
             command_manager.registerCommand( new CommandCreate( "create" ) );
             command_manager.registerCommand( new CommandReload( "reload" ) );
         }
-
-        getUtil().consoleLog( Level.INFO, ChatColor.GREEN + getDescription().getName() + " " + getDescription().getVersion() + " is enabled!" );
+    
+        getUtil().consoleLog( String.format( "%s %s is enabled!", getDescription().getName(), getDescription().getVersion()), ChatColor.GREEN );
 
         // Log warning if the build is a Snapshot/Development build
         if ( this.getDescription().getVersion().contains("-SNAPSHOT") )
-            getUtil().consoleLog( Level.SEVERE, "*** WARNING: This is a development build. Please keep backups and update frequently. ***" );
+            getUtil().consoleLog( "*** WARNING: This is a development build. Please keep backups and update frequently. ***", Level.SEVERE );
     }
 
     private boolean checkDependencies() {
+        PluginManager pm = getServer().getPluginManager();
         if ( pm.getPlugin( "Vault" ) == null || !pm.getPlugin( "Vault" ).isEnabled() )
         {
-            getUtil().consoleLog( Level.SEVERE, "Something went wrong! Couldn't find Vault!" );
-            getUtil().consoleLog( Level.SEVERE, "Disabling DwarfCraft..." );
+            getUtil().consoleLog( "Something went wrong! Couldn't find Vault!", Level.SEVERE );
+            getUtil().consoleLog( "Disabling DwarfCraft...", Level.SEVERE );
             return false;
         }
 
         if ( setupChat() )
-            getUtil().consoleLog( Level.INFO, ChatColor.GREEN + "Success! Hooked into a Vault chat plugin!" );
+            getUtil().consoleLog( "Success! Hooked into a Vault chat plugin!", ChatColor.GREEN );
 
         if ( pm.getPlugin( "Citizens" ) == null || !pm.getPlugin( "Citizens" ).isEnabled() )
         {
-            getUtil().consoleLog( Level.SEVERE, "Something went wrong! Couldn't find Citizens!" );
-            getUtil().consoleLog( Level.SEVERE, "Disabling DwarfCraft..." );
+            getUtil().consoleLog( "Something went wrong! Couldn't find Citizens!", Level.SEVERE );
+            getUtil().consoleLog( "Disabling DwarfCraft...", Level.SEVERE );
             return false;
         }
 
-        getUtil().consoleLog( Level.INFO, ChatColor.GREEN + "Success! Hooked into Citizens!" );
+        getUtil().consoleLog( "Success! Hooked into Citizens!", ChatColor.GREEN );
         npc_registry = CitizensAPI.getNPCRegistry();
 
         if ( pm.getPlugin( "PlaceholderAPI" ) != null )
         {
             new PlaceholderHook().register();
-            getUtil().consoleLog( Level.INFO, ChatColor.GREEN + "Success! Hooked into PlaceholderAPI!" );
+            getUtil().consoleLog( "Success! Hooked into PlaceholderAPI!", ChatColor.GREEN );
         }
 
         return true;

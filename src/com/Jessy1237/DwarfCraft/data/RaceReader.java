@@ -86,7 +86,7 @@ class RaceReader {
                         race.setPrefixColour(prefix_colour);
                         manager.addRace(race);
                     } else {
-                        plugin.getUtil().consoleLog( Level.WARNING, "Did not load race: " + race.getName() + " as already at cap of " + maxAllowed + " races" );
+                        plugin.getUtil().consoleLog( "Did not load race: " + race.getName() + " as already at cap of " + maxAllowed + " races", Level.WARNING );
                     }
                 }
                 catch ( Exception e )

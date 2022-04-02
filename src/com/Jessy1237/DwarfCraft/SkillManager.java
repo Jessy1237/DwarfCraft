@@ -3,7 +3,6 @@ package com.Jessy1237.DwarfCraft;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 
@@ -28,7 +27,7 @@ class SkillManager
         DwarfLoadSkillsEvent e = new DwarfLoadSkillsEvent( ( HashMap<String, DwarfSkill> ) skills.clone() );
         plugin.getServer().getPluginManager().callEvent( e );
         skills = getAllSkills();
-        plugin.getUtil().consoleLog( Level.INFO, "Loaded " + ChatColor.AQUA + skills.values().size() + ChatColor.WHITE + " Skill(s)");
+        plugin.getUtil().consoleLog( "Loaded " + ChatColor.AQUA + skills.values().size() + ChatColor.WHITE + " Skill(s)" );
     }
 
     private
@@ -51,7 +50,7 @@ class SkillManager
             if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
             {
                 plugin.saveResource( path, true );
-                plugin.getUtil().consoleLog( Level.INFO, "Writing data file: " + ChatColor.AQUA + path );
+                plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
             }
         }
 
