@@ -8,19 +8,22 @@
     <artifactId>DwarfCraft</artifactId>
     <name>DwarfCraft</name>
     <packaging>jar</packaging>
-    <version>4.3.0</version>
+    <version>4.3.2</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
 
         <!--    Minecraft Version    -->
-        <minecraft.version>1.18.2</minecraft.version>
-        <plugin.api.version>1.18</plugin.api.version>
+        <minecraft.version>1.20.1</minecraft.version>
+        <plugin.api.version>1.20</plugin.api.version>
 
         <!--    Dependency Version    -->
-        <citizens.version>2.0.29-SNAPSHOT</citizens.version>
+        <citizens.version>2.0.32-SNAPSHOT</citizens.version>
         <vault.version>1.7</vault.version>
-        <placeholderapi.version>2.11.1</placeholderapi.version>
+        <placeholderapi.version>2.11.3</placeholderapi.version>
     </properties>
 
     <repositories>
@@ -29,8 +32,9 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>citizens-npcs</id>
-            <url>https://ci.citizensnpcs.co/plugin/repository/everything</url>
+            <id>citizens-repo</id>
+            <name>Citizens Repository</name>
+            <url>https://maven.citizensnpcs.co/repo</url>
         </repository>
         <repository>
             <id>vault-repo</id>
@@ -102,18 +106,6 @@
                 </includes>
             </resource>
         </resources>
-        <pluginManagement>
-            <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 </project>
