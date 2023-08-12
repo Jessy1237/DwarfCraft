@@ -107,4 +107,12 @@
             </resource>
         </resources>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/jessy1237/dwarfcraft</url>
+        </repository>
+    </distributionManagement>
 </project>
