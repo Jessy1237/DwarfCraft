@@ -255,8 +255,8 @@ public class Out
         }
         else
         {
-            message = stripColors( message );
-            prefix = stripColors( prefix );
+            message = stripColors( ChatColor.translateAlternateColorCodes('&', message ) );
+            prefix = stripColors( ChatColor.translateAlternateColorCodes('&', prefix ) );
             messagePrinter( message, prefix );
         }
     }
