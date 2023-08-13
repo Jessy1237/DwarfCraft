@@ -92,12 +92,9 @@ public final class Messages
     public static String trainerOccupied = "&6Please wait. I am talking to someone else.";
     public static String trainerCooldown = "&6Sorry, I need time to recuperate.";
     public static String describeGeneral = "Effect Block Trigger: <effect.initiator> Block Output: <effect.output>. Effect value ranges from <effect.amount.low> - <effect.amount.high> for levels 0 to 30. Non specialists have the effect <effect.minor.amount> , as if they were level <effect.normal.level>. Tools affected: <effect.tool.type>.";
-    public static String describeLevelExplosionDamageMore = "&6You take <effect.level.color><effect.damage.taken>% more &6damage from explosions";
-    public static String describeLevelExplosionDamageLess = "&6You take <effect.level.color><effect.damage.taken>% less &6damage from explosions";
-    public static String describeLevelFireDamageMore = "&6You take <effect.level.color><effect.damage.taken>% more &6damage from fire";
-    public static String describeLevelFireDamageLess = "&6You take <effect.level.color><effect.damage.taken>% less &6damage from fire";
-    public static String describeLevelFallingDamageMore = "&6You take <effect.level.color><effect.damage.taken>% more &6damage from falling";
-    public static String describeLevelFallingDamageLess = "&6You take <effect.level.color><effect.damage.taken>% less &6damage from falling";
+    public static String describeLevelExplosionDamage = "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from explosions";
+    public static String describeLevelFireDamage = "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from fire";
+    public static String describeLevelFallingDamage = "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from falling";
     public static String vanillaRace = "Sorry but you are the vanilla race. Change your race to use DwarfCraft";
     public static ArrayList<String> tutorial = new ArrayList<>();
 }

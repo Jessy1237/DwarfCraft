@@ -95,9 +95,9 @@ public final class ConfigManager
             }
 
             // Create Data Files
-            File locale = new File( root + "/data/dwarfcraft/locale/", "en_US.yml" );
+            File locale = new File( root + "/data/locale/", "en_US.yml" );
             if ( !locale.exists() )
-                plugin.saveResource( "data/dwarfcraft/locale/en_US.yml", false );
+                plugin.saveResource( "data/locale/en_US.yml", false );
         }
         catch ( Exception e )
         {
@@ -157,9 +157,9 @@ public final class ConfigManager
 
     private boolean readLocaleFile()
     {
-        plugin.getUtil().consoleLog( "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/dwarfcraft/locale/" + "en_US.yml" );
+        plugin.getUtil().consoleLog( "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/locale/" + "en_US.yml" );
 
-        FileConfiguration localeConfig = YamlConfiguration.loadConfiguration( new File( plugin.getDataFolder() + "/data/dwarfcraft/locale/en_US.yml" ));
+        FileConfiguration localeConfig = YamlConfiguration.loadConfiguration( new File( plugin.getDataFolder() + "/data/locale/en_US.yml" ));
 
         // Welcome Messages
         Messages.welcomePrefix = localeConfig.getString( "Welcome prefix" );
@@ -206,12 +206,9 @@ public final class ConfigManager
 
         // Effect Messages
         Messages.describeGeneral = localeConfig.getString( "Effect Descriptions.General" );
-        Messages.describeLevelExplosionDamageMore = localeConfig.getString( "Effect Descriptions.Explosion Damage (more)" );
-        Messages.describeLevelExplosionDamageLess = localeConfig.getString( "Effect Descriptions.Explosion Damage (less)" );
-        Messages.describeLevelFireDamageMore = localeConfig.getString( "Effect Descriptions.Fire Damage (more)" );
-        Messages.describeLevelFireDamageLess = localeConfig.getString( "Effect Descriptions.Fire Damage (less)" );
-        Messages.describeLevelFallingDamageMore = localeConfig.getString( "Effect Descriptions.Fall Damage (more)" );
-        Messages.describeLevelFallingDamageLess = localeConfig.getString( "Effect Descriptions.Fall Damage (less)" );
+        Messages.describeLevelExplosionDamage = localeConfig.getString( "Effect Descriptions.Explosion Damage" );
+        Messages.describeLevelFireDamage = localeConfig.getString( "Effect Descriptions.Fire Damage" );
+        Messages.describeLevelFallingDamage = localeConfig.getString( "Effect Descriptions.Fall Damage" );
 
         List<String> tutorialPages = localeConfig.getStringList( "Tutorial Pages" );
         // If there is at least one tutorial page, reset default messages and add custom messages

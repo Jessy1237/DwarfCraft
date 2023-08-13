@@ -55,6 +55,7 @@
     },
     {
       "type": "DIGTIME",
+      "description": "<effect.amount.dig>% of the time <effect.tool.type> break <effect.initiator> instantly",
       "origin_material": "DEEPSLATE",
       "output_material": "AIR",
       "base": 0.0,
@@ -75,6 +76,7 @@
     },
     {
       "type": "DIGTIME",
+      "description": "<effect.amount.dig>% of the time <effect.tool.type> break <effect.initiator> instantly",
       "origin_material": "COBBLED_DEEPSLATE",
       "output_material": "AIR",
       "base": 0.0,

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.jessy1237.dwarfcraft.data.RaceReader;
 import com.jessy1237.dwarfcraft.events.DwarfLoadRacesEvent;
@@ -45,7 +44,7 @@ class RaceManager
 
         for ( String file_name : Registration.getRaceFiles() )
         {
-            String path = "data/dwarfcraft/races/" + file_name;
+            String path = "data/races/" + file_name;
             File destFile = new File( plugin.getDataFolder() + File.separator + path );
             InputStream source = plugin.getResource( path );
             if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
@@ -54,9 +53,6 @@ class RaceManager
                 plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
             }
         }
-
-        File customDir = new File( plugin.getDataFolder().getAbsolutePath() + "/data/custom/races/" );
-        if ( !customDir.exists() ) customDir.mkdirs();
     }
 
     public void addRace( DwarfRace race ) {

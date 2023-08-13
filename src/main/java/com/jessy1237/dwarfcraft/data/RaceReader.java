@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -38,10 +36,7 @@ class RaceReader {
     private
     void parseRaces() {
         String content;
-        File directory = new File( plugin.getDataFolder().getAbsolutePath() + "/data/dwarfcraft/races/" );
-        File customRaces = new File( plugin.getDataFolder().getAbsolutePath() + "/data/custom/races/" );
-        ArrayList<String> overrideNames = new ArrayList<>( Arrays.asList( Objects.requireNonNull( customRaces.list() ) ) );
-        overrideNames.removeIf( override->!override.endsWith( ".json" ) );
+        File directory = new File( plugin.getDataFolder().getAbsolutePath() + "/data/races/" );
 
         if ( vanillaEnabled ) {
             System.out.println("Adding vanilla race");
@@ -54,12 +49,8 @@ class RaceReader {
             for (String file_name : Objects.requireNonNull( directory.list() ) ) {
                 try
                 {
-                    if ( overrideNames.contains( file_name ) ) {
-                        content = new String( Files.readAllBytes( Paths.get( customRaces + "/" + file_name ) ) );
-                    } else {
-                        content = new String( Files.readAllBytes( Paths.get( directory + "/" + file_name ) ) );
-                        if ( !file_name.endsWith( ".json" ) ) continue;
-                    }
+                    content = new String( Files.readAllBytes( Paths.get( directory + "/" + file_name ) ) );
+                    if ( !file_name.endsWith( ".json" ) ) continue;
 
                     JsonReader reader = new JsonReader( new StringReader( content.trim() ) );
                     reader.setLenient( true );

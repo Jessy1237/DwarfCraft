@@ -40,22 +40,15 @@ class SkillReader
     void parseSkills()
     {
         String content;
-        File directory = new File( plugin.getDataFolder().getAbsolutePath() + "/data/dwarfcraft/skills/" );
-        File customSkills = new File( plugin.getDataFolder().getAbsolutePath() + "/data/custom/skills/" );
-        ArrayList<String> overrideNames = new ArrayList<>( Arrays.asList( Objects.requireNonNull( customSkills.list() ) ) );
-        overrideNames.removeIf( override->!override.endsWith( ".json" ) );
+        File directory = new File( plugin.getDataFolder().getAbsolutePath() + "/data/skills/" );
 
         if ( directory.list() != null && Objects.requireNonNull( directory.list() ).length > 0 )
         {
             for (String file_name : Objects.requireNonNull( directory.list() ) ) {
                 try
                 {
-                    if ( overrideNames.contains( file_name ) ) {
-                        content = new String( Files.readAllBytes( Paths.get( customSkills + "/" + file_name ) ) );
-                    } else {
-                        content = new String( Files.readAllBytes( Paths.get( directory + "/" + file_name ) ) );
-                        if ( !file_name.endsWith( ".json" ) ) continue;
-                    }
+                    content = new String( Files.readAllBytes( Paths.get( directory + "/" + file_name ) ) );
+                    if ( !file_name.endsWith( ".json" ) ) continue;
 
                     JsonReader reader = new JsonReader( new StringReader( content.trim() ) );
                     reader.setLenient( true );

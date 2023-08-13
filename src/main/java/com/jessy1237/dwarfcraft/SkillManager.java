@@ -44,7 +44,7 @@ class SkillManager
 
         for ( String file_name : Registration.getSkillFiles() )
         {
-            String path = "data/dwarfcraft/skills/" + file_name;
+            String path = "data/skills/" + file_name;
             File destFile = new File( plugin.getDataFolder() + File.separator + path );
             InputStream source = plugin.getResource( path );
             if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
@@ -53,9 +53,6 @@ class SkillManager
                 plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
             }
         }
-
-        File customDir = new File( plugin.getDataFolder().getAbsolutePath() + "/data/custom/skills/" );
-        if ( !customDir.exists() ) customDir.mkdirs();
     }
 
     public void addSkill(DwarfSkill skill) {
