@@ -54,6 +54,7 @@ public class DwarfPlayerListener implements Listener
     public void onPlayerJoin( PlayerJoinEvent event )
     {
         plugin.getUtil().setPlayerPrefix( event.getPlayer() );
+        plugin.getPlayerManager().createDwarf( event.getPlayer() );
 
         DwarfPlayer dwarfPlayer = plugin.getDataManager().find( event.getPlayer() );
         if ( dwarfPlayer.getRace().getId().isEmpty() )
