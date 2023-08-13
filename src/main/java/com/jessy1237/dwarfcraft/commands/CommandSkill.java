@@ -54,56 +54,45 @@ public class CommandSkill extends DwarfCommand implements TabCompleter
         }
         else
         {
-            try
-            {
-                CommandParser parser = new CommandParser( plugin, sender, args );
-                List<Object> desiredArguments = new ArrayList<Object>();
-                List<Object> outputList;
-
-                DwarfPlayer dwarfPlayer = new DwarfPlayer( plugin, null );
-                DwarfSkill skill = new DwarfSkill( plugin, "", null, new LinkedHashMap<>(),0, null, null, null, null, null );
-                desiredArguments.add( dwarfPlayer );
-                desiredArguments.add( skill );
-
-                try
-                {
-                    outputList = parser.parse( desiredArguments, false );
-                    if ( args.length > outputList.size() )
-                        throw new CommandException( plugin, Type.TOOMANYARGS );
-
-                    skill = ( DwarfSkill ) outputList.get( 1 );
-                    dwarfPlayer = ( DwarfPlayer ) outputList.get( 0 );
-                }
-                catch ( CommandException dce )
-                {
-                    if ( dce.getType() == Type.PARSEDWARFFAIL || dce.getType() == Type.TOOFEWARGS || dce.getType() == Type.EMPTYPLAYER )
-                    {
-                        if ( !( sender instanceof Player ) )
-                            throw new CommandException( plugin, Type.CONSOLECANNOTUSE );
-                        
-                        desiredArguments.remove( 0 );
-                        outputList = parser.parse( desiredArguments, true );
-                        skill = ( DwarfSkill ) outputList.get( 0 );
-                        dwarfPlayer = plugin.getDataManager().find( ( Player ) sender );
-
-                        if ( dwarfPlayer.getRace().getId().equals( "" ) )
-                        {
-                            plugin.getOut().sendMessage( sender, Messages.chooseARace );
-                            return true;
-                        }
-                    }
-                    else
-                        throw dce;
-                }
-                plugin.getOut().printSkillInfo( sender, skill, dwarfPlayer, plugin.getConfigManager().getMaxSkillLevel() );
-                return true;
-            }
-            catch ( CommandException e )
-            {
-                e.describe( sender );
+            String playerName;
+            if (args.length == 1 && (!(sender instanceof Player))) {
+                // Sender is console and player not provided
+                sender.sendMessage("Player must be specified when run from console");
                 sender.sendMessage( getUsage() );
                 return true;
             }
+
+            if (args.length == 1) {
+                playerName = sender.getName();
+            } else {
+                playerName = args[0];
+            }
+
+            Player player = sender.getServer().getPlayer( playerName );
+            if (player == null) {
+                plugin.getOut().sendMessage( sender, "Unable to locate player");
+                return true;
+            }
+            DwarfPlayer dwarfPlayer = new DwarfPlayer(plugin, player);
+
+            DwarfSkill skill;
+            if (args.length == 1 && player != null)
+                skill = dwarfPlayer.getSkill(args[0]);
+            else 
+                skill = dwarfPlayer.getSkill(args[1]);
+
+            if ( dwarfPlayer.getRace() == null )
+            {
+                if ((sender instanceof Player)) {
+                    plugin.getOut().sendMessage( sender, Messages.chooseARace );
+                } else {
+                    plugin.getOut().sendMessage(sender, "Player has no data");
+                }
+                return true;
+            }
+
+            plugin.getOut().printSkillInfo( sender, skill, dwarfPlayer, plugin.getConfigManager().getMaxSkillLevel() );
+            return true;
         }
         return true;
     }
