@@ -29,6 +29,7 @@
     },
     {
       "type": "FIREDAMAGE",
+      "description": "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from fire",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 1.25,

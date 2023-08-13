@@ -23,6 +23,7 @@ public enum Placeholder
     EFFECT_AMOUNT_NORMAL( "<effect.normal.level>" ),
     EFFECT_CREATURE_NAME( "<effect.creature.name>" ),
     EFFECT_DAMAGE( "<effect.damage>" ),
+    EFFECT_DAMAGE_SUFFIX( "<effect.damage.suffix>" ),
     EFFECT_DAMAGE_BOW( "<effect.damage.bow>" ),
     EFFECT_DAMAGE_TAKEN( "<effect.damage.taken>" ),
     EFFECT_INITIATOR( "<effect.initiator>" ),

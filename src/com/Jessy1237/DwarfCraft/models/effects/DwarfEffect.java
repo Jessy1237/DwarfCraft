@@ -322,10 +322,8 @@ public class DwarfEffect
                 case EXPLOSIONDAMAGE:
                 case FIREDAMAGE:
                 case FALLDAMAGE:
-                    if (this.descriptionMore == null || this.descriptionLess == null ) {
-                        //log error
-                    }
-                    output = ( getEffectAmount(dCPlayer) > 1 ) ? this.descriptionMore : this.descriptionLess;
+                    String suffix = ( getEffectAmount(dCPlayer) > 1 ) ? "more" : "less";
+                    output = this.description.replaceAll(Placeholder.EFFECT_DAMAGE_SUFFIX.value(), suffix);
                     break;
                 default:
                     output = this.description;
@@ -366,6 +364,7 @@ public class DwarfEffect
         replacements.put(Placeholder.EFFECT_CREATURE_NAME, plugin.getUtil().getCleanName( getEntity() ) );
         replacements.put(Placeholder.EFFECT_LEVEL_COLOR, effectLevelColor( dCPlayer.getSkillLevel( getSkillId() ) ) );
         replacements.put(Placeholder.EFFECT_AMOUNT, String.format( "%.2f", getEffectAmount(dCPlayer) ) );
+        replacements.put(Placeholder.EFFECT_AMOUNT_INT, String.format( "%d", (int)effectAmount) );
         replacements.put(Placeholder.EFFECT_AMOUNT_MINOR, minorAmountStr );
         replacements.put(Placeholder.EFFECT_AMOUNT_LOW, String.format( "%.2f", effectAmountLow ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_HIGH, String.format( "%.2f", effectAmountHigh ) );
