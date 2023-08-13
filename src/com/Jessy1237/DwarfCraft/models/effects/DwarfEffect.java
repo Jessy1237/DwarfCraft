@@ -363,6 +363,7 @@ public class DwarfEffect
         // Replace placeholders
         output = Placeholder.generalParse(output, plugin);
         replacements.put(Placeholder.EFFECT_INITIATOR, ChatColor.DARK_GREEN + initiator );
+        replacements.put(Placeholder.EFFECT_CREATURE_NAME, plugin.getUtil().getCleanName( getEntity() ) );
         replacements.put(Placeholder.EFFECT_LEVEL_COLOR, effectLevelColor( dCPlayer.getSkillLevel( getSkillId() ) ) );
         replacements.put(Placeholder.EFFECT_AMOUNT, String.format( "%.2f", getEffectAmount(dCPlayer) ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_MINOR, minorAmountStr );
