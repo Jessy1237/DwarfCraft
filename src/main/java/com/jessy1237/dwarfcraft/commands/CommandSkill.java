@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018.
+ * Copyright (c) 2023.
  *
  * DwarfCraft is an RPG plugin that allows players to improve their characters
  * skills and capabilities through training, not experience.
