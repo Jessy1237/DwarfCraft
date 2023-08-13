@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jessy1237</groupId>
-    <artifactId>DwarfCraft</artifactId>
+    <artifactId>dwarfcraft</artifactId>
     <name>DwarfCraft</name>
     <packaging>jar</packaging>
-    <version>4.3.2</version>
+    <version>4.3</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -79,7 +79,7 @@
 
     <build>
         <defaultGoal>clean package install</defaultGoal>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>${project.name}-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
