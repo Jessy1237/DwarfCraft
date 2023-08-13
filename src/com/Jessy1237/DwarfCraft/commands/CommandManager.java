@@ -16,8 +16,8 @@ public class CommandManager {
     private Permission perms = null;
     private final LinkedHashMap<String, DwarfCommand> commands = new LinkedHashMap<>();
 
-    public CommandManager() {
-        plugin = DwarfCraft.getInstance();
+    public CommandManager( DwarfCraft plugin ) {
+        this.plugin = plugin;
         try
         {
             if ( setupPermissions() )

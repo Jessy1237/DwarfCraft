@@ -78,7 +78,7 @@
     </dependencies>
 
     <build>
-        <defaultGoal>package</defaultGoal>
+        <defaultGoal>clean package install</defaultGoal>
         <directory>${project.basedir}/target</directory>
         <outputDirectory>${project.basedir}/target/classes</outputDirectory>
         <finalName>${project.artifactId}-${project.version}</finalName>

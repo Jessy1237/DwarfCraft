@@ -34,9 +34,9 @@ public class Util
 {
     private final DwarfCraft plugin;
     
-    public Util()
+    public Util( DwarfCraft plugin )
     {
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
     }
     
     public void consoleLog(String message)

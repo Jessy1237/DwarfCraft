@@ -42,9 +42,9 @@ public class DwarfPlayerListener implements Listener
 {
     private final DwarfCraft plugin;
 
-    public DwarfPlayerListener()
+    public DwarfPlayerListener( DwarfCraft plugin)
     {
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
     }
 
     /**
@@ -68,7 +68,7 @@ public class DwarfPlayerListener implements Listener
             DwarfPlayer dcPlayer = plugin.getDataManager().find( event.getPlayer() );
 
             // Add Written Book to Players Inventory
-            CommandTutorial commandTutorial = new CommandTutorial( "tutorial" );
+            CommandTutorial commandTutorial = new CommandTutorial( "tutorial", plugin );
             HashMap<Integer, ItemStack> overflow = dcPlayer.getPlayer().getInventory().addItem( commandTutorial.createTutorialBook( dcPlayer ) );
             commandTutorial.dropBookIfInventoryFull( dcPlayer.getPlayer(), overflow );
 

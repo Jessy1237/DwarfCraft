@@ -23,6 +23,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
+import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
 import com.Jessy1237.DwarfCraft.events.DwarfLevelUpEvent;
 import com.Jessy1237.DwarfCraft.models.DwarfCommand;
@@ -31,9 +32,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 
 public class CommandSetSkill extends DwarfCommand implements TabCompleter
 {
-    public CommandSetSkill( String name )
+    public CommandSetSkill( String name, DwarfCraft plugin )
     {
-        super( name );
+        super( name, plugin );
         setDescription("Admin command to change a players skill level manually.");
     }
 

@@ -31,9 +31,9 @@ public class Out
     private final int maxLines = 20;
     private final DwarfCraft plugin;
 
-    protected Out()
+    protected Out( DwarfCraft plugin )
     {
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
     }
 
     private String consoleLinePrinter( String line, String prefix )

@@ -31,7 +31,6 @@ import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
 
 public class DwarfCraft extends JavaPlugin
 {
-    private static DwarfCraft instance;
     private NPCRegistry npc_registry;
     private ConfigManager config_manager;
     private DataManager data_manager;
@@ -42,16 +41,11 @@ public class DwarfCraft extends JavaPlugin
     private Out out;
     private Util util;
     private Chat chat = null;
-    private TraitInfo trainerTrait;
     public boolean isAuraActive = false;
     public static int debugMessagesThreshold = 10;
     
-    private final DwarfInventoryListener inventoryListener = new DwarfInventoryListener();
-    private final DwarfEntityListener entityListener = new DwarfEntityListener();
-    
-    public static DwarfCraft getInstance() {
-        return instance;
-    }
+    private final DwarfInventoryListener inventoryListener = new DwarfInventoryListener( this );
+    private final DwarfEntityListener entityListener = new DwarfEntityListener( this );
     
     public NPCRegistry getNPCRegistry()
     {
@@ -136,12 +130,11 @@ public class DwarfCraft extends JavaPlugin
     }
 
     public void onEnable( boolean reload ) {
-        instance = this;
         PluginManager pm = getServer().getPluginManager();
-        util = new Util(); //Need to initialise Util earlier if going to use it in the enabling method
-        race_manager = new RaceManager();
+        util = new Util( this ); //Need to initialise Util earlier if going to use it in the enabling method
+        race_manager = new RaceManager( this );
         effect_registry = new EffectRegistry();
-        skill_manager = new SkillManager();
+        skill_manager = new SkillManager( this );
 
         if ( !checkDependencies() ) onDisable();
 
@@ -153,18 +146,18 @@ public class DwarfCraft extends JavaPlugin
         data_manager = new DataManager( this, config_manager.dbType );
         data_manager.dbInitialize();
 
-        command_manager = new CommandManager();
-        out = new Out();
+        command_manager = new CommandManager( this );
+        out = new Out( this );
         
         // Creates the citizen trait for the DwarfTrainers
         if ( !reload )
         {
-            pm.registerEvents( new DwarfPlayerListener(), this );
+            pm.registerEvents( new DwarfPlayerListener( this ), this );
             pm.registerEvents( entityListener, this );
-            pm.registerEvents( new DwarfBlockListener(), this );
-            pm.registerEvents( new DwarfVehicleListener(), this );
+            pm.registerEvents( new DwarfBlockListener( this ), this );
+            pm.registerEvents( new DwarfVehicleListener( this ), this );
             pm.registerEvents( inventoryListener, this );
-            pm.registerEvents( new DwarfListener(), this );
+            pm.registerEvents( new DwarfListener( this ), this );
     
             TraitInfo trainerTrait = TraitInfo.create(DwarfTrainerTrait.class).withName("DwarfTrainer");
             CitizensAPI.getTraitFactory().registerTrait(trainerTrait);
@@ -183,19 +176,19 @@ public class DwarfCraft extends JavaPlugin
         });
 
         if ( isEnabled() ) {
-            Objects.requireNonNull(this.getCommand("dwarfcraft")).setExecutor( new DwarfCommandExecutor() );
-            Objects.requireNonNull(this.getCommand("dwarfcraft")).setTabCompleter( new DwarfCommandExecutor() );
-            command_manager.registerCommand( new CommandSkillSheet( "skillsheet" ) );
-            command_manager.registerCommand( new CommandTutorial( "tutorial" ) );
-            command_manager.registerCommand( new CommandInfo( "info" ) );
-            command_manager.registerCommand( new CommandSkill( "skill" ) );
-            command_manager.registerCommand( new CommandRace( "race" ) );
-            command_manager.registerCommand( new CommandHelp( "help" ) );
-            command_manager.registerCommand( new CommandDebug( "debug" ) );
-            command_manager.registerCommand( new CommandList( "list" ) );
-            command_manager.registerCommand( new CommandSetSkill( "set_skill" ) );
-            command_manager.registerCommand( new CommandCreate( "create" ) );
-            command_manager.registerCommand( new CommandReload( "reload" ) );
+            Objects.requireNonNull(this.getCommand("dwarfcraft")).setExecutor( new DwarfCommandExecutor( this ) );
+            Objects.requireNonNull(this.getCommand("dwarfcraft")).setTabCompleter( new DwarfCommandExecutor( this ) );
+            command_manager.registerCommand( new CommandSkillSheet( "skillsheet", this ) );
+            command_manager.registerCommand( new CommandTutorial( "tutorial", this ) );
+            command_manager.registerCommand( new CommandInfo( "info", this ) );
+            command_manager.registerCommand( new CommandSkill( "skill", this ) );
+            command_manager.registerCommand( new CommandRace( "race", this ) );
+            command_manager.registerCommand( new CommandHelp( "help", this ) );
+            command_manager.registerCommand( new CommandDebug( "debug", this ) );
+            command_manager.registerCommand( new CommandList( "list", this ) );
+            command_manager.registerCommand( new CommandSetSkill( "set_skill", this ) );
+            command_manager.registerCommand( new CommandCreate( "create", this ) );
+            command_manager.registerCommand( new CommandReload( "reload", this ) );
         }
     
         getUtil().consoleLog( String.format( "%s %s is enabled!", getDescription().getName(), getDescription().getVersion()), ChatColor.GREEN );

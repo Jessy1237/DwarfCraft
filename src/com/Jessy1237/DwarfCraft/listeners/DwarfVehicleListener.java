@@ -38,9 +38,9 @@ public class DwarfVehicleListener implements Listener
 {
     private final DwarfCraft plugin;
 
-    public DwarfVehicleListener()
+    public DwarfVehicleListener( DwarfCraft plugin )
     {
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
     }
 
     /**

@@ -16,8 +16,8 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 public class DwarfCommandExecutor implements CommandExecutor, TabCompleter {
     private final DwarfCraft plugin;
 
-    public DwarfCommandExecutor() {
-        this.plugin = DwarfCraft.getInstance();
+    public DwarfCommandExecutor( DwarfCraft plugin ) {
+        this.plugin = plugin;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args ) {
@@ -46,7 +46,7 @@ public class DwarfCommandExecutor implements CommandExecutor, TabCompleter {
         List<String> matches = new ArrayList<>();
         if ( args.length <= 1 || args[0].equalsIgnoreCase( "" ) )
         {
-            matches = new CommandHelp( "help" ).onTabComplete( commandSender, command, s, args );
+            matches = new CommandHelp( "help", plugin ).onTabComplete( commandSender, command, s, args );
         }
         else if ( plugin.getCommandManager().getCommand( args[0] ) != null)
         {

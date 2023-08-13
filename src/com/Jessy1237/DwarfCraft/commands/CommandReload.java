@@ -20,9 +20,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandReload extends DwarfCommand
 {
-    public CommandReload( String name )
+    public CommandReload( String name, DwarfCraft plugin )
     {
-        super( name );
+        super( name, plugin );
         setDescription("Reloads the DwarfCraft plugin.");
     }
 

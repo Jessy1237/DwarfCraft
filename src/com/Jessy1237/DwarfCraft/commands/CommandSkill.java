@@ -24,6 +24,7 @@ import org.bukkit.util.StringUtil;
 
 import net.md_5.bungee.api.ChatColor;
 
+import com.Jessy1237.DwarfCraft.DwarfCraft;
 import com.Jessy1237.DwarfCraft.Messages;
 import com.Jessy1237.DwarfCraft.commands.CommandException.Type;
 import com.Jessy1237.DwarfCraft.models.DwarfCommand;
@@ -32,9 +33,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfSkill;
 
 public class CommandSkill extends DwarfCommand implements TabCompleter
 {
-    public CommandSkill( String name )
+    public CommandSkill( String name, DwarfCraft plugin )
     {
-        super( name );
+        super( name, plugin );
         setDescription("Displays a description of a dwarf's skill and training costs.");
     }
 

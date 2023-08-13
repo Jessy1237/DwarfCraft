@@ -13,9 +13,9 @@ public class DwarfCommand extends Command {
     protected final DwarfCraft plugin;
     protected String name;
     
-    public DwarfCommand(String name) {
+    public DwarfCommand(String name, DwarfCraft plugin) {
         super(name);
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
         this.name = name;
     }
 

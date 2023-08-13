@@ -25,9 +25,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfPlayer;
 
 public class CommandSkillSheet extends DwarfCommand
 {
-    public CommandSkillSheet( String name )
+    public CommandSkillSheet( String name, DwarfCraft plugin )
     {
-        super( name );
+        super( name, plugin );
         setDescription("Displays a list of skills and levels for a Dwarf.");
     }
 

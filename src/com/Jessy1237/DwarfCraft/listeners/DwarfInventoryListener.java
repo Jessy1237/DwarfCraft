@@ -41,9 +41,9 @@ public class DwarfInventoryListener implements Listener
     private final HashMap<Location, BrewerInventory> stands = new HashMap<>();
     private final HashMap<Player, DwarfGUI> dwarfGUIs = new HashMap<>();
 
-    public DwarfInventoryListener()
+    public DwarfInventoryListener( DwarfCraft plugin )
     {
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
     }
 
     @EventHandler( priority = EventPriority.NORMAL )

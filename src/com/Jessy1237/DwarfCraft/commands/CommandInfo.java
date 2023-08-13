@@ -19,9 +19,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfCommand;
 
 public class CommandInfo extends DwarfCommand
 {
-    public CommandInfo( String name )
+    public CommandInfo( String name, DwarfCraft plugin )
     {
-        super( name );
+        super( name, plugin );
     }
 
     @Override

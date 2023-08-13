@@ -47,9 +47,9 @@ public class DwarfEntityListener implements Listener
     private final DwarfCraft plugin;
     private final HashMap<Entity, DwarfPlayer> killMap;
 
-    public DwarfEntityListener()
+    public DwarfEntityListener( DwarfCraft plugin )
     {
-        this.plugin = DwarfCraft.getInstance();
+        this.plugin = plugin;
         killMap = new HashMap<>();
     }
 

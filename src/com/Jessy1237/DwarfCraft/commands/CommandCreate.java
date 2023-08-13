@@ -31,9 +31,9 @@ import com.Jessy1237.DwarfCraft.models.DwarfTrainerTrait;
 
 public class CommandCreate extends DwarfCommand implements TabCompleter
 {
-    public CommandCreate( String name )
+    public CommandCreate( String name, DwarfCraft plugin )
     {
-        super( name );
+        super( name, plugin );
         setDescription("Creates a new trainer where you are standing.");
     }
 
