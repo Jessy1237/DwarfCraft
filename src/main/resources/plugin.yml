@@ -1,0 +1,14 @@
+name: ${project.name}
+description: A skills and progression plugin for character development in RPG worlds.
+author: Jessy1237 and Drekryan
+main: com.jessy1237.dwarfcraft.DwarfCraft
+version: ${project.version}
+api-version: ${plugin.api.version}
+depend: [Vault, Citizens]
+softdepend: [PlaceholderAPI]
+commands: 
+   dwarfcraft:
+      description: The base command for DwarfCraft
+      usage: |
+           /dwarfcraft
+      aliases: [dc]
