@@ -4,7 +4,7 @@
                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.Jessy1237</groupId>
+    <groupId>com.jessy1237</groupId>
     <artifactId>DwarfCraft</artifactId>
     <name>DwarfCraft</name>
     <packaging>jar</packaging>
@@ -79,13 +79,10 @@
 
     <build>
         <defaultGoal>clean package install</defaultGoal>
-        <directory>${project.basedir}/target</directory>
-        <outputDirectory>${project.basedir}/target/classes</outputDirectory>
         <finalName>${project.artifactId}-${project.version}</finalName>
-        <sourceDirectory>${project.basedir}/src</sourceDirectory>
         <resources>
             <resource>
-                <directory>${project.basedir}</directory>
+                <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
                     <include>plugin.yml</include>
                     <include>config.yml</include>
@@ -94,13 +91,13 @@
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>${project.basedir}/src</directory>
+                <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
                     <include>default_files/**/*.*</include>
                 </includes>
             </resource>
             <resource>
-                <directory>${project.basedir}/src</directory>
+                <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
                     <include>data/**/*.*</include>
                 </includes>
