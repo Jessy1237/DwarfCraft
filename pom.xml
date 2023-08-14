@@ -93,7 +93,7 @@
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
-                    <include>default_files/**/*.*</include>
+                    <include>legacy/**/*.*</include>
                 </includes>
             </resource>
             <resource>
