@@ -30,6 +30,26 @@ public class CommandManager {
         }
     }
 
+    public void init() {
+        plugin.getCommand("dwarfcraft").setExecutor( new DwarfCommandExecutor( plugin ) );
+        plugin.getCommand("dwarfcraft").setTabCompleter( new DwarfCommandExecutor( plugin ) );
+        registerCommands();
+    }
+
+    public void registerCommands() {
+        registerCommand( new CommandSkillSheet( "skillsheet", plugin ) );
+        registerCommand( new CommandTutorial( "tutorial", plugin ) );
+        registerCommand( new CommandInfo( "info", plugin ) );
+        registerCommand( new CommandSkill( "skill", plugin ) );
+        registerCommand( new CommandRace( "race", plugin ) );
+        registerCommand( new CommandHelp( "help", plugin ) );
+        registerCommand( new CommandDebug( "debug", plugin ) );
+        registerCommand( new CommandList( "list", plugin ) );
+        registerCommand( new CommandSetSkill( "set_skill", plugin ) );
+        registerCommand( new CommandCreate( "create", plugin ) );
+        registerCommand( new CommandReload( "reload", plugin ) );
+    }
+
     public void registerCommand( DwarfCommand command ) {
         commands.put( command.getName(), command );
     }
