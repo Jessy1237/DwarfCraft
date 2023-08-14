@@ -1,12 +1,14 @@
 package com.jessy1237.dwarfcraft.data;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Level;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
@@ -28,16 +30,99 @@ class SkillReader
 {
     private final DwarfCraft plugin;
     private final SkillManager manager;
+    private static final List<String> skill_files = new ArrayList<>();
+    private File dataDir;
 
     public
     SkillReader( DwarfCraft plugin, SkillManager manager ) {
         this.plugin = plugin;
         this.manager = manager;
+        dataDir = new File( plugin.getDataFolder().getAbsolutePath() + "/data/skills/" );
+
+        registerSkills();
+        createSkillFiles();
         parseSkills();
     }
 
-    private
-    void parseSkills()
+    private void registerSkills() {
+        registerSkill( "pickaxe_use" );
+        registerSkill( "shovel_use" );
+        registerSkill( "axe_use" );
+        registerSkill( "seed_gatherer" );
+        registerSkill( "melon_farmer" );
+        registerSkill( "fishing" );
+        registerSkill( "stone_shaper" );
+        registerSkill( "smelter" );
+        registerSkill( "iron_forger" );
+        registerSkill( "diamond_forger" );
+        registerSkill( "excavator" );
+        registerSkill( "quarry_worker" );
+        registerSkill( "ore_miner" );
+        registerSkill( "exotic_miner" );
+        registerSkill( "wood_carver" );
+        registerSkill( "gold_forger" );
+        registerSkill( "nether_miner" );
+        registerSkill( "sand_digger" );
+        registerSkill( "gravel_digger" );
+        registerSkill( "dirt_digger" );
+        registerSkill( "lumberjack" );
+        registerSkill( "carpenter" );
+        registerSkill( "wheat_farmer" );
+        registerSkill( "exotic_farmer" );
+        registerSkill( "vegetable_farmer" );
+        registerSkill( "mason" );
+        registerSkill( "glass_worker" );
+        registerSkill( "wood_crafter" );
+        registerSkill( "bookmaker" );
+        registerSkill( "brickmaker" );
+        registerSkill( "demolitionist" );
+        registerSkill( "fire_starter" );
+        registerSkill( "railworker" );
+        registerSkill( "baker" );
+        registerSkill( "fletcher" );
+        registerSkill( "butcher" );
+        registerSkill( "sailor" );
+        registerSkill( "climber" );
+        registerSkill( "survivalist" );
+        registerSkill( "florist" );
+        registerSkill( "dungeon_delver" );
+        registerSkill( "nether_hunter" );
+        registerSkill( "shearer" );
+        registerSkill( "huntsman" );
+        registerSkill( "monster_hunter" );
+        registerSkill( "scout" );
+        registerSkill( "soldier" );
+        registerSkill( "archer" );
+        registerSkill( "exotic_armour" );
+        registerSkill( "swordsman" );
+        registerSkill( "sign_maker" );
+        registerSkill( "torch_maker" );
+        registerSkill( "alchemist" );
+        registerSkill( "noble" );
+        registerSkill( "axe_swinger" );
+    }
+
+    public static void registerSkill( String skill_id ) {
+        skill_files.add( skill_id.toLowerCase() + ".json" );
+    }
+
+    private void createSkillFiles() {
+        if ( !dataDir.exists() ) dataDir.mkdirs();
+        for ( String file_name : skill_files )
+        {
+            String path = "data/skills/" + file_name;
+            InputStream source = plugin.getResource( path );
+
+            File destFile = new File( dataDir.toString() + "/" + file_name );
+            if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
+            {
+                plugin.saveResource( path, false );
+                plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
+            }
+        }
+    }
+
+    private void parseSkills()
     {
         String content;
         File directory = new File( plugin.getDataFolder().getAbsolutePath() + "/data/skills/" );
@@ -103,8 +188,7 @@ class SkillReader
     }
 
     @SuppressWarnings( "unused" )
-    private
-    ArrayList<DwarfEffect> parseEffects( JsonObject object, String skill_id )
+    private ArrayList<DwarfEffect> parseEffects( JsonObject object, String skill_id )
     {
         ArrayList<DwarfEffect> effectList = new ArrayList<>();
         JsonArray effects = object.getAsJsonArray("effects");

@@ -22,37 +22,11 @@ class SkillManager
 
     @SuppressWarnings( "unchecked" )
     public void init() {
-        createSkillFiles();
         new SkillReader( plugin, this );
         DwarfLoadSkillsEvent e = new DwarfLoadSkillsEvent( ( HashMap<String, DwarfSkill> ) skills.clone() );
         plugin.getServer().getPluginManager().callEvent( e );
         skills = getAllSkills();
         plugin.getUtil().consoleLog( "Loaded " + ChatColor.AQUA + skills.values().size() + ChatColor.WHITE + " Skill(s)" );
-    }
-
-    private
-    void createSkillFiles() {
-        File root = new File( plugin.getDataFolder().getAbsolutePath() );
-
-        if ( !root.exists() )
-        {
-            if ( !root.mkdirs() )
-            {
-                return;
-            }
-        }
-
-        for ( String file_name : Registration.getSkillFiles() )
-        {
-            String path = "data/skills/" + file_name;
-            File destFile = new File( plugin.getDataFolder() + File.separator + path );
-            InputStream source = plugin.getResource( path );
-            if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
-            {
-                plugin.saveResource( path, true );
-                plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
-            }
-        }
     }
 
     public void addSkill(DwarfSkill skill) {
