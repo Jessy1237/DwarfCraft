@@ -14,6 +14,7 @@ import java.util.*;
 
 import org.bukkit.Material;
 
+import com.google.gson.annotations.Expose;
 import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.Placeholder;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
@@ -25,11 +26,11 @@ public class DwarfSkill implements Cloneable
     private final String mID;
     private final String mName;
     private final LinkedHashMap<String, DwarfRace> mRaces;
-    private int mLevel;
+    @Expose private int mLevel;
     private final List<DwarfEffect> mEffects;
     private final Material mHeldItem;
     private final DwarfTrainingItem mItem1, mItem2, mItem3;
-    private int mDeposit1, mDeposit2, mDeposit3;
+    @Expose private int mDeposit1, mDeposit2, mDeposit3;
     
     private final Map<Placeholder,String> replacements = new HashMap<>();
 

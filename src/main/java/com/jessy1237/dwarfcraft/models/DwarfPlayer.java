@@ -22,16 +22,17 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.google.gson.annotations.Expose;
 import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.Placeholder;
 
 public class DwarfPlayer
 {
     private final DwarfCraft plugin;
-    private HashMap<String, DwarfSkill> skills;
+    @Expose private HashMap<String, DwarfSkill> skills;
     private Player player;
-    private DwarfRace race;
-    private boolean raceMaster;
+    @Expose private DwarfRace race;
+    @Expose private boolean raceMaster;
 
     public void setPlayer( Player player )
     {
