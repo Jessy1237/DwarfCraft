@@ -47,7 +47,7 @@ Race Messages:
 # ################################################################# #
 Trainer Messages:
   Choose Race: "&cPlease choose a race! Use /dc race"
-  Train Skill Prefix: "&6[Train &b<skill.id>&6]"
+  Train Skill Prefix: "&6[Train &b<skill.name>&6]"
   Skill Blocked: "&cYour race doesn't have this skill!"
   Non-Racial Skill: "&cYour race doesn't specialize in this skill! Max level is (<race.level.limit>)!"
   Max Skill Level: "&cYour skill is max level (<skill.max.level>)!"
@@ -57,7 +57,7 @@ Trainer Messages:
   More Item Needed: "&cAn additional &2<skill.cost.amount> <item.name> &cis required"
   Training Successful: "&6Training Successful!"
   Deposit Successful: "&6Deposit Successful!"
-  GUI Title: "&8<skill.name>&6 [&b<skill.id>&6] || &3<skill.level>/<skill.max.level>"
+  GUI Title: "&8<skill.name>&6 || &3<skill.level>/<skill.max.level>"
   Occupied: "&6Please wait. I am talking to someone else."
   Cooldown: "&6Sorry, I need time to recuperate."
 
