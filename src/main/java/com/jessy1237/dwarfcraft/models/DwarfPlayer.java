@@ -23,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.Placeholder;
 
@@ -31,7 +32,7 @@ public class DwarfPlayer
     private final DwarfCraft plugin;
     @Expose private HashMap<String, DwarfSkill> skills;
     private Player player;
-    @Expose private DwarfRace race;
+    @Expose @SerializedName("race") private String race_id;
     @Expose private boolean raceMaster;
 
     public void setPlayer( Player player )
@@ -43,7 +44,7 @@ public class DwarfPlayer
     {
         this.plugin = plugin;
         this.player = player;
-        this.race = plugin.getRaceManager().getDefaultRace();
+        this.race_id = plugin.getRaceManager().getDefaultRace().getId();
         this.skills = plugin.getSkillManager().getAllSkills();
         this.raceMaster = false;
     }
@@ -52,7 +53,7 @@ public class DwarfPlayer
     {
         this.plugin = plugin;
         this.player = player;
-        this.race = race;
+        this.race_id = race.getId();
         this.skills = plugin.getSkillManager().getAllSkills();
         this.raceMaster = raceMaster;
     }
@@ -239,8 +240,9 @@ public class DwarfPlayer
 
     public void changeRace( String race )
     {
-        final DwarfRace oldRace = this.race;
-        this.race = plugin.getRaceManager().getRace( race );
+        final DwarfRace oldRace = plugin.getRaceManager().getRace( this.race_id );
+        if (!plugin.getRaceManager().raceExists( race.toLowerCase() )) return;
+        this.race_id = race.toLowerCase();
         DwarfSkill[] dCSkills = new DwarfSkill[skills.size()];
 
         int I = 0;
@@ -270,7 +272,7 @@ public class DwarfPlayer
                 }
                 else
                 {
-                    if ( !plugin.getSkillManager().getSkill( skill.getId() ).getRaces().containsValue( race ) && skill.getLevel() > plugin.getConfigManager().getRaceLevelLimit() )
+                    if ( !plugin.getSkillManager().getSkill( skill.getId() ).getRaces().containsValue( plugin.getRaceManager().getRace( race ) ) && skill.getLevel() > plugin.getConfigManager().getRaceLevelLimit() )
                     {
                         skill.setLevel( plugin.getConfigManager().getRaceLevelLimit() );
                         skill.setDeposit( 0, 1 );
@@ -294,15 +296,15 @@ public class DwarfPlayer
 
     public DwarfRace getRace()
     {
-        return race;
+        return plugin.getRaceManager().getRace( this.race_id );
     }
 
     public void setRace( String race )
     {
-        if (race.isEmpty() )
-            this.race = new DwarfRace("", "");
+        if ( plugin.getRaceManager().raceExists( race.toLowerCase() ) )
+            this.race_id = race.toLowerCase();
         else
-            this.race = plugin.getRaceManager().getRace( race );
+            this.race_id = "";
     }
 
     public boolean isRaceMaster()

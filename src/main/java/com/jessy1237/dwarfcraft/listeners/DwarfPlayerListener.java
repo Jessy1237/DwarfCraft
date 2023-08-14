@@ -31,6 +31,7 @@ import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.Util;
 import com.jessy1237.dwarfcraft.commands.CommandTutorial;
+import com.jessy1237.dwarfcraft.data.DwarfReader;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
@@ -54,8 +55,9 @@ public class DwarfPlayerListener implements Listener
     public void onPlayerJoin( PlayerJoinEvent event )
     {
         plugin.getUtil().setPlayerPrefix( event.getPlayer() );
-        //TODO: check if this is needed?
-        //plugin.getDwarfManager().createDwarf( event.getPlayer() );
+                
+        DwarfReader reader = new DwarfReader(plugin, plugin.getDwarfManager());
+        reader.createDwarf ( event.getPlayer() ); //TODO: don't recreate dwarf all the time
 
         DwarfPlayer dwarfPlayer = plugin.getDataManager().find( event.getPlayer() );
         if ( dwarfPlayer.getRace().getId().isEmpty() )

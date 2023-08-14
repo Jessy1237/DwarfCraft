@@ -99,14 +99,14 @@ class DwarfReader {
     public void createDwarf( OfflinePlayer player )
     {
         File playerData = new File( plugin.getDataFolder().getAbsolutePath() + "/data/players/" + player.getUniqueId() + ".json" );
-        if (playerData.exists()) return;
+        //if (playerData.exists()) return; //TODO: Add back this check when loading from data files
         
         try {
-            DwarfPlayer newDwarf;
             try ( FileOutputStream fos = new FileOutputStream( playerData ); OutputStreamWriter isr = new OutputStreamWriter( fos, StandardCharsets.UTF_8 ) )
             {
-                newDwarf = plugin.getDataManager().findOffline(player.getUniqueId());
-                if (newDwarf == null) {
+                DwarfPlayer newDwarf = null;
+                DwarfPlayer dwarf = plugin.getDataManager().findOffline(player.getUniqueId());
+                if (dwarf == null) {
                     if (player.isOnline()) {
                         newDwarf = new DwarfPlayer( plugin, player.getPlayer() );
                         HashMap<String, DwarfSkill> skills = new HashMap<>();
@@ -118,6 +118,7 @@ class DwarfReader {
                         plugin.getUtil().consoleLog( "Creating data file: " + ChatColor.AQUA + playerData.getAbsolutePath() );
                     }
                 } else {
+                    newDwarf = dwarf;
                     plugin.getUtil().consoleLog( "Found player data, creating data file: " + ChatColor.AQUA + playerData.getAbsolutePath() );
                 }
 
