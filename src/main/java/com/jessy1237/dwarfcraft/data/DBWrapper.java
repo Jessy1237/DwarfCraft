@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
-
+@Deprecated
 public interface DBWrapper
 {
 
@@ -12,6 +12,7 @@ public interface DBWrapper
 
     void dbFinalize();
 
+    @Deprecated
     void createDwarfData(DwarfPlayer dCPlayer);
 
     boolean checkDwarfData(DwarfPlayer player);
@@ -24,6 +25,7 @@ public interface DBWrapper
      */
     boolean checkDwarfData( DwarfPlayer player, UUID uuid );
 
+    @Deprecated
     boolean saveDwarfData(DwarfPlayer dwarfPlayer, DwarfSkill[] skills);
 
 }

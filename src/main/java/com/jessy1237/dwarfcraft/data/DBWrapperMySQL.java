@@ -15,6 +15,7 @@ import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 
+@Deprecated
 class DBWrapperMySQL implements DBWrapper
 {
     private final DwarfCraft plugin;

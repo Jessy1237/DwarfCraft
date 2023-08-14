@@ -57,6 +57,7 @@ public class DwarfCraft extends JavaPlugin
         return config_manager;
     }
 
+    @Deprecated
     public DataManager getDataManager()
     {
         return data_manager;

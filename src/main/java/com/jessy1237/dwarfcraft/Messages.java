@@ -11,7 +11,7 @@
 package com.jessy1237.dwarfcraft;
 
 import java.util.ArrayList;
-
+@Deprecated
 public final class Messages
 {
 

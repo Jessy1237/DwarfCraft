@@ -1,8 +1,7 @@
 package com.jessy1237.dwarfcraft.data;
 
-import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-
+@Deprecated
 public class DBWrapperFactory
 {
 

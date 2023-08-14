@@ -27,8 +27,8 @@ import com.jessy1237.dwarfcraft.models.*;
 
 public class DataManager
 {
-    List<DwarfPlayer> dwarves = new ArrayList<>();
-    public HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>();
+    protected List<DwarfPlayer> dwarves = new ArrayList<>();
+    private HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>();
     public HashMap<Integer, DwarfTrainer> trainerList = new HashMap<>();
     private final DwarfCraft plugin;
     private final DBWrapper dbWrapper;
@@ -68,16 +68,19 @@ public class DataManager
         dbWrapper.dbFinalize();
     }
 
+    @Deprecated
     public void createDwarfData( DwarfPlayer dCPlayer )
     {
         dbWrapper.createDwarfData( dCPlayer );
     }
 
+    @Deprecated
     public boolean checkDwarfData( DwarfPlayer player )
     {
         return dbWrapper.checkDwarfData( player );
     }
 
+    @Deprecated
     public boolean saveDwarfData( DwarfPlayer dwarfPlayer, DwarfSkill[] skills )
     {
         return dbWrapper.saveDwarfData( dwarfPlayer, skills );
@@ -106,6 +109,7 @@ public class DataManager
         return false;
     }
 
+    @Deprecated
     public DwarfPlayer createDwarf( Player player )
     {
         DwarfPlayer newDwarf = new DwarfPlayer( plugin, player );
@@ -131,6 +135,7 @@ public class DataManager
      * @param player
      * @return DwarfPlayer or null
      */
+    @Deprecated
     public DwarfPlayer find( Player player )
     {
         for ( DwarfPlayer d : dwarves )
@@ -150,6 +155,7 @@ public class DataManager
         return null;
     }
 
+    @Deprecated
     public DwarfPlayer findOffline( UUID uuid )
     {
         DwarfPlayer dCPlayer = createDwarf( null );

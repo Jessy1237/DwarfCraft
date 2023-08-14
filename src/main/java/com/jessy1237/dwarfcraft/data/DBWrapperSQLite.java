@@ -30,7 +30,7 @@ import com.jessy1237.dwarfcraft.models.DwarfSkill;
 import com.jessy1237.dwarfcraft.models.DwarfTrainerTrait;
 
 import net.citizensnpcs.api.npc.AbstractNPC;
-
+@Deprecated
 class DBWrapperSQLite implements DBWrapper
 {
     private final ConfigManager configManager;
