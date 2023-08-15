@@ -124,7 +124,7 @@ public final class ConfigManager
         password = config.getString( "MySQL Password" );
     
         dbpath = config.getString( "Database File Name" );
-        DwarfCraft.debugMessagesThreshold = config.getInt( "Debug Level" );
+        plugin.debugMessagesThreshold = config.getInt( "Debug Level" );
         sendGreeting = config.getBoolean( "Send Login Greet" );
         disableCacti = config.getBoolean( "Disable Farm Exploits" );
         worldBlacklist = config.getBoolean( "World Blacklist" );

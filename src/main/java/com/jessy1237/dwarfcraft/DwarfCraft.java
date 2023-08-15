@@ -42,7 +42,7 @@ public class DwarfCraft extends JavaPlugin
     private Util util;
     private Chat chat = null;
     public boolean isAuraActive = false;
-    public static int debugMessagesThreshold = 10;
+    public int debugMessagesThreshold = 5;
     
     private final DwarfInventoryListener inventoryListener = new DwarfInventoryListener( this );
     private final DwarfEntityListener entityListener = new DwarfEntityListener( this );

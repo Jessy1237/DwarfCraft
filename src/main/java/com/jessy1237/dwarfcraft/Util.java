@@ -60,7 +60,7 @@ public class Util
     {
         String prefix = ChatColor.YELLOW + "[" + plugin.getName() + "] [DEBUG] ";
         String suffix = ChatColor.ITALIC + " (set to " + debugThreshold + " to silence.)";
-        if ( DwarfCraft.debugMessagesThreshold < debugThreshold ) {
+        if ( plugin.debugMessagesThreshold < debugThreshold ) {
             ChatColor color = chatColorForLogLevel(logLevel);
             plugin.getServer().getConsoleSender().sendMessage(prefix + color + message + suffix);
         }
