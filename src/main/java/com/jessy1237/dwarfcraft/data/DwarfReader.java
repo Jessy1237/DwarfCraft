@@ -98,7 +98,8 @@ class DwarfReader {
 
     public void createDwarf( OfflinePlayer player )
     {
-        File playerData = new File( plugin.getDataFolder().getAbsolutePath() + "/data/players/" + player.getUniqueId() + ".json" );
+        String path = "/data/players/" + player.getUniqueId() + ".json";
+        File playerData = new File( plugin.getDataFolder().getAbsolutePath() + path );
         //if (playerData.exists()) return; //TODO: Add back this check when loading from data files
         
         try {
@@ -115,11 +116,11 @@ class DwarfReader {
                         newDwarf.setRaceMaster( false );
                         newDwarf.setSkills( skills );
 
-                        plugin.getUtil().consoleLog( "Creating data file: " + ChatColor.AQUA + playerData.getAbsolutePath() );
+                        plugin.getUtil().consoleLog( "Creating data file: " + ChatColor.AQUA + path );
                     }
                 } else {
                     newDwarf = dwarf;
-                    plugin.getUtil().consoleLog( "Found player data, creating data file: " + ChatColor.AQUA + playerData.getAbsolutePath() );
+                    plugin.getUtil().consoleLog( "Found player data, creating data file: " + ChatColor.AQUA + path );
                 }
 
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();

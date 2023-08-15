@@ -21,7 +21,7 @@ public class CommandManager {
         try
         {
             if ( setupPermissions() )
-                plugin.getUtil().consoleLog( "Success! Hooked into a Vault permissions plugin!", ChatColor.GREEN );
+                plugin.getUtil().consoleLog( "Hooked into a Vault permissions plugin!", ChatColor.GREEN );
         }
         catch ( Exception e )
         {

@@ -206,7 +206,7 @@ public class DwarfCraft extends JavaPlugin
         }
 
         if ( setupChat() )
-            getUtil().consoleLog( "Success! Hooked into a Vault chat plugin!", ChatColor.GREEN );
+            getUtil().consoleLog( "Hooked into a Vault chat plugin!", ChatColor.GREEN );
 
         if ( pm.getPlugin( "Citizens" ) == null || !pm.getPlugin( "Citizens" ).isEnabled() )
         {
@@ -215,13 +215,13 @@ public class DwarfCraft extends JavaPlugin
             return false;
         }
 
-        getUtil().consoleLog( "Success! Hooked into Citizens!", ChatColor.GREEN );
+        getUtil().consoleLog( "Hooked into Citizens!", ChatColor.GREEN );
         npc_registry = CitizensAPI.getNPCRegistry();
 
         if ( pm.getPlugin( "PlaceholderAPI" ) != null )
         {
             new PlaceholderHook().register();
-            getUtil().consoleLog( "Success! Hooked into PlaceholderAPI!", ChatColor.GREEN );
+            getUtil().consoleLog( "Hooked into PlaceholderAPI!", ChatColor.GREEN );
         }
 
         return true;
