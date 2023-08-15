@@ -30,8 +30,8 @@ import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.Placeholder;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.guis.TrainerGUI;
@@ -99,7 +99,7 @@ public class DwarfEntityListener implements Listener
 
             if ( dCPlayer.getRace().getId().equals( "" ) )
             {
-                plugin.getOut().sendMessage( event.getClicker(), Messages.chooseARace );
+                plugin.getOut().sendMessage( event.getClicker(), ConfigManager.getMessage("Trainer Messages.Choose Race") );
                 return;
             }
 
@@ -120,7 +120,7 @@ public class DwarfEntityListener implements Listener
 
                 if ( trainer.isWaiting() )
                 {
-                    dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.trainerOccupied ) ) );
+                    dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Occupied") ) ) );
                 }
                 else
                 {
@@ -128,43 +128,43 @@ public class DwarfEntityListener implements Listener
 
                     if ( skill == null )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.raceDoesNotContainSkill ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Skill Blocked") ) ) );
                         return;
                     }
 
                     if ( dwarfPlayer.getRace().getId().equals( "" ) )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.chooseARace ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Choose Race") ) ) );
                         return;
                     }
 
                     if ( dwarfPlayer.getRace().getId().equalsIgnoreCase( "vanilla" ) )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.vanillaRace ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Choose Race") ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() >= plugin.getConfigManager().getRaceLevelLimit() && !skill.doesSpecialize( dwarfPlayer.getRace() ) )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.raceDoesNotSpecialize.replaceAll( Placeholder.RACE_LEVEL_LIMIT.value(), "" + plugin.getConfigManager().getRaceLevelLimit() ) ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Non-Racial Skill").replaceAll( Placeholder.RACE_LEVEL_LIMIT.value(), "" + plugin.getConfigManager().getRaceLevelLimit() ) ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() >= plugin.getConfigManager().getMaxSkillLevel() )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.maxSkillLevel.replaceAll( Placeholder.SKILL_MAX_LEVEL.value(), "" + plugin.getConfigManager().getMaxSkillLevel() ) ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Max Skill Level").replaceAll( Placeholder.SKILL_MAX_LEVEL.value(), "" + plugin.getConfigManager().getMaxSkillLevel() ) ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() >= trainer.getMaxSkill() )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.trainerMaxLevel ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Max Level") ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() < trainer.getMinSkill() )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.trainerLevelTooHigh ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Level Too High") ) ) );
                         return;
                     }
 

@@ -27,8 +27,8 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.inventory.ItemStack;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.Util;
 import com.jessy1237.dwarfcraft.commands.CommandTutorial;
 import com.jessy1237.dwarfcraft.data.DwarfReader;
@@ -61,7 +61,7 @@ public class DwarfPlayerListener implements Listener
 
         DwarfPlayer dwarfPlayer = plugin.getDataManager().find( event.getPlayer() );
         if ( dwarfPlayer.getRace().getId().isEmpty() )
-            plugin.getOut().sendMessage( dwarfPlayer.getPlayer(), Messages.chooseARace );
+            plugin.getOut().sendMessage( dwarfPlayer.getPlayer(), ConfigManager.getMessage("Trainer Messages.Choose Race") );
 
         if ( plugin.getConfigManager().sendGreeting )
             plugin.getOut().welcome( dwarfPlayer );

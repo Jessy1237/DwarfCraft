@@ -24,8 +24,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatMessageType;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 import com.jessy1237.dwarfcraft.models.DwarfTrainer;
@@ -49,7 +49,7 @@ public class TrainerGUI extends DwarfGUI
     public void init()
     {
         DwarfSkill skill = dwarfPlayer.getSkill( trainer.getSkillTrained() );
-        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( skill.description( Messages.trainerGUITitle, dwarfPlayer ) ) );
+        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( skill.description( ConfigManager.getMessage("Trainer Messages.GUI Title"), dwarfPlayer ) ) );
         inventory.clear();
 
         List<List<ItemStack>> costs = dwarfPlayer.calculateTrainingCost( skill );
@@ -148,7 +148,7 @@ public class TrainerGUI extends DwarfGUI
                 long currentTime = System.currentTimeMillis();
                 if ( trainer.getLastTrain() != 0 && ( currentTime - trainer.getLastTrain() ) < ( long ) ( plugin.getConfigManager().getTrainDelay() * 1000 ) )
                 {
-                    plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, Messages.trainerCooldown );
+                    plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.Cooldown") );
                     player.playSound( player.getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.MASTER, 0.5f, 1.0f );
                 }
                 else
@@ -197,7 +197,7 @@ public class TrainerGUI extends DwarfGUI
     {
         DwarfSkill skill = dwarfPlayer.getSkill( trainer.getSkillTrained() );
         dwarfPlayer.getPlayer().closeInventory();
-        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( skill.description( Messages.trainerGUITitle, dwarfPlayer ) ) );
+        this.inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), 18, plugin.getOut().parseColors( skill.description( ConfigManager.getMessage("Trainer Messages.GUI Title"), dwarfPlayer ) ) );
         plugin.getDwarfInventoryListener().addDwarfGUI( dwarfPlayer.getPlayer(), this );
     }
 

@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.commands.CommandException.Type;
 import com.jessy1237.dwarfcraft.models.DwarfCommand;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
@@ -43,7 +43,7 @@ public class CommandSkillSheet extends DwarfCommand
                 DwarfPlayer dCPlayer = plugin.getDataManager().find( ( Player ) sender );
                 if ( dCPlayer.getRace().getId().equals( "" ) )
                 {
-                    plugin.getOut().sendMessage( sender, Messages.chooseARace );
+                    plugin.getOut().sendMessage( sender, ConfigManager.getMessage("Trainer Messages.Choose Race") );
                     return true;
                 }
 
@@ -100,7 +100,7 @@ public class CommandSkillSheet extends DwarfCommand
 
                 if ( dCPlayer.getRace().getId().equals( "" ) )
                 {
-                    plugin.getOut().sendMessage( sender, Messages.chooseARace );
+                    plugin.getOut().sendMessage( sender, ConfigManager.getMessage("Trainer Messages.Choose Race") );
                     return true;
                 }
                 plugin.getOut().printSkillSheet( dCPlayer, sender, printFull );

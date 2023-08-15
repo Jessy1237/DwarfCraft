@@ -10,6 +10,7 @@
 Welcome prefix: "&6[DwarfCraft] "
 Welcome: "&fWelcome, &9<player.race> &6<player.name>"
 Announcement Message: "<player.name> has just leveled <skill.name> to level <skill.level>!"
+Info Message: "&dWelcome to DwarfCraft. You are a player with a set of skills that let you do certain tasks better. For more information see &4/dc tutorial&d. Original Authors: smartaleq, LexManos and RCarretta Authors: Jessy1237"
 
 # ################################################################# #
 #    Messages used when displaying information for /dc skillsheet   #

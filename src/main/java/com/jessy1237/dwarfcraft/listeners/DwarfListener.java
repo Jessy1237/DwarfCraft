@@ -17,8 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.Placeholder;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.events.DwarfLevelUpEvent;
@@ -52,7 +52,7 @@ public class DwarfListener implements Listener
             if (suffix != null)
                 name = name.concat( suffix );
 
-            String message = Messages.announcementMessage.replaceAll( Placeholder.PLAYER_NAME.value(), name ).replaceAll( Placeholder.SKILL_NAME.value(), skill.getDisplayName() ).replaceAll( Placeholder.SKILL_LEVEL.value(), String.valueOf(skill.getLevel()) ).replaceAll( Placeholder.LEVEL.value(), String.valueOf(skill.getLevel()) );
+            String message = ConfigManager.getMessage("Announcement Message").replaceAll( Placeholder.PLAYER_NAME.value(), name ).replaceAll( Placeholder.SKILL_NAME.value(), skill.getDisplayName() ).replaceAll( Placeholder.SKILL_LEVEL.value(), String.valueOf(skill.getLevel()) ).replaceAll( Placeholder.LEVEL.value(), String.valueOf(skill.getLevel()) );
             player.getPlayer().playSound( player.getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 0.5f, 1.0f );
 
             plugin.getServer().broadcastMessage( message );

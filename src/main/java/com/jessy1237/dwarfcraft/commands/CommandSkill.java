@@ -12,7 +12,6 @@ package com.jessy1237.dwarfcraft.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -24,9 +23,8 @@ import org.bukkit.util.StringUtil;
 
 import net.md_5.bungee.api.ChatColor;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
-import com.jessy1237.dwarfcraft.commands.CommandException.Type;
 import com.jessy1237.dwarfcraft.models.DwarfCommand;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
@@ -84,7 +82,7 @@ public class CommandSkill extends DwarfCommand implements TabCompleter
             if ( dwarfPlayer.getRace() == null )
             {
                 if ((sender instanceof Player)) {
-                    plugin.getOut().sendMessage( sender, Messages.chooseARace );
+                    plugin.getOut().sendMessage( sender, ConfigManager.getMessage("Trainer Messages.Choose Race") );
                 } else {
                     plugin.getOut().sendMessage(sender, "Player has no data");
                 }

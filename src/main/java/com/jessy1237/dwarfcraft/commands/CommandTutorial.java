@@ -25,8 +25,8 @@ import org.bukkit.inventory.meta.BookMeta;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
+import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.commands.CommandException.Type;
 import com.jessy1237.dwarfcraft.models.DwarfCommand;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
@@ -104,7 +104,7 @@ public class CommandTutorial extends DwarfCommand
         bookMeta.setTitle( "DwarfCraft Pocket Guide" );
         bookMeta.setAuthor( "Jessy1237" );
 
-        for ( String readPage : Messages.tutorial )
+        for ( String readPage : ConfigManager.getTutorialBookPages() )
         {
 
             String page = plugin.getOut().parseColors( dwarfPlayer.toString( readPage ) );
