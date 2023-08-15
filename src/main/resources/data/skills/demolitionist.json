@@ -31,7 +31,7 @@
     },
     {
       "type": "EXPLOSIONDAMAGE",
-      "description": "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from explosions",
+      "description": "You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> damage from explosions",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 1.25,

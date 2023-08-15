@@ -371,9 +371,9 @@ public class DwarfEffect
         replacements.put(Placeholder.EFFECT_AMOUNT_NORMAL, String.valueOf(this.getNormalLevel() ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_FOOD_ORIGINAL, origFoodLevel );
         replacements.put(Placeholder.EFFECT_AMOUNT_FOOD, String.format( "%.2f", ( effectAmount / 2.0 ) ) );
-        replacements.put(Placeholder.EFFECT_DAMAGE, String.valueOf ( effectAmount * 100 ) );
+        replacements.put(Placeholder.EFFECT_DAMAGE, String.format( "%.2f", effectAmount * 100 ) );
         replacements.put(Placeholder.EFFECT_DAMAGE_BOW, String.format( "%.0f", ( effectAmount + 2 ) ) );
-        replacements.put(Placeholder.EFFECT_DAMAGE_TAKEN, String.valueOf( effectAmount * 100 ) );
+        replacements.put(Placeholder.EFFECT_DAMAGE_TAKEN, String.format( "%.2f", effectAmount * 100 ) );
         replacements.put(Placeholder.EFFECT_AMOUNT_DIG, String.format( "%.0f", +( effectAmount * 100 ) ) );
         replacements.put(Placeholder.EFFECT_OUTPUT, ChatColor.DARK_GREEN + plugin.getUtil().getCleanName( getOutput(dCPlayer) ) );
         replacements.put(Placeholder.EFFECT_TOOL_TYPE, toolType());
