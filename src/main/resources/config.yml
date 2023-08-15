@@ -13,7 +13,7 @@ MySQL Password: ""
 Database File Name: "dwarfcraft.db"
 
 #Affects debug level on restart
-Debug Level: 7
+Debug Level: 10
 
 #If we should greet every player as they come online
 Send Login Greet: true
