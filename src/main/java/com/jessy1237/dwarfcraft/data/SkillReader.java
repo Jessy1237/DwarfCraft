@@ -12,7 +12,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.SkillManager;
 import com.jessy1237.dwarfcraft.models.DwarfItemHolder;
 import com.jessy1237.dwarfcraft.models.DwarfRace;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;

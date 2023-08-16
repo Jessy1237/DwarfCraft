@@ -8,7 +8,7 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,20 +22,14 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.jessy1237.dwarfcraft.DwarfCraft;
+
 public final class ConfigManager
 {
     private final DwarfCraft plugin;
 
     private final String configDirectory;
-
-    public String dbType;
-    public String host;
-    public int port;
-    public String database;
-    public String username;
-    public String password;
     
-    private String dbpath;
     private Integer trainDelay;
     private Integer announcementInterval;
     private ArrayList<String> skillLevelCommands;
@@ -62,7 +56,7 @@ public final class ConfigManager
     protected static final HashMap<String, String> messages = new HashMap<>();
     protected static final ArrayList<String> tutorialBookPages = new ArrayList<String>();
 
-    protected ConfigManager( DwarfCraft plugin, String directory )
+    public ConfigManager( DwarfCraft plugin, String directory )
     {
         this.plugin = plugin;
         if ( !directory.endsWith( File.separator ) )
@@ -118,15 +112,7 @@ public final class ConfigManager
         skillMaxCapeCommands = new ArrayList<>();
 
         FileConfiguration config = plugin.getConfig();
-
-        dbType = config.getString( "Database Type" );
-        host = config.getString( "MySQL Hostname" );
-        port = config.getInt( "MySQL Port" );
-        database = config.getString( "MySQL Database" );
-        username = config.getString( "MySQL Username" );
-        password = config.getString( "MySQL Password" );
     
-        dbpath = config.getString( "Database File Name" );
         plugin.debugMessagesThreshold = config.getInt( "Debug Level" );
         sendGreeting = config.getBoolean( "Send Login Greet" );
         disableCacti = config.getBoolean( "Disable Farm Exploits" );

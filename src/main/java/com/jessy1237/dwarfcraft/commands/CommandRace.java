@@ -12,6 +12,7 @@ package com.jessy1237.dwarfcraft.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -45,7 +46,7 @@ public class CommandRace extends DwarfCommand
             if ( args.length == 0 && sender instanceof Player )
             {
                 Player p = ( Player ) sender;
-                RaceGUI gui = new RaceGUI( plugin, plugin.getDataManager().find( p ) );
+                RaceGUI gui = new RaceGUI( plugin, plugin.getDwarfManager().getDwarf( p ) );
                 plugin.getDwarfInventoryListener().addDwarfGUI( p, gui );
                 return true;
             }
@@ -59,7 +60,7 @@ public class CommandRace extends DwarfCommand
                 List<Object> desiredArguments = new ArrayList<Object>();
                 List<Object> outputList = null;
 
-                DwarfPlayer dCPlayer = new DwarfPlayer( plugin, null );
+                DwarfPlayer dCPlayer = new DwarfPlayer( plugin, new UUID(0, 0));
                 String newRace = "";
                 boolean confirm = false;
                 desiredArguments.add( dCPlayer );
@@ -101,7 +102,7 @@ public class CommandRace extends DwarfCommand
                         outputList = parser.parse( desiredArguments, true );
                         newRace = ( String ) outputList.get( 0 );
                         confirm = ( ( Boolean ) outputList.get( 1 ) );
-                        dCPlayer = plugin.getDataManager().find( ( Player ) sender );
+                        dCPlayer = plugin.getDwarfManager().getDwarf( ( Player ) sender );
 
                         if ( plugin.getRaceManager().raceExists( newRace ) )
                         {

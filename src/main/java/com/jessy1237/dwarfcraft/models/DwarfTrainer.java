@@ -22,8 +22,8 @@ import org.bukkit.inventory.meta.Damageable;
 import net.citizensnpcs.api.npc.AbstractNPC;
 import net.md_5.bungee.api.ChatMessageType;
 
-import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.events.DwarfDepositEvent;
 import com.jessy1237.dwarfcraft.events.DwarfLevelUpEvent;
 import com.jessy1237.dwarfcraft.guis.TrainerGUI;
@@ -136,8 +136,8 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
         if ( deposited )
         {
             plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.Deposit Successful") );
-            DwarfSkill[] dCSkills = { skill };
-            plugin.getDataManager().saveDwarfData( dCPlayer, dCSkills );
+            dCPlayer.setSkill(skill);
+            plugin.getDwarfManager().saveDwarf( dCPlayer );
             player.getWorld().playSound( player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0f, 1.0f );
         }
     }
@@ -177,8 +177,8 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
         if ( deposited )
         {
             plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.Deposit Successful") );
-            DwarfSkill[] dCSkills = { skill };
-            plugin.getDataManager().saveDwarfData( dCPlayer, dCSkills );
+            dCPlayer.setSkill(skill);
+            plugin.getDwarfManager().saveDwarf(dCPlayer);
             player.getWorld().playSound( player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0f, 1.0f );
         }
     }
@@ -211,7 +211,6 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
             e = new DwarfLevelUpEvent( dCPlayer, this, skill );
 
             plugin.getServer().getPluginManager().callEvent( e );
-            dCPlayer.runLevelUpCommands( skill );
         }
         if ( hasMatsOrDeposits[1] || hasMatsOrDeposits[0] )
         {
@@ -236,9 +235,8 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
                 }
             }
 
-            DwarfSkill[] dCSkills = new DwarfSkill[1];
-            dCSkills[0] = skill;
-            plugin.getDataManager().saveDwarfData( dCPlayer, dCSkills );
+            dCPlayer.setSkill(skill);
+            plugin.getDwarfManager().saveDwarf( dCPlayer );
             trainerGUI.updateTitle();
             player.getWorld().playSound( player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1.0f, 1.0f );
         }

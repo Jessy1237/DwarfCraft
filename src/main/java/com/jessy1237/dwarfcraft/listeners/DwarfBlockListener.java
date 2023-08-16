@@ -115,7 +115,7 @@ public class DwarfBlockListener implements Listener
             return;
         }
 
-        DwarfPlayer player = plugin.getDataManager().find( event.getPlayer() );
+        DwarfPlayer player = plugin.getDwarfManager().getDwarf( event.getPlayer() );
         HashMap<String, DwarfSkill> skills = player.getSkills();
 
         ItemStack tool = player.getPlayer().getInventory().getItemInMainHand();
@@ -323,7 +323,7 @@ public class DwarfBlockListener implements Listener
             return;
 
         Player player = event.getPlayer();
-        DwarfPlayer dCPlayer = plugin.getDataManager().find( player );
+        DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( player );
         HashMap<String, DwarfSkill> skills = dCPlayer.getSkills();
 
         // Effect Specific information
@@ -400,7 +400,7 @@ public class DwarfBlockListener implements Listener
                         {
                             if ( b.getX() == x && b.getY() == y && b.getZ() == z )
                             {
-                                DwarfPlayer dCPlayer = plugin.getDataManager().find( crops.get( b ) );
+                                DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( crops.get( b ) );
                                 for ( DwarfEffect effect : plugin.getEffectRegistry().getEffectsOfType( DwarfEffectType.BLOCKDROP ) ) {
                                     if ( effect.checkInitiator( Material.CACTUS ) ) {
                                         int amount = plugin.getUtil().randomAmount(effect.getEffectAmount(dCPlayer));
@@ -470,7 +470,7 @@ public class DwarfBlockListener implements Listener
                     {
                         if ( b.getX() == x && b.getY() == y && b.getZ() == z )
                         {
-                            DwarfPlayer dCPlayer = plugin.getDataManager().find( crops.get( b ) );
+                            DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( crops.get( b ) );
                             for ( DwarfEffect e : plugin.getEffectRegistry().getEffectsOfType( DwarfEffectType.BLOCKDROP ) ) {
                                 if (e.checkInitiator( Material.SUGAR_CANE )) {
                                     int amount = plugin.getUtil().randomAmount(e.getEffectAmount(dCPlayer));

@@ -17,9 +17,9 @@ import org.bukkit.Material;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Placeholder;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffectType;
+import com.jessy1237.dwarfcraft.util.Placeholder;
 
 public class DwarfSkill implements Cloneable
 {

@@ -129,6 +129,7 @@ public class ListGUI extends DwarfGUI
                 lore.add( "" );
                 lore.add( ChatColor.LIGHT_PURPLE + "Click to teleport to Trainer..." );
 
+                if (trainer.getEntity().getEntity() == null) continue;
                 if ( trainer.getEntity().getEntity().getType() == EntityType.PLAYER )
                 {
                     meta.setOwningPlayer( plugin.getServer().getOfflinePlayer( trainer.getName() ) );

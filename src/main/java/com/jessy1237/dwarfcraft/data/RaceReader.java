@@ -14,7 +14,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.RaceManager;
 import com.jessy1237.dwarfcraft.models.DwarfRace;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

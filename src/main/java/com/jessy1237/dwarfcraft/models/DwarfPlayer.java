@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,37 +24,55 @@ import org.bukkit.inventory.ItemStack;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Placeholder;
+import com.jessy1237.dwarfcraft.util.Placeholder;
 
 public class DwarfPlayer
 {
     private final DwarfCraft plugin;
-    @Expose private HashMap<String, DwarfSkill> skills;
     private Player player;
+    private UUID uuid;
+    @Expose private HashMap<String, DwarfSkill> skills;
     @Expose @SerializedName("race") private String race_id;
     @Expose private boolean raceMaster;
 
-    public void setPlayer( Player player )
-    {
-        this.player = player;
-    }
-
-    public DwarfPlayer( final DwarfCraft plugin, Player player )
+    public DwarfPlayer( final DwarfCraft plugin, UUID uuid )
     {
         this.plugin = plugin;
-        this.player = player;
+        this.uuid = uuid;
+        this.player = null;
         this.race_id = plugin.getRaceManager().getDefaultRace().getId();
-        this.skills = plugin.getSkillManager().getAllSkills();
+        this.skills = new HashMap<>();
         this.raceMaster = false;
+    }
+
+    public DwarfPlayer( final DwarfCraft plugin, UUID uuid, DwarfRace race, boolean raceMaster )
+    {
+        this.plugin = plugin;
+        this.uuid = uuid;
+        this.player = null;
+        this.race_id = race.getId();
+        this.skills = new HashMap<>();
+        this.raceMaster = raceMaster;
     }
 
     public DwarfPlayer( final DwarfCraft plugin, Player player, DwarfRace race, boolean raceMaster )
     {
         this.plugin = plugin;
+        this.uuid = player.getUniqueId();
         this.player = player;
         this.race_id = race.getId();
-        this.skills = plugin.getSkillManager().getAllSkills();
+        this.skills = new HashMap<>();
         this.raceMaster = raceMaster;
+    }
+
+    public DwarfPlayer( final DwarfCraft plugin, Player player )
+    {
+        this.plugin = plugin;
+        this.uuid = player.getUniqueId();
+        this.player = player;
+        this.race_id = plugin.getRaceManager().getDefaultRace().getId();
+        this.skills = new HashMap<>();
+        this.raceMaster = false;
     }
 
     public List<List<ItemStack>> calculateTrainingCost( DwarfSkill skill )
@@ -163,26 +180,26 @@ public class DwarfPlayer
         return playerLevel;
     }
 
+    public UUID getUuid()
+    {
+        return uuid;
+    }
+
     public Player getPlayer()
     {
+        if (!hasPlayer()) player = plugin.getServer().getPlayer(uuid);
         return player;
     }
 
-    /**
-     * Gets a dwarf's skill from an effect
-     * 
-     * @param effect (does not have to be this dwarf's effect, only used for ID#)
-     * @return DwarfSkill or null if none found
-     */
-//    public DwarfSkill getSkill( DwarfEffect effect )
-//    {
-//        for ( DwarfSkill skill : skills.values() )
-//        {
-//            if ( skill.getId() == effect.getId() / 10 )
-//                return skill;
-//        }
-//        return null;
-//    }
+    public void setPlayer( Player player )
+    {
+        this.player = player;
+    }
+
+    public boolean hasPlayer()
+    {
+        return !(player == null);
+    }
 
     /**
      * Gets a dwarf's skill by skill_id
@@ -227,7 +244,12 @@ public class DwarfPlayer
      */
     public void setSkills( HashMap<String, DwarfSkill> skills )
     {
-        this.skills = skills;
+        this.skills.putAll(skills);
+    }
+
+    public void setSkill( DwarfSkill skill )
+    {
+        this.skills.put( skill.getId(), skill);
     }
 
     public int getSkillLevel( String skill_id )
@@ -243,9 +265,7 @@ public class DwarfPlayer
         final DwarfRace oldRace = plugin.getRaceManager().getRace( this.race_id );
         if (!plugin.getRaceManager().raceExists( race.toLowerCase() )) return;
         this.race_id = race.toLowerCase();
-        DwarfSkill[] dCSkills = new DwarfSkill[skills.size()];
 
-        int I = 0;
         // Resets the players skills
         for ( DwarfSkill skill : skills.values() )
         {
@@ -281,8 +301,7 @@ public class DwarfPlayer
                     }
                 }
             }
-            dCSkills[I] = skill;
-            I++;
+            skills.put(skill.getId(), skill);
         }
 
         // Resets the players prefix
@@ -291,7 +310,7 @@ public class DwarfPlayer
                 if ( plugin.getChat().getPlayerPrefix( getPlayer() ).contains( plugin.getUtil().getPlayerPrefix( oldRace.getName() ) ) )
                     plugin.getChat().setPlayerPrefix( getPlayer(), plugin.getChat().getPlayerPrefix( getPlayer() ).replace( plugin.getUtil().getPlayerPrefix( oldRace.getName() ), plugin.getUtil().getPlayerPrefix( this ) ) );
 
-        plugin.getDataManager().saveDwarfData( this, dCSkills );
+        plugin.getDwarfManager().saveDwarf( this );
     }
 
     public DwarfRace getRace()
@@ -331,53 +350,14 @@ public class DwarfPlayer
         return isMax;
     }
 
-    public boolean isDwarfCraftDev()
+    public boolean isDeveloper()
     {
         ArrayList<UUID> uuids = new ArrayList<>();
         uuids.add( UUID.fromString( "83a00245-b186-4cda-a11d-c0c5fff4da1f" ) );
         uuids.add( UUID.fromString( "193fef41-cfe9-4d35-b1f5-40fa23410e93" ) );
-        return uuids.contains( this.player.getUniqueId() );
+        return uuids.contains( this.uuid );
     }
 
-    public void runLevelUpCommands( DwarfSkill skill )
-    {
-        if ( plugin.getConfigManager().getSkillLevelCommands().size() > 0 )
-        {
-            ArrayList<String> commands;
-
-            if ( !plugin.getSkillManager().getAllSkills().containsValue( skill ) )
-            {
-                return;
-            }
-
-            if ( isMax() )
-            {
-                commands = plugin.getConfigManager().getSkillMaxCapeCommands();
-            }
-            else if ( skill.getLevel() >= skill.getMaxLevel( this ) )
-            {
-                commands = plugin.getConfigManager().getSkillMasteryCommands();
-            }
-            else
-            {
-                commands = plugin.getConfigManager().getSkillLevelCommands();
-            }
-
-            for ( String command : commands )
-            {
-                String playerPosition = player.getLocation().getX() + " " + player.getLocation().getY() + " " + player.getLocation().getZ();
-
-                command = command.replaceAll( "<player.pos>", playerPosition ).replaceAll( "<world.name>", player.getWorld().getName() );
-                command = skill.description( command, this );
-                command = ChatColor.translateAlternateColorCodes( '&', command );
-
-                plugin.getServer().dispatchCommand( plugin.getServer().getConsoleSender(), command );
-            }
-
-            commands.clear();
-        }
-    }
-    
     public String toString( String text )
     {
         return text.replaceAll( Placeholder.PLAYER_LEVEL.value(), "" + this.getDwarfLevel() ).replaceAll( Placeholder.PLAYER_NAME.value(), this.getPlayer().getDisplayName() )

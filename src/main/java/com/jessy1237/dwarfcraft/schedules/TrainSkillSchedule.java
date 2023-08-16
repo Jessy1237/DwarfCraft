@@ -17,13 +17,13 @@ import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatMessageType;
 
-import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Placeholder;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.guis.TrainerGUI;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 import com.jessy1237.dwarfcraft.models.DwarfTrainer;
+import com.jessy1237.dwarfcraft.util.Placeholder;
 
 public class TrainSkillSchedule implements Runnable
 {

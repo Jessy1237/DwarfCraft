@@ -1,14 +1,15 @@
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.util;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+
+import static com.jessy1237.dwarfcraft.util.Placeholder.generalParse;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
-
-import static com.jessy1237.dwarfcraft.Placeholder.generalParse;
 
 public class PlaceholderHook extends PlaceholderExpansion
 {
@@ -49,7 +50,7 @@ public class PlaceholderHook extends PlaceholderExpansion
         if (plugin == null) return null;
         
         String out = generalParse( "<" + identifier + ">", plugin );
-        DwarfPlayer dwarfPlayer = plugin.getDataManager().find( player );
+        DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( player );
         
         if ( dwarfPlayer != null )
             out = dwarfPlayer.toString(out);

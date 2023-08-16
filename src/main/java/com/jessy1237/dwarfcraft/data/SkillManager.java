@@ -1,4 +1,4 @@
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.data;
 
 import java.io.File;
 import java.io.InputStream;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.bukkit.ChatColor;
 
-import com.jessy1237.dwarfcraft.data.SkillReader;
+import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.events.DwarfLoadSkillsEvent;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 

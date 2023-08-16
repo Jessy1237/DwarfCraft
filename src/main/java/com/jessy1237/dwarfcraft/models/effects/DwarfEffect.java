@@ -15,11 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Placeholder;
-import com.jessy1237.dwarfcraft.Util;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.models.DwarfItemHolder;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
+import com.jessy1237.dwarfcraft.util.Placeholder;
+import com.jessy1237.dwarfcraft.util.Util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

@@ -8,7 +8,9 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.util;
+
+import com.jessy1237.dwarfcraft.DwarfCraft;
 
 public enum Placeholder
 {

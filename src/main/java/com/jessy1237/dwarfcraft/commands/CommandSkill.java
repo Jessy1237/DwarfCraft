@@ -23,8 +23,8 @@ import org.bukkit.util.StringUtil;
 
 import net.md_5.bungee.api.ChatColor;
 
-import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.models.DwarfCommand;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
@@ -71,7 +71,7 @@ public class CommandSkill extends DwarfCommand implements TabCompleter
                 plugin.getOut().sendMessage( sender, "Unable to locate player");
                 return true;
             }
-            DwarfPlayer dwarfPlayer = new DwarfPlayer(plugin, player);
+            DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf(player);
 
             DwarfSkill skill;
             if (args.length == 1 && player != null)

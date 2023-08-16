@@ -1,17 +1,5 @@
 #This is the default configuration setup for DwarfCraft
 
-#Select the Database type to use. Currently only supports "sqlite" or "MySQL"
-Database Type: "sqlite"
-
-MySQL Hostname: "127.0.0.1"
-MySQL Port: 3306
-MySQL Database: "dwarfcraft"
-MySQL Username: "root"
-MySQL Password: ""
-
-#Manually set the DwarfCraft database to another database file, if you are using multiple sqlite plugins this should work.
-Database File Name: "dwarfcraft.db"
-
 #Affects debug level on restart
 Debug Level: 10
 
@@ -54,7 +42,7 @@ Announce Level Up: true
 #This is the interval of levels that the announcements go off for when a player successfully levels up a skill. i.e. If its set to 5 then at every 5 levels an announcement will go out.
 Announcement Interval: 5
 
-#This decides how to sort the DwarfTrainers for the "/dc listtrainers" command. If true it will sort by Unique IDs otherwise if false it will sort by Name
+#This decides how to sort the DwarfTrainers for the "/dc list" command. If true it will sort by Unique IDs otherwise if false it will sort by Name
 Sort DwarfTrainers by Unique ID: true
 
 #This decides the race change penalty.

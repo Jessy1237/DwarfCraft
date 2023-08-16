@@ -63,7 +63,7 @@ public class DwarfVehicleListener implements Listener
             {
 
                 Player player = ( Player ) event.getAttacker();
-                DwarfPlayer dwarfPlayer = plugin.getDataManager().find( player );
+                DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( player );
                 Location loc = event.getVehicle().getLocation();
 
                 for ( DwarfSkill skill : dwarfPlayer.getSkills().values() )
@@ -141,7 +141,7 @@ public class DwarfVehicleListener implements Listener
             if ( !( passenger instanceof Player ) || !( event.getVehicle() instanceof Boat ) )
                 return;
 
-            DwarfPlayer dCPlayer = plugin.getDataManager().find( (Player) passenger );
+            DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( (Player) passenger );
             double effectAmount = 1.0;
             DwarfEffect effect = null;
             for ( DwarfSkill s : dCPlayer.getSkills().values() )

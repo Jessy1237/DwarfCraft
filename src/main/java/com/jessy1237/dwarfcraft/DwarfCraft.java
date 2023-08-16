@@ -24,9 +24,16 @@ import net.citizensnpcs.api.trait.TraitInfo;
 import net.milkbowl.vault.chat.Chat;
 
 import com.jessy1237.dwarfcraft.commands.*;
-import com.jessy1237.dwarfcraft.data.DataManager;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
+import com.jessy1237.dwarfcraft.data.DwarfManager;
+import com.jessy1237.dwarfcraft.data.RaceManager;
+import com.jessy1237.dwarfcraft.data.SkillManager;
+import com.jessy1237.dwarfcraft.legacy.DataManager;
 import com.jessy1237.dwarfcraft.listeners.*;
 import com.jessy1237.dwarfcraft.models.DwarfTrainerTrait;
+import com.jessy1237.dwarfcraft.util.Out;
+import com.jessy1237.dwarfcraft.util.PlaceholderHook;
+import com.jessy1237.dwarfcraft.util.Util;
 
 public class DwarfCraft extends JavaPlugin
 {
@@ -153,7 +160,7 @@ public class DwarfCraft extends JavaPlugin
             race_manager.init(); // Races must be loaded before skills for validation
             skill_manager.init();
 
-            data_manager = new DataManager( this, config_manager.dbType );
+            data_manager = new DataManager( this );
             data_manager.dbInitialize();
             dwarf_manager.init();
             
@@ -182,7 +189,7 @@ public class DwarfCraft extends JavaPlugin
             getServer().getScheduler().runTaskAsynchronously( this, () -> {
                 getUtil().removePlayerPrefixes();
                 for (Player player : getServer().getOnlinePlayers()) {
-                    getUtil().setPlayerPrefix(player);
+                    //getUtil().setPlayerPrefix(player); //TODO
                 }
             });
 

@@ -8,7 +8,7 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.util;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +18,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.jessy1237.dwarfcraft.DwarfCraft;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
@@ -31,7 +33,7 @@ public class Out
     private final int maxLines = 20;
     private final DwarfCraft plugin;
 
-    protected Out( DwarfCraft plugin )
+    public Out( DwarfCraft plugin )
     {
         this.plugin = plugin;
     }
@@ -314,7 +316,7 @@ public class Out
 
     public void race( CommandSender sender, Player player )
     {
-        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Race Info"), plugin.getDataManager().find( player ), null ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Race Info"), plugin.getDwarfManager().getDwarf( player ), null ) );
     }
 
     public void adminRace( CommandSender sender, DwarfPlayer player )

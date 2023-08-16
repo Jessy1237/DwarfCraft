@@ -30,9 +30,8 @@ import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
-import com.jessy1237.dwarfcraft.ConfigManager;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Placeholder;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.guis.TrainerGUI;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
@@ -41,6 +40,7 @@ import com.jessy1237.dwarfcraft.models.DwarfTrainer;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffectType;
 import com.jessy1237.dwarfcraft.schedules.InitTrainerGUISchedule;
+import com.jessy1237.dwarfcraft.util.Placeholder;
 
 public class DwarfEntityListener implements Listener
 {
@@ -93,10 +93,9 @@ public class DwarfEntityListener implements Listener
         if ( trainer != null )
         {
             Player player = event.getClicker();
-            DwarfPlayer dCPlayer = plugin.getDataManager().find( player );
+            DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf(player.getUniqueId());
             DwarfSkill skill = dCPlayer.getSkill( trainer.getSkillTrained() );
             if (skill == null) return;
-
             if ( dCPlayer.getRace().getId().equals( "" ) )
             {
                 plugin.getOut().sendMessage( event.getClicker(), ConfigManager.getMessage("Trainer Messages.Choose Race") );
@@ -104,7 +103,6 @@ public class DwarfEntityListener implements Listener
             }
 
             plugin.getOut().printSkillInfo( player, skill, dCPlayer, trainer.getMaxSkill() );
-
         }
     }
 
@@ -113,7 +111,7 @@ public class DwarfEntityListener implements Listener
     {
         try
         {
-            DwarfPlayer dwarfPlayer = plugin.getDataManager().find( event.getClicker() );
+            DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( event.getClicker() );
             DwarfTrainer trainer = plugin.getDataManager().getTrainer( event.getNPC() );
             if ( trainer != null )
             {
@@ -225,7 +223,7 @@ public class DwarfEntityListener implements Listener
         double hp = victim.getHealth();
         if ( damager instanceof Player )
         {
-            attacker = plugin.getDataManager().find( ( Player ) damager );
+            attacker = plugin.getDwarfManager().getDwarf( ( Player ) damager );
             assert ( event.getDamager() == attacker.getPlayer() );
         }
         else
@@ -328,7 +326,7 @@ public class DwarfEntityListener implements Listener
 
         if ( attacker instanceof Player )
         {
-            attackDwarf = plugin.getDataManager().find( ( Player ) attacker );
+            attackDwarf = plugin.getDwarfManager().getDwarf( ( Player ) attacker );
             for ( DwarfSkill skill : attackDwarf.getSkills().values() )
             {
                 for ( DwarfEffect effect : skill.getEffects() )
@@ -365,7 +363,7 @@ public class DwarfEntityListener implements Listener
 
         if ( ( event.getEntity() instanceof Player ) )
         {
-            DwarfPlayer dCPlayer = plugin.getDataManager().find( ( Player ) event.getEntity() );
+            DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( ( Player ) event.getEntity() );
             double damage = event.getDamage();
             final double origDamage = event.getDamage();
             for ( DwarfSkill s : dCPlayer.getSkills().values() )

@@ -8,10 +8,8 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft.data;
+package com.jessy1237.dwarfcraft.legacy;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -31,60 +29,35 @@ public class DataManager
     private HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>();
     public HashMap<Integer, DwarfTrainer> trainerList = new HashMap<>();
     private final DwarfCraft plugin;
-    private final DBWrapper dbWrapper;
-    private final String type;
+    private final SQLiteReader dbReader;
 
-    public DataManager( DwarfCraft plugin, String type )
+    public DataManager( DwarfCraft plugin )
     {
         this.plugin = plugin;
-        this.dbWrapper = DBWrapperFactory.createWrapper( plugin, type );
-        this.type = type;
+        this.dbReader = new SQLiteReader(plugin, plugin.getConfigManager());
     }
 
     public void dbInitialize()
     {
-        File database = new File( plugin.getDataFolder(), "dwarfcraft.db" );
-        if ( !database.exists() )
-        {
-            try
-            {
-                if ( !database.createNewFile() && type.equalsIgnoreCase( "sqlite" ) )
-                {
-                    plugin.getUtil().consoleLog( "Failed to create database! Disabling...", Level.SEVERE );
-                    plugin.onDisable();
-                    return;
-                }
-            }
-            catch ( IOException e )
-            {
-                e.printStackTrace();
-            }
-        }
-        dbWrapper.dbInitialize();
+        dbReader.dbInitialize();
     }
 
     public void dbFinalize()
     {
-        dbWrapper.dbFinalize();
-    }
-
-    @Deprecated
-    public void createDwarfData( DwarfPlayer dCPlayer )
-    {
-        dbWrapper.createDwarfData( dCPlayer );
+        dbReader.dbFinalize();
     }
 
     @Deprecated
     public boolean checkDwarfData( DwarfPlayer player )
     {
-        return dbWrapper.checkDwarfData( player );
+        return dbReader.checkDwarfData( player, player.getUuid() );
     }
 
-    @Deprecated
-    public boolean saveDwarfData( DwarfPlayer dwarfPlayer, DwarfSkill[] skills )
-    {
-        return dbWrapper.saveDwarfData( dwarfPlayer, skills );
-    }
+    // @Deprecated
+    // public boolean saveDwarfData( DwarfPlayer dwarfPlayer, DwarfSkill[] skills )
+    // {
+    //     return dbWrapper.saveDwarfData( dwarfPlayer, skills );
+    // }
 
     public void addVehicle( DwarfVehicle v )
     {
@@ -107,26 +80,6 @@ public class DataManager
             return true;
         }
         return false;
-    }
-
-    @Deprecated
-    public DwarfPlayer createDwarf( Player player )
-    {
-        DwarfPlayer newDwarf = new DwarfPlayer( plugin, player );
-        newDwarf.setRace( plugin.getRaceManager().getDefaultRace().getId() );
-        newDwarf.setSkills( plugin.getSkillManager().getAllSkills() );
-
-        for ( DwarfSkill skill : newDwarf.getSkills().values() )
-        {
-            skill.setLevel( 0 );
-            skill.setDeposit( 0, 1 );
-            skill.setDeposit( 0, 2 );
-            skill.setDeposit( 0, 3 );
-        }
-
-        if ( player != null )
-            dwarves.add( newDwarf );
-        return newDwarf;
     }
 
     /**
@@ -158,8 +111,8 @@ public class DataManager
     @Deprecated
     public DwarfPlayer findOffline( UUID uuid )
     {
-        DwarfPlayer dCPlayer = createDwarf( null );
-        if ( dbWrapper.checkDwarfData( dCPlayer, uuid ) )
+        DwarfPlayer dCPlayer = new DwarfPlayer(plugin, uuid);
+        if ( dbReader.checkDwarfData( dCPlayer, uuid ) )
             return dCPlayer;
         else
         {
