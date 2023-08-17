@@ -38,7 +38,8 @@
         "STONE_PICKAXE",
         "IRON_PICKAXE",
         "GOLDEN_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     },
     {
@@ -71,9 +72,10 @@
         "STONE_PICKAXE",
         "IRON_PICKAXE",
         "GOLDEN_PICKAXE",
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     }
   ],
-  "held_item": "QUARTZ"
+  "held_item": "ANCIENT_DEBRIS"
 }
