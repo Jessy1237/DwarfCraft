@@ -24,7 +24,8 @@
       "should_floor": false,
       "normal_level": 0,
       "tools": [
-        "DIAMOND_PICKAXE"
+        "DIAMOND_PICKAXE",
+        "NETHERITE_PICKAXE"
       ]
     }
   ],
