@@ -116,7 +116,7 @@ public class CommandSetSkill extends DwarfCommand implements TabCompleter
                         {
                             s.setLevel( oldLevel );
                         }
-                        dCPlayer.setSkill(skill);
+                        dCPlayer.setSkill(s);
                     }
                     plugin.getDwarfManager().saveDwarf( dCPlayer );
                     plugin.getOut().sendMessage(sender, "&eAll skills for player &9" + name + "&e have been set to level &3" + level);
