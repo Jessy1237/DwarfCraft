@@ -8,7 +8,7 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.util;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,7 +26,8 @@ import net.citizensnpcs.api.npc.NPC;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
-import com.jessy1237.dwarfcraft.data.DataManager;
+import com.jessy1237.dwarfcraft.DwarfCraft;
+import com.jessy1237.dwarfcraft.legacy.DataManager;
 import com.jessy1237.dwarfcraft.models.*;
 import com.google.gson.JsonObject;
 
@@ -60,7 +61,7 @@ public class Util
     {
         String prefix = ChatColor.YELLOW + "[" + plugin.getName() + "] [DEBUG] ";
         String suffix = ChatColor.ITALIC + " (set to " + debugThreshold + " to silence.)";
-        if ( DwarfCraft.debugMessagesThreshold < debugThreshold ) {
+        if ( plugin.debugMessagesThreshold < debugThreshold ) {
             ChatColor color = chatColorForLogLevel(logLevel);
             plugin.getServer().getConsoleSender().sendMessage(prefix + color + message + suffix);
         }
@@ -315,55 +316,56 @@ public class Util
         }
     }
     
-    public void setPlayerPrefix( Player player )
-    {
-        DataManager dm = plugin.getDataManager();
-        DwarfPlayer data = dm.find( player );
+    //TODO: Player prefixes
+    // public void setPlayerPrefix( Player player )
+    // {
+    //     DataManager dm = plugin.getDataManager();
+    //     DwarfPlayer data = dm.find( player );
         
-        if ( data == null )
-            data = dm.createDwarf( player );
-        if ( !dm.checkDwarfData( data ) )
-        {
-            dm.createDwarfData( data );
-        }
+    //     if ( data == null )
+    //         data = dm.createDwarf( player );
+    //     if ( !dm.checkDwarfData( data ) )
+    //     {
+    //         dm.createDwarfData( data );
+    //     }
         
-        if ( plugin.isChatEnabled() )
-        {
-            String prefix = plugin.getChat().getPlayerPrefix( player );
-            if ( plugin.getConfigManager().prefix )
-            {
-                if ( prefix != null )
-                {
-                    if ( !prefix.equals( "" ) )
-                    {
-                        while ( plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
-                        {
-                            prefix = plugin.getChat().getPlayerPrefix( player );
-                            prefix = prefix.replace( plugin.getUtil().getPlayerPrefix( data ) + " ", "" );
-                            plugin.getChat().setPlayerPrefix( player, prefix );
-                        }
-                    }
+    //     if ( plugin.isChatEnabled() )
+    //     {
+    //         String prefix = plugin.getChat().getPlayerPrefix( player );
+    //         if ( plugin.getConfigManager().prefix )
+    //         {
+    //             if ( prefix != null )
+    //             {
+    //                 if ( !prefix.equals( "" ) )
+    //                 {
+    //                     while ( plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
+    //                     {
+    //                         prefix = plugin.getChat().getPlayerPrefix( player );
+    //                         prefix = prefix.replace( plugin.getUtil().getPlayerPrefix( data ) + " ", "" );
+    //                         plugin.getChat().setPlayerPrefix( player, prefix );
+    //                     }
+    //                 }
                     
-                    if ( plugin.getChat() != null && !plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
-                    {
-                        plugin.getChat().setPlayerPrefix( player, plugin.getUtil().getPlayerPrefix( data ) + " " + plugin.getChat().getPlayerPrefix( player ) );
-                    }
-                }
-            }
-            else
-            {
+    //                 if ( plugin.getChat() != null && !plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
+    //                 {
+    //                     plugin.getChat().setPlayerPrefix( player, plugin.getUtil().getPlayerPrefix( data ) + " " + plugin.getChat().getPlayerPrefix( player ) );
+    //                 }
+    //             }
+    //         }
+    //         else
+    //         {
     
-                if ( prefix != null )
-                    if ( !prefix.equals( "" ) )
-                        while ( plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
-                        {
-                            prefix = plugin.getChat().getPlayerPrefix( player );
-                            prefix = prefix.replace( plugin.getUtil().getPlayerPrefix( data ) + " ", "" );
-                            plugin.getChat().setPlayerPrefix( player, prefix );
-                        }
-            }
-        }
-    }
+    //             if ( prefix != null )
+    //                 if ( !prefix.equals( "" ) )
+    //                     while ( plugin.getChat().getPlayerPrefix( player ).contains( plugin.getUtil().getPlayerPrefix( data ) ) )
+    //                     {
+    //                         prefix = plugin.getChat().getPlayerPrefix( player );
+    //                         prefix = prefix.replace( plugin.getUtil().getPlayerPrefix( data ) + " ", "" );
+    //                         plugin.getChat().setPlayerPrefix( player, prefix );
+    //                     }
+    //         }
+    //     }
+    // }
     
     /**
      * Gets the clean name of the Entity.

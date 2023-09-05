@@ -31,8 +31,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
-import com.jessy1237.dwarfcraft.Placeholder;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.guis.TrainerGUI;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
@@ -41,6 +40,7 @@ import com.jessy1237.dwarfcraft.models.DwarfTrainer;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffectType;
 import com.jessy1237.dwarfcraft.schedules.InitTrainerGUISchedule;
+import com.jessy1237.dwarfcraft.util.Placeholder;
 
 public class DwarfEntityListener implements Listener
 {
@@ -93,18 +93,16 @@ public class DwarfEntityListener implements Listener
         if ( trainer != null )
         {
             Player player = event.getClicker();
-            DwarfPlayer dCPlayer = plugin.getDataManager().find( player );
+            DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf(player.getUniqueId());
             DwarfSkill skill = dCPlayer.getSkill( trainer.getSkillTrained() );
             if (skill == null) return;
-
             if ( dCPlayer.getRace().getId().equals( "" ) )
             {
-                plugin.getOut().sendMessage( event.getClicker(), Messages.chooseARace );
+                plugin.getOut().sendMessage( event.getClicker(), ConfigManager.getMessage("Trainer Messages.Choose Race") );
                 return;
             }
 
             plugin.getOut().printSkillInfo( player, skill, dCPlayer, trainer.getMaxSkill() );
-
         }
     }
 
@@ -113,14 +111,14 @@ public class DwarfEntityListener implements Listener
     {
         try
         {
-            DwarfPlayer dwarfPlayer = plugin.getDataManager().find( event.getClicker() );
+            DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( event.getClicker() );
             DwarfTrainer trainer = plugin.getDataManager().getTrainer( event.getNPC() );
             if ( trainer != null )
             {
 
                 if ( trainer.isWaiting() )
                 {
-                    dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.trainerOccupied ) ) );
+                    dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Occupied") ) ) );
                 }
                 else
                 {
@@ -128,43 +126,43 @@ public class DwarfEntityListener implements Listener
 
                     if ( skill == null )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.raceDoesNotContainSkill ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Skill Blocked") ) ) );
                         return;
                     }
 
                     if ( dwarfPlayer.getRace().getId().equals( "" ) )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.chooseARace ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Choose Race") ) ) );
                         return;
                     }
 
                     if ( dwarfPlayer.getRace().getId().equalsIgnoreCase( "vanilla" ) )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.vanillaRace ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Choose Race") ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() >= plugin.getConfigManager().getRaceLevelLimit() && !skill.doesSpecialize( dwarfPlayer.getRace() ) )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.raceDoesNotSpecialize.replaceAll( Placeholder.RACE_LEVEL_LIMIT.value(), "" + plugin.getConfigManager().getRaceLevelLimit() ) ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Non-Racial Skill").replaceAll( Placeholder.RACE_LEVEL_LIMIT.value(), "" + plugin.getConfigManager().getRaceLevelLimit() ) ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() >= plugin.getConfigManager().getMaxSkillLevel() )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.maxSkillLevel.replaceAll( Placeholder.SKILL_MAX_LEVEL.value(), "" + plugin.getConfigManager().getMaxSkillLevel() ) ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Max Skill Level").replaceAll( Placeholder.SKILL_MAX_LEVEL.value(), "" + plugin.getConfigManager().getMaxSkillLevel() ) ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() >= trainer.getMaxSkill() )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.trainerMaxLevel ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Max Level") ) ) );
                         return;
                     }
 
                     if ( skill.getLevel() < trainer.getMinSkill() )
                     {
-                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', Messages.trainerLevelTooHigh ) ) );
+                        dwarfPlayer.getPlayer().spigot().sendMessage( ChatMessageType.ACTION_BAR, new TextComponent( ChatColor.translateAlternateColorCodes( '&', ConfigManager.getMessage("Trainer Messages.Level Too High") ) ) );
                         return;
                     }
 
@@ -225,7 +223,7 @@ public class DwarfEntityListener implements Listener
         double hp = victim.getHealth();
         if ( damager instanceof Player )
         {
-            attacker = plugin.getDataManager().find( ( Player ) damager );
+            attacker = plugin.getDwarfManager().getDwarf( ( Player ) damager );
             assert ( event.getDamager() == attacker.getPlayer() );
         }
         else
@@ -328,7 +326,7 @@ public class DwarfEntityListener implements Listener
 
         if ( attacker instanceof Player )
         {
-            attackDwarf = plugin.getDataManager().find( ( Player ) attacker );
+            attackDwarf = plugin.getDwarfManager().getDwarf( ( Player ) attacker );
             for ( DwarfSkill skill : attackDwarf.getSkills().values() )
             {
                 for ( DwarfEffect effect : skill.getEffects() )
@@ -365,7 +363,7 @@ public class DwarfEntityListener implements Listener
 
         if ( ( event.getEntity() instanceof Player ) )
         {
-            DwarfPlayer dCPlayer = plugin.getDataManager().find( ( Player ) event.getEntity() );
+            DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( ( Player ) event.getEntity() );
             double damage = event.getDamage();
             final double origDamage = event.getDamage();
             for ( DwarfSkill s : dCPlayer.getSkills().values() )

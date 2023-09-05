@@ -8,7 +8,7 @@
     <artifactId>dwarfcraft</artifactId>
     <name>DwarfCraft</name>
     <packaging>jar</packaging>
-    <version>4.3</version>
+    <version>4.3-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -93,23 +93,9 @@
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
-                    <include>default_files/**/*.*</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <includes>
                     <include>data/**/*.*</include>
                 </includes>
             </resource>
         </resources>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/jessy1237/dwarfcraft</url>
-        </repository>
-    </distributionManagement>
 </project>

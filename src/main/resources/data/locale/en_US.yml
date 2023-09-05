@@ -10,6 +10,7 @@
 Welcome prefix: "&6[DwarfCraft] "
 Welcome: "&fWelcome, &9<player.race> &6<player.name>"
 Announcement Message: "<player.name> has just leveled <skill.name> to level <skill.level>!"
+Info Message: "&dWelcome to DwarfCraft. You are a player with a set of skills that let you do certain tasks better. For more information see &4/dc tutorial&d. Original Authors: smartaleq, LexManos and RCarretta Authors: Jessy1237"
 
 # ################################################################# #
 #    Messages used when displaying information for /dc skillsheet   #
@@ -66,12 +67,9 @@ Trainer Messages:
 # ################################################################# #
 Effect Descriptions:
   General: "Effect Block Trigger: <effect.initiator> Block Output: <effect.output>. Effect value ranges from %.2<effect.amount.low> - %.2<effect.amount.high> for levels 0 to 30. Non specialists have the effect %.2<effect.minor.amount> , as if they were level <effect.normal.level>. Tools affected: <effect.tool.type>."
-  Explosion Damage (more): "&6You take <effect.level.color><effect.damage.taken>% more &6damage from explosions"
-  Explosion Damage (less): "&6You take <effect.level.color><effect.damage.taken>% less &6damage from explosions"
-  Fire Damage (more): "&6You take <effect.level.color><effect.damage.taken>% more &6damage from fire"
-  Fire Damage (less): "&6You take <effect.level.color><effect.damage.taken>% less &6damage from fire"
-  Fall Damage (more): "&6You take <effect.level.color><effect.damage.taken>% more &6damage from falling"
-  Fall Damage (less): "&6You take <effect.level.color><effect.damage.taken>% less &6damage from falling"
+  Explosion Damage: "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from explosions"
+  Fire Damage: "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from fire"
+  Fall Damage: "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from falling"
 
 # ################################################################# #
 #                         Tutorial Book Pages                       #

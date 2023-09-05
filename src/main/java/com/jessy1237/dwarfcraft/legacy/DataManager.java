@@ -8,10 +8,8 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft.data;
+package com.jessy1237.dwarfcraft.legacy;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -27,61 +25,39 @@ import com.jessy1237.dwarfcraft.models.*;
 
 public class DataManager
 {
-    List<DwarfPlayer> dwarves = new ArrayList<>();
-    public HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>();
+    protected List<DwarfPlayer> dwarves = new ArrayList<>();
+    private HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>();
     public HashMap<Integer, DwarfTrainer> trainerList = new HashMap<>();
     private final DwarfCraft plugin;
-    private final DBWrapper dbWrapper;
-    private final String type;
+    private final SQLiteReader dbReader;
 
-    public DataManager( DwarfCraft plugin, String type )
+    public DataManager( DwarfCraft plugin )
     {
         this.plugin = plugin;
-        this.dbWrapper = DBWrapperFactory.createWrapper( plugin, type );
-        this.type = type;
+        this.dbReader = new SQLiteReader(plugin, plugin.getConfigManager());
     }
 
     public void dbInitialize()
     {
-        File database = new File( plugin.getDataFolder(), "dwarfcraft.db" );
-        if ( !database.exists() )
-        {
-            try
-            {
-                if ( !database.createNewFile() && type.equalsIgnoreCase( "sqlite" ) )
-                {
-                    plugin.getUtil().consoleLog( "Failed to create database! Disabling...", Level.SEVERE );
-                    plugin.onDisable();
-                    return;
-                }
-            }
-            catch ( IOException e )
-            {
-                e.printStackTrace();
-            }
-        }
-        dbWrapper.dbInitialize();
+        dbReader.dbInitialize();
     }
 
     public void dbFinalize()
     {
-        dbWrapper.dbFinalize();
+        dbReader.dbFinalize();
     }
 
-    public void createDwarfData( DwarfPlayer dCPlayer )
-    {
-        dbWrapper.createDwarfData( dCPlayer );
-    }
-
+    @Deprecated
     public boolean checkDwarfData( DwarfPlayer player )
     {
-        return dbWrapper.checkDwarfData( player );
+        return dbReader.checkDwarfData( player, player.getUuid() );
     }
 
-    public boolean saveDwarfData( DwarfPlayer dwarfPlayer, DwarfSkill[] skills )
-    {
-        return dbWrapper.saveDwarfData( dwarfPlayer, skills );
-    }
+    // @Deprecated
+    // public boolean saveDwarfData( DwarfPlayer dwarfPlayer, DwarfSkill[] skills )
+    // {
+    //     return dbWrapper.saveDwarfData( dwarfPlayer, skills );
+    // }
 
     public void addVehicle( DwarfVehicle v )
     {
@@ -106,31 +82,13 @@ public class DataManager
         return false;
     }
 
-    public DwarfPlayer createDwarf( Player player )
-    {
-        DwarfPlayer newDwarf = new DwarfPlayer( plugin, player );
-        newDwarf.setRace( plugin.getRaceManager().getDefaultRace().getId() );
-        newDwarf.setSkills( plugin.getSkillManager().getAllSkills() );
-
-        for ( DwarfSkill skill : newDwarf.getSkills().values() )
-        {
-            skill.setLevel( 0 );
-            skill.setDeposit( 0, 1 );
-            skill.setDeposit( 0, 2 );
-            skill.setDeposit( 0, 3 );
-        }
-
-        if ( player != null )
-            dwarves.add( newDwarf );
-        return newDwarf;
-    }
-
     /**
      * Finds a DwarfPlayer from the server's static list based on player's name
      * 
      * @param player
      * @return DwarfPlayer or null
      */
+    @Deprecated
     public DwarfPlayer find( Player player )
     {
         for ( DwarfPlayer d : dwarves )
@@ -150,10 +108,11 @@ public class DataManager
         return null;
     }
 
+    @Deprecated
     public DwarfPlayer findOffline( UUID uuid )
     {
-        DwarfPlayer dCPlayer = createDwarf( null );
-        if ( dbWrapper.checkDwarfData( dCPlayer, uuid ) )
+        DwarfPlayer dCPlayer = new DwarfPlayer(plugin, uuid);
+        if ( dbReader.checkDwarfData( dCPlayer, uuid ) )
             return dCPlayer;
         else
         {

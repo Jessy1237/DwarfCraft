@@ -14,10 +14,12 @@ import java.util.*;
 
 import org.bukkit.Material;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Placeholder;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffectType;
+import com.jessy1237.dwarfcraft.util.Placeholder;
 
 public class DwarfSkill implements Cloneable
 {
@@ -25,11 +27,13 @@ public class DwarfSkill implements Cloneable
     private final String mID;
     private final String mName;
     private final LinkedHashMap<String, DwarfRace> mRaces;
-    private int mLevel;
+    @Expose @SerializedName("level") private int mLevel;
     private final List<DwarfEffect> mEffects;
     private final Material mHeldItem;
     private final DwarfTrainingItem mItem1, mItem2, mItem3;
-    private int mDeposit1, mDeposit2, mDeposit3;
+    @Expose @SerializedName("deposit1") private int mDeposit1;
+    @Expose @SerializedName("deposit2")private int mDeposit2;
+    @Expose @SerializedName("deposit3") private int mDeposit3;
     
     private final Map<Placeholder,String> replacements = new HashMap<>();
 

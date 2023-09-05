@@ -8,10 +8,11 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.data;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -21,21 +22,14 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.jessy1237.dwarfcraft.DwarfCraft;
+
 public final class ConfigManager
 {
-
     private final DwarfCraft plugin;
 
     private final String configDirectory;
-
-    public String dbType;
-    public String host;
-    public int port;
-    public String database;
-    public String username;
-    public String password;
     
-    private String dbpath;
     private Integer trainDelay;
     private Integer announcementInterval;
     private ArrayList<String> skillLevelCommands;
@@ -59,7 +53,10 @@ public final class ConfigManager
     public boolean hardcorePenalty = true;
     public boolean spawnTutorialBook = true;
 
-    protected ConfigManager( DwarfCraft plugin, String directory )
+    protected static final HashMap<String, String> messages = new HashMap<>();
+    protected static final ArrayList<String> tutorialBookPages = new ArrayList<String>();
+
+    public ConfigManager( DwarfCraft plugin, String directory )
     {
         this.plugin = plugin;
         if ( !directory.endsWith( File.separator ) )
@@ -95,9 +92,9 @@ public final class ConfigManager
             }
 
             // Create Data Files
-            File locale = new File( root + "/data/dwarfcraft/locale/", "en_US.yml" );
+            File locale = new File( root + "/data/locale/", "en_US.yml" );
             if ( !locale.exists() )
-                plugin.saveResource( "data/dwarfcraft/locale/en_US.yml", false );
+                plugin.saveResource( "data/locale/en_US.yml", false );
         }
         catch ( Exception e )
         {
@@ -115,16 +112,8 @@ public final class ConfigManager
         skillMaxCapeCommands = new ArrayList<>();
 
         FileConfiguration config = plugin.getConfig();
-
-        dbType = config.getString( "Database Type" );
-        host = config.getString( "MySQL Hostname" );
-        port = config.getInt( "MySQL Port" );
-        database = config.getString( "MySQL Database" );
-        username = config.getString( "MySQL Username" );
-        password = config.getString( "MySQL Password" );
     
-        dbpath = config.getString( "Database File Name" );
-        DwarfCraft.debugMessagesThreshold = config.getInt( "Debug Level" );
+        plugin.debugMessagesThreshold = config.getInt( "Debug Level" );
         sendGreeting = config.getBoolean( "Send Login Greet" );
         disableCacti = config.getBoolean( "Disable Farm Exploits" );
         worldBlacklist = config.getBoolean( "World Blacklist" );
@@ -157,71 +146,85 @@ public final class ConfigManager
 
     private boolean readLocaleFile()
     {
-        plugin.getUtil().consoleLog( "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/dwarfcraft/locale/" + "en_US.yml" );
+        plugin.getUtil().consoleLog( "Reading locale file: " + ChatColor.AQUA + configDirectory + "data/locale/" + "en_US.yml" );
 
-        FileConfiguration localeConfig = YamlConfiguration.loadConfiguration( new File( plugin.getDataFolder() + "/data/dwarfcraft/locale/en_US.yml" ));
+        FileConfiguration localeConfig = YamlConfiguration.loadConfiguration( new File( plugin.getDataFolder() + "/data/locale/en_US.yml" ));
 
         // Welcome Messages
-        Messages.welcomePrefix = localeConfig.getString( "Welcome prefix" );
-        Messages.welcome = localeConfig.getString( "Welcome" );
-        Messages.announcementMessage = localeConfig.getString( "Announcement Message" );
+        addMessage("Welcome prefix", localeConfig);
+        addMessage("Welcome", localeConfig);
+        addMessage("Announcement Message", localeConfig);
 
         // Skillsheet Messages
-        Messages.skillSheetHeader = localeConfig.getString( "Skillsheet.Header" );
-        Messages.skillSheetSkillLine = localeConfig.getString( "Skillsheet.Skill Line" );
-        Messages.skillSheetUntrainedSkillHeader = localeConfig.getString( "Skillsheet.Untrained Skill Header" );
-        Messages.skillSheetUntrainedSkillLine = localeConfig.getString( "Skillsheet.Untrained Skill Line" );
+        addMessage("Skillsheet.Header", localeConfig);
+        addMessage("Skillsheet.Skill Line", localeConfig);
+        addMessage("Skillsheet.Untrained Skill Header", localeConfig);
+        addMessage("Skillsheet.Untrained Skill Line", localeConfig);
 
         // Skill Info Messages
-        Messages.skillInfoHeader = localeConfig.getString( "Skill Info.Header" );
-        Messages.skillInfoMinorHeader = localeConfig.getString( "Skill Info.Subheader" );
-        Messages.skillInfoMaxSkillLevel = localeConfig.getString( "Skill Info.Max Skill Level" );
-        Messages.skillInfoAtTrainerLevel = localeConfig.getString( "Skill Info.Max Trainer Level" );
-        Messages.skillInfoTrainCostHeader = localeConfig.getString( "Skill Info.Train Cost Header" );
-        Messages.skillInfoTrainCost = localeConfig.getString( "Skill Info.Train Cost" );
+        addMessage("Skill Info.Header", localeConfig);
+        addMessage("Skill Info.Subheader", localeConfig);
+        addMessage("Skill Info.Max Skill Level", localeConfig);
+        addMessage("Skill Info.Max Trainer Level", localeConfig);
+        addMessage("Skill Info.Train Cost Header", localeConfig);
+        addMessage("Skill Info.Train Cost", localeConfig);
 
         // Race Messages
-        Messages.raceCheck = localeConfig.getString( "Race Messages.Race Info" );
-        Messages.adminRaceCheck = localeConfig.getString( "Race Messages.Admin Race Info" );
-        Messages.alreadyRace = localeConfig.getString( "Race Messages.Already Race" );
-        Messages.changedRace = localeConfig.getString( "Race Messages.Changed Race" );
-        Messages.confirmRace = localeConfig.getString( "Race Messages.Confirm Race" );
-        Messages.raceDoesNotExist = localeConfig.getString( "Race Messages.Race Failed" );
+        addMessage("Race Messages.Race Info", localeConfig);
+        addMessage("Race Messages.Admin Race Info", localeConfig);
+        addMessage("Race Messages.Already Race", localeConfig);
+        addMessage("Race Messages.Changed Race", localeConfig);
+        addMessage("Race Messages.Confirm Race", localeConfig);
+        addMessage("Race Messages.Race Failed", localeConfig);
 
         // Trainer Messages
-        Messages.chooseARace = localeConfig.getString( "Trainer Messages.Choose Race" );
-        Messages.trainSkillPrefix = localeConfig.getString( "Trainer Messages.Train Skill Prefix" );
-        Messages.raceDoesNotContainSkill = localeConfig.getString( "Trainer Messages.Skill Blocked" );
-        Messages.raceDoesNotSpecialize = localeConfig.getString( "Trainer Messages.Non-Racial Skill" );
-        Messages.maxSkillLevel = localeConfig.getString( "Trainer Messages.Max Skill Level" );
-        Messages.trainerMaxLevel = localeConfig.getString( "Trainer Messages.Max Level" );
-        Messages.trainerLevelTooHigh = localeConfig.getString( "Trainer Messages.Level Too High" );
-        Messages.noMoreItemNeeded = localeConfig.getString( "Trainer Messages.No More Item Needed" );
-        Messages.moreItemNeeded = localeConfig.getString( "Trainer Messages.More Item Needed" );
-        Messages.trainingSuccessful = localeConfig.getString( "Trainer Messages.Training Successful" );
-        Messages.depositSuccessful = localeConfig.getString( "Trainer Messages.Deposit Successful" );
-        Messages.trainerGUITitle = localeConfig.getString( "Trainer Messages.GUI Title" );
-        Messages.trainerOccupied = localeConfig.getString( "Trainer Messages.Occupied" );
-        Messages.trainerCooldown = localeConfig.getString( "Trainer Messages.Cooldown" );
+        addMessage("Trainer Messages.Choose Race", localeConfig);
+        addMessage("Trainer Messages.Train Skill Prefix", localeConfig);
+        addMessage("Trainer Messages.Skill Blocked", localeConfig);
+        addMessage("Trainer Messages.Non-Racial Skill", localeConfig);
+        addMessage("Trainer Messages.Max Skill Level", localeConfig);
+        addMessage("Trainer Messages.Max Level", localeConfig);
+        addMessage("Trainer Messages.Level Too High", localeConfig);
+        addMessage("Trainer Messages.No More Item Needed", localeConfig);
+        addMessage("Trainer Messages.More Item Needed", localeConfig);
+        addMessage("Trainer Messages.Training Successful", localeConfig);
+        addMessage("Trainer Messages.Deposit Successful", localeConfig);
+        addMessage("Trainer Messages.GUI Title", localeConfig);
+        addMessage("Trainer Messages.Occupied", localeConfig);
+        addMessage("Trainer Messages.Cooldown", localeConfig);
 
         // Effect Messages
-        Messages.describeGeneral = localeConfig.getString( "Effect Descriptions.General" );
-        Messages.describeLevelExplosionDamageMore = localeConfig.getString( "Effect Descriptions.Explosion Damage (more)" );
-        Messages.describeLevelExplosionDamageLess = localeConfig.getString( "Effect Descriptions.Explosion Damage (less)" );
-        Messages.describeLevelFireDamageMore = localeConfig.getString( "Effect Descriptions.Fire Damage (more)" );
-        Messages.describeLevelFireDamageLess = localeConfig.getString( "Effect Descriptions.Fire Damage (less)" );
-        Messages.describeLevelFallingDamageMore = localeConfig.getString( "Effect Descriptions.Fall Damage (more)" );
-        Messages.describeLevelFallingDamageLess = localeConfig.getString( "Effect Descriptions.Fall Damage (less)" );
+        addMessage("Effect Descriptions.General", localeConfig);
+        addMessage("Effect Descriptions.Explosion Damage", localeConfig);
+        addMessage("Effect Descriptions.Fire Damage", localeConfig);
+        addMessage("Effect Descriptions.Fall Damage", localeConfig);
 
-        List<String> tutorialPages = localeConfig.getStringList( "Tutorial Pages" );
-        // If there is at least one tutorial page, reset default messages and add custom messages
-        if ( tutorialPages.size() > 0 )
-        {
-            Messages.tutorial.clear();
-            Messages.tutorial.addAll( tutorialPages );
-        }
+        // Tutorial Book Pages
+        tutorialBookPages.clear();
+        tutorialBookPages.addAll( localeConfig.getStringList( "Tutorial Pages" ) );
+
+        plugin.getUtil().consoleLog("Loaded " + ChatColor.AQUA + messages.size() + ChatColor.WHITE + " Message(s)");
 
         return true;
+    }
+
+    public void addMessage(String key, FileConfiguration localeConfig) {
+        boolean hasKey = localeConfig.contains(key);
+        if (hasKey) {
+            messages.put(key, localeConfig.get(key).toString());
+            plugin.getUtil().debugLog(4, Level.INFO, "Loaded locale message: " + ChatColor.AQUA + key);
+        }
+    }
+
+    public static String getMessage(String key) {
+        if (!messages.containsKey(key)) {
+            System.out.println("Warning: Unable to find message with key: " + key);
+        }
+        return messages.get(key);
+    }
+
+    public static ArrayList<String> getTutorialBookPages() {
+        return tutorialBookPages;
     }
 
     public String getPrefix()

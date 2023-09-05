@@ -1,13 +1,12 @@
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.data;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import com.jessy1237.dwarfcraft.data.RaceReader;
+import com.jessy1237.dwarfcraft.DwarfCraft;
 import com.jessy1237.dwarfcraft.events.DwarfLoadRacesEvent;
 import com.jessy1237.dwarfcraft.models.DwarfRace;
 
@@ -23,7 +22,6 @@ class RaceManager
 
     @SuppressWarnings( "unchecked" )
     public void init() {
-        createRaceFiles();
         new RaceReader( plugin, this );
         DwarfLoadRacesEvent e = new DwarfLoadRacesEvent( ( HashMap<String, DwarfRace> ) races.clone() );
         plugin.getServer().getPluginManager().callEvent( e );
@@ -31,40 +29,11 @@ class RaceManager
         plugin.getUtil().consoleLog( "Loaded " + ChatColor.AQUA + races.values().size() + ChatColor.WHITE + " Races(s)" );
     }
 
-    private
-    void createRaceFiles() {
-        File root = new File( plugin.getDataFolder().getAbsolutePath() );
-
-        if ( !root.exists() )
-        {
-            if ( !root.mkdirs() )
-            {
-                return;
-            }
-        }
-
-        for ( String file_name : Registration.getRaceFiles() )
-        {
-            String path = "data/dwarfcraft/races/" + file_name;
-            File destFile = new File( plugin.getDataFolder() + File.separator + path );
-            InputStream source = plugin.getResource( path );
-            if ( source != null && file_name.endsWith( ".json" ) && !destFile.exists() )
-            {
-                plugin.saveResource( path, true );
-                plugin.getUtil().consoleLog( "Writing data file: " + ChatColor.AQUA + path );
-            }
-        }
-
-        File customDir = new File( plugin.getDataFolder().getAbsolutePath() + "/data/custom/races/" );
-        if ( !customDir.exists() ) customDir.mkdirs();
-    }
-
     public void addRace( DwarfRace race ) {
         races.put( race.getId().toLowerCase(), race );
     }
 
-    public
-    DwarfRace getRace( String race_id )
+    public DwarfRace getRace( String race_id )
     {
         if ( race_id.isEmpty() )
             return new DwarfRace("", "");
@@ -72,8 +41,7 @@ class RaceManager
             return races.get( race_id.toLowerCase() );
     }
 
-    public
-    HashMap<String, DwarfRace> getAllRaces()
+    public HashMap<String, DwarfRace> getAllRaces()
     {
         HashMap<String, DwarfRace> newRacesArray = new HashMap<>();
         for ( DwarfRace r : races.values() )

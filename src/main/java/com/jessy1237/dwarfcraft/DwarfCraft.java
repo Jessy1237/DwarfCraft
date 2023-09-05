@@ -10,7 +10,6 @@
 
 package com.jessy1237.dwarfcraft;
 
-import java.util.Objects;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -25,9 +24,16 @@ import net.citizensnpcs.api.trait.TraitInfo;
 import net.milkbowl.vault.chat.Chat;
 
 import com.jessy1237.dwarfcraft.commands.*;
-import com.jessy1237.dwarfcraft.data.DataManager;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
+import com.jessy1237.dwarfcraft.data.DwarfManager;
+import com.jessy1237.dwarfcraft.data.RaceManager;
+import com.jessy1237.dwarfcraft.data.SkillManager;
+import com.jessy1237.dwarfcraft.legacy.DataManager;
 import com.jessy1237.dwarfcraft.listeners.*;
 import com.jessy1237.dwarfcraft.models.DwarfTrainerTrait;
+import com.jessy1237.dwarfcraft.util.Out;
+import com.jessy1237.dwarfcraft.util.PlaceholderHook;
+import com.jessy1237.dwarfcraft.util.Util;
 
 public class DwarfCraft extends JavaPlugin
 {
@@ -35,6 +41,7 @@ public class DwarfCraft extends JavaPlugin
     private ConfigManager config_manager;
     private DataManager data_manager;
     private CommandManager command_manager;
+    private DwarfManager dwarf_manager;
     private SkillManager skill_manager;
     private EffectRegistry effect_registry;
     private RaceManager race_manager;
@@ -42,7 +49,7 @@ public class DwarfCraft extends JavaPlugin
     private Util util;
     private Chat chat = null;
     public boolean isAuraActive = false;
-    public static int debugMessagesThreshold = 10;
+    public int debugMessagesThreshold = 5;
     
     private final DwarfInventoryListener inventoryListener = new DwarfInventoryListener( this );
     private final DwarfEntityListener entityListener = new DwarfEntityListener( this );
@@ -57,12 +64,21 @@ public class DwarfCraft extends JavaPlugin
         return config_manager;
     }
 
+    @Deprecated
     public DataManager getDataManager()
     {
         return data_manager;
     }
 
-    public CommandManager getCommandManager() { return command_manager; }
+    public CommandManager getCommandManager() 
+    { 
+        return command_manager; 
+    }
+
+    public DwarfManager getDwarfManager()
+    {
+        return dwarf_manager;
+    }
 
     public SkillManager getSkillManager()
     {
@@ -132,70 +148,59 @@ public class DwarfCraft extends JavaPlugin
     public void onEnable( boolean reload ) {
         PluginManager pm = getServer().getPluginManager();
         util = new Util( this ); //Need to initialise Util earlier if going to use it in the enabling method
-        race_manager = new RaceManager( this );
-        effect_registry = new EffectRegistry();
-        skill_manager = new SkillManager( this );
 
         if ( !checkDependencies() ) onDisable();
-
-        config_manager = new ConfigManager( this, getDataFolder().getAbsolutePath() );
-        Registration.init();
-        race_manager.init(); // Races must be loaded before skills for validation
-        skill_manager.init();
-
-        data_manager = new DataManager( this, config_manager.dbType );
-        data_manager.dbInitialize();
-
-        command_manager = new CommandManager( this );
-        out = new Out( this );
-        
-        // Creates the citizen trait for the DwarfTrainers
-        if ( !reload )
-        {
-            pm.registerEvents( new DwarfPlayerListener( this ), this );
-            pm.registerEvents( entityListener, this );
-            pm.registerEvents( new DwarfBlockListener( this ), this );
-            pm.registerEvents( new DwarfVehicleListener( this ), this );
-            pm.registerEvents( inventoryListener, this );
-            pm.registerEvents( new DwarfListener( this ), this );
-    
-            TraitInfo trainerTrait = TraitInfo.create(DwarfTrainerTrait.class).withName("DwarfTrainer");
-            CitizensAPI.getTraitFactory().registerTrait(trainerTrait);
-        }
-        else
-        {
-            util.reloadTrainers();
-            this.getConfigManager().clearCommands();
-        }
-
-        getServer().getScheduler().runTaskAsynchronously( this, () -> {
-            getUtil().removePlayerPrefixes();
-            for (Player player : getServer().getOnlinePlayers()) {
-                getUtil().setPlayerPrefix(player);
-            }
-        });
-
         if ( isEnabled() ) {
-            Objects.requireNonNull(this.getCommand("dwarfcraft")).setExecutor( new DwarfCommandExecutor( this ) );
-            Objects.requireNonNull(this.getCommand("dwarfcraft")).setTabCompleter( new DwarfCommandExecutor( this ) );
-            command_manager.registerCommand( new CommandSkillSheet( "skillsheet", this ) );
-            command_manager.registerCommand( new CommandTutorial( "tutorial", this ) );
-            command_manager.registerCommand( new CommandInfo( "info", this ) );
-            command_manager.registerCommand( new CommandSkill( "skill", this ) );
-            command_manager.registerCommand( new CommandRace( "race", this ) );
-            command_manager.registerCommand( new CommandHelp( "help", this ) );
-            command_manager.registerCommand( new CommandDebug( "debug", this ) );
-            command_manager.registerCommand( new CommandList( "list", this ) );
-            command_manager.registerCommand( new CommandSetSkill( "set_skill", this ) );
-            command_manager.registerCommand( new CommandCreate( "create", this ) );
-            command_manager.registerCommand( new CommandReload( "reload", this ) );
-        }
-    
-        getUtil().consoleLog( String.format( "%s %s is enabled!", getDescription().getName(), getDescription().getVersion()), ChatColor.GREEN );
+            config_manager = new ConfigManager( this, getDataFolder().getAbsolutePath() );
+            dwarf_manager = new DwarfManager( this );
+            race_manager = new RaceManager( this );
+            effect_registry = new EffectRegistry();
+            skill_manager = new SkillManager( this );
 
-        // Log warning if the build is a Snapshot/Development build
-        if ( this.getDescription().getVersion().contains("-SNAPSHOT") )
-            getUtil().consoleLog( "*** WARNING: This is a development build. Please keep backups and update frequently. ***", Level.SEVERE );
+            race_manager.init(); // Races must be loaded before skills for validation
+            skill_manager.init();
+
+            data_manager = new DataManager( this );
+            data_manager.dbInitialize();
+            dwarf_manager.init();
+            
+            command_manager = new CommandManager( this );
+            out = new Out( this );
+            
+            // Creates the citizen trait for the DwarfTrainers
+            if ( !reload )
+            {
+                pm.registerEvents( new DwarfPlayerListener( this ), this );
+                pm.registerEvents( entityListener, this );
+                pm.registerEvents( new DwarfBlockListener( this ), this );
+                pm.registerEvents( new DwarfVehicleListener( this ), this );
+                pm.registerEvents( inventoryListener, this );
+                pm.registerEvents( new DwarfListener( this ), this );
+        
+                TraitInfo trainerTrait = TraitInfo.create(DwarfTrainerTrait.class).withName("DwarfTrainer");
+                CitizensAPI.getTraitFactory().registerTrait(trainerTrait);
+            }
+            else
+            {
+                util.reloadTrainers();
+                this.getConfigManager().clearCommands();
+            }
+
+            getServer().getScheduler().runTaskAsynchronously( this, () -> {
+                getUtil().removePlayerPrefixes();
+                for (Player player : getServer().getOnlinePlayers()) {
+                    //getUtil().setPlayerPrefix(player); //TODO
+                }
+            });
+
+            command_manager.init();
+
+            getUtil().consoleLog( String.format( "%s %s is enabled!", getDescription().getName(), getDescription().getVersion()), ChatColor.GREEN );
+
+            // Log warning if the build is a Snapshot/Development build
+            if ( this.getDescription().getVersion().contains("-SNAPSHOT") )
+                getUtil().consoleLog( "*** WARNING: This is a development build. Please keep backups and update frequently. ***", Level.SEVERE );
+        }
     }
 
     private boolean checkDependencies() {
@@ -208,7 +213,7 @@ public class DwarfCraft extends JavaPlugin
         }
 
         if ( setupChat() )
-            getUtil().consoleLog( "Success! Hooked into a Vault chat plugin!", ChatColor.GREEN );
+            getUtil().consoleLog( "Hooked into a Vault chat plugin!", ChatColor.GREEN );
 
         if ( pm.getPlugin( "Citizens" ) == null || !pm.getPlugin( "Citizens" ).isEnabled() )
         {
@@ -217,13 +222,13 @@ public class DwarfCraft extends JavaPlugin
             return false;
         }
 
-        getUtil().consoleLog( "Success! Hooked into Citizens!", ChatColor.GREEN );
+        getUtil().consoleLog( "Hooked into Citizens!", ChatColor.GREEN );
         npc_registry = CitizensAPI.getNPCRegistry();
 
         if ( pm.getPlugin( "PlaceholderAPI" ) != null )
         {
             new PlaceholderHook().register();
-            getUtil().consoleLog( "Success! Hooked into PlaceholderAPI!", ChatColor.GREEN );
+            getUtil().consoleLog( "Hooked into PlaceholderAPI!", ChatColor.GREEN );
         }
 
         return true;

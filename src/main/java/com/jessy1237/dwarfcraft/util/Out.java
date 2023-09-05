@@ -8,7 +8,7 @@
  * Original Authors: smartaleq, LexManos and RCarretta
  */
 
-package com.jessy1237.dwarfcraft;
+package com.jessy1237.dwarfcraft.util;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +18,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.jessy1237.dwarfcraft.DwarfCraft;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
@@ -31,7 +33,7 @@ public class Out
     private final int maxLines = 20;
     private final DwarfCraft plugin;
 
-    protected Out( DwarfCraft plugin )
+    public Out( DwarfCraft plugin )
     {
         this.plugin = plugin;
     }
@@ -48,7 +50,7 @@ public class Out
 
     public void info( CommandSender sender )
     {
-        sendMessage( sender, Messages.Fixed.GENERALINFO.getMessage(), "&6[&d?&6]" );
+        sendMessage( sender, ConfigManager.getMessage("Info Message"), "&6[&d?&6]" );
     }
 
     /**
@@ -117,29 +119,29 @@ public class Out
     public void printSkillInfo(CommandSender sender, DwarfSkill skill, DwarfPlayer dCPlayer, int maxTrainLevel )
     {
         // general line
-        sendMessage( sender, skill.description( Messages.skillInfoHeader, dCPlayer ) );
+        sendMessage( sender, skill.description( ConfigManager.getMessage("Skill Info.Header"), dCPlayer ) );
 
         // effects lines
         for ( DwarfEffect effect : skill.getEffects() )
         {
             if ( effect != null )
-                sendMessage( sender, effect.description( dCPlayer ), Messages.skillInfoEffectIDPrefix );
+                sendMessage( sender, effect.description( dCPlayer ), "&6[&5*&6] " );
         }
 
         // training lines
         if ( skill.getLevel() >= skill.getMaxLevel(dCPlayer) )
         {
-            sendMessage( sender, Messages.skillInfoMaxSkillLevel );
+            sendMessage( sender, ConfigManager.getMessage("Skill Info.Max Skill Level") );
             return;
         }
 
         if ( skill.getLevel() >= maxTrainLevel )
         {
-            sendMessage( sender, Messages.skillInfoAtTrainerLevel );
+            sendMessage( sender, ConfigManager.getMessage("Skill Info.Max Trainer Level") );
             return;
         }
 
-        sendMessage( sender, skill.description( Messages.skillInfoTrainCostHeader ) );
+        sendMessage( sender, skill.description( ConfigManager.getMessage("Skill Info.Train Cost Header") ) );
         List<List<ItemStack>> costsTurnins = dCPlayer.calculateTrainingCost( skill );
         List<ItemStack> remaining = costsTurnins.get( 0 );
         List<ItemStack> total = costsTurnins.get( 1 );
@@ -151,7 +153,7 @@ public class Out
             {
                 int totalCost = t.getAmount();
                 int deposited = t.getAmount() - r.getAmount();
-                sendMessage( sender, parseForTrainCosts( Messages.skillInfoTrainCost, deposited, r.getAmount(), totalCost, plugin.getUtil().getCleanName( skill.getItem( i+1 ).getDwarfItemHolder() ) ) );
+                sendMessage( sender, parseForTrainCosts( ConfigManager.getMessage("Skill Info.Train Cost"), deposited, r.getAmount(), totalCost, plugin.getUtil().getCleanName( skill.getItem( i+1 ).getDwarfItemHolder() ) ) );
             }
 
         }
@@ -162,11 +164,11 @@ public class Out
         String message1;
         String message2 = "";
 
-        message1 = parseSkillSheet( Messages.skillSheetHeader, dCPlayer, null );
+        message1 = parseSkillSheet( ConfigManager.getMessage("Skillsheet.Header"), dCPlayer, null );
         sendMessage( sender, message1, "" );
 
         boolean odd = true;
-        String untrainedSkills = Messages.skillSheetUntrainedSkillHeader;
+        String untrainedSkills = ConfigManager.getMessage("Skillsheet.Untrained Skill Header");
         String seperator = ChatColor.GOLD + " | ";
         Iterator<DwarfSkill> iter = dCPlayer.getSkills().values().iterator();
         while (iter.hasNext())
@@ -175,14 +177,14 @@ public class Out
             if ( s.getLevel() == 0 )
             {
                 if (!iter.hasNext()) seperator = "";
-                untrainedSkills = untrainedSkills.concat( parseSkillSheet( Messages.skillSheetUntrainedSkillLine, dCPlayer, s ) ).concat(seperator);
+                untrainedSkills = untrainedSkills.concat( parseSkillSheet( ConfigManager.getMessage("Skillsheet.Untrained Skill Line"), dCPlayer, s ) ).concat(seperator);
                 continue;
             }
             odd = !odd;
             // the goal here is for every skill sheet line to be 60 characters
             // long.
             // each skill should take 30 characters - no more, no less
-            String interim = parseSkillSheet( Messages.skillSheetSkillLine, dCPlayer, s );
+            String interim = parseSkillSheet( ConfigManager.getMessage("Skillsheet.Skill Line"), dCPlayer, s );
 
             if ( !odd )
             {
@@ -304,7 +306,7 @@ public class Out
         try
         {
             if ( plugin.getConfigManager().sendGreeting )
-                sendBroadcast( dCPlayer.toString( Messages.welcome ), Messages.welcomePrefix );
+                sendBroadcast( dCPlayer.toString( ConfigManager.getMessage("Welcome") ), ConfigManager.getMessage("Welcome prefix") );
         }
         catch ( Exception e )
         {
@@ -314,32 +316,32 @@ public class Out
 
     public void race( CommandSender sender, Player player )
     {
-        sendMessage( sender, parseRace( Messages.raceCheck, plugin.getDataManager().find( player ), null ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Race Info"), plugin.getDwarfManager().getDwarf( player ), null ) );
     }
 
     public void adminRace( CommandSender sender, DwarfPlayer player )
     {
-        sendMessage( sender, parseRace( Messages.adminRaceCheck, player, null ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Admin Race Info"), player, null ) );
     }
 
     public void alreadyRace( CommandSender sender, DwarfPlayer dCPlayer, String newRace )
     {
-        sendMessage( sender, parseRace( Messages.alreadyRace, dCPlayer, newRace ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Already Race"), dCPlayer, newRace ) );
     }
 
     public void changedRace( CommandSender sender, DwarfPlayer dCPlayer, String newRace )
     {
-        sendMessage( sender, parseRace( Messages.changedRace, dCPlayer, newRace ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Changed Race"), dCPlayer, newRace ) );
     }
 
     public void confirmRace( CommandSender sender, DwarfPlayer dCPlayer, String newRace )
     {
-        sendMessage( sender, parseRace( Messages.confirmRace, dCPlayer, newRace ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Confirm Race"), dCPlayer, newRace ) );
     }
 
     public void dExistRace( CommandSender sender, DwarfPlayer dCPlayer, String newRace )
     {
-        sendMessage( sender, parseRace( Messages.raceDoesNotExist, dCPlayer, newRace ) );
+        sendMessage( sender, parseRace( ConfigManager.getMessage("Race Messages.Race Failed"), dCPlayer, newRace ) );
     }
 
     public String parseRace( String message, DwarfPlayer dCPlayer, String newRace )

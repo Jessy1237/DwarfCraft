@@ -105,7 +105,7 @@ public final class CommandParser
             player = sender.getServer().getPlayer( dwarf );
 
             if ( player != null && player.isOnline() )
-                dCPlayer = plugin.getDataManager().find( player );
+                dCPlayer = plugin.getDwarfManager().getDwarf( player );
 
             else if ( player == null || !player.isOnline() )
             {
@@ -170,7 +170,7 @@ public final class CommandParser
             return null;
 
         if ( target == null )
-            target = plugin.getDataManager().find( ( Player ) sender );
+            target = plugin.getDwarfManager().getDwarf( ( Player ) sender );
         if ( !( sender instanceof Player ) )
         {
             for ( DwarfSkill dwarfSkill : plugin.getSkillManager().getAllSkills().values() )

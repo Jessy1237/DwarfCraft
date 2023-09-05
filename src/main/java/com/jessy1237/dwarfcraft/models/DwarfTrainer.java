@@ -23,7 +23,7 @@ import net.citizensnpcs.api.npc.AbstractNPC;
 import net.md_5.bungee.api.ChatMessageType;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.events.DwarfDepositEvent;
 import com.jessy1237.dwarfcraft.events.DwarfLevelUpEvent;
 import com.jessy1237.dwarfcraft.guis.TrainerGUI;
@@ -135,9 +135,9 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
 
         if ( deposited )
         {
-            plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, Messages.depositSuccessful );
-            DwarfSkill[] dCSkills = { skill };
-            plugin.getDataManager().saveDwarfData( dCPlayer, dCSkills );
+            plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.Deposit Successful") );
+            dCPlayer.setSkill(skill);
+            plugin.getDwarfManager().saveDwarf( dCPlayer );
             player.getWorld().playSound( player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0f, 1.0f );
         }
     }
@@ -176,9 +176,9 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
 
         if ( deposited )
         {
-            plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, Messages.depositSuccessful );
-            DwarfSkill[] dCSkills = { skill };
-            plugin.getDataManager().saveDwarfData( dCPlayer, dCSkills );
+            plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.Deposit Successful") );
+            dCPlayer.setSkill(skill);
+            plugin.getDwarfManager().saveDwarf(dCPlayer);
             player.getWorld().playSound( player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0f, 1.0f );
         }
     }
@@ -211,7 +211,6 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
             e = new DwarfLevelUpEvent( dCPlayer, this, skill );
 
             plugin.getServer().getPluginManager().callEvent( e );
-            dCPlayer.runLevelUpCommands( skill );
         }
         if ( hasMatsOrDeposits[1] || hasMatsOrDeposits[0] )
         {
@@ -232,13 +231,12 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
                 }
                 else
                 {
-                    plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, Messages.trainingSuccessful );
+                    plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.Training Successful") );
                 }
             }
 
-            DwarfSkill[] dCSkills = new DwarfSkill[1];
-            dCSkills[0] = skill;
-            plugin.getDataManager().saveDwarfData( dCPlayer, dCSkills );
+            dCPlayer.setSkill(skill);
+            plugin.getDwarfManager().saveDwarf( dCPlayer );
             trainerGUI.updateTitle();
             player.getWorld().playSound( player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1.0f, 1.0f );
         }
@@ -383,7 +381,7 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
         // Checks if the trainer has already accepted the required item
         if ( costStack.getAmount() == 0 )
         {
-            plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, Messages.noMoreItemNeeded.replaceAll( "<item.name>", plugin.getUtil().getCleanName( costStack ) ) );
+            plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, ConfigManager.getMessage("Trainer Messages.No More Item Needed").replaceAll( "<item.name>", plugin.getUtil().getCleanName( costStack ) ) );
         }
         else
         {
@@ -414,17 +412,17 @@ public final class DwarfTrainer implements Comparable<DwarfTrainer>
             else
             {
                 hasMatsOrDeposits[0] = false;
-                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( Messages.moreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
+                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( ConfigManager.getMessage("Trainer Messages.More Item Needed"), 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
                 return hasMatsOrDeposits;
             }
 
             if ( costStack.getAmount() == 0 )
             {
-                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( Messages.noMoreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
+                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( ConfigManager.getMessage("Trainer Messages.No More Item Needed"), 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
             }
             else
             {
-                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( Messages.moreItemNeeded, 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
+                plugin.getUtil().sendPlayerMessage( player, ChatMessageType.CHAT, plugin.getOut().parseForTrainCosts( ConfigManager.getMessage("Trainer Messages.More Item Needed"), 0, costStack.getAmount(), 0, plugin.getUtil().getCleanName( costStack ) ) );
                 hasMatsOrDeposits[0] = false;
                 hasMatsOrDeposits[1] = true;
             }

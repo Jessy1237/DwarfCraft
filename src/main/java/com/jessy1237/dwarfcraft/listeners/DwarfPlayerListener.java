@@ -28,15 +28,15 @@ import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.inventory.ItemStack;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
-import com.jessy1237.dwarfcraft.Util;
 import com.jessy1237.dwarfcraft.commands.CommandTutorial;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.events.DwarfEffectEvent;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 import com.jessy1237.dwarfcraft.models.DwarfSkill;
 import com.jessy1237.dwarfcraft.models.DwarfTrainer;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffect;
 import com.jessy1237.dwarfcraft.models.effects.DwarfEffectType;
+import com.jessy1237.dwarfcraft.util.Util;
 
 public class DwarfPlayerListener implements Listener
 {
@@ -53,11 +53,17 @@ public class DwarfPlayerListener implements Listener
     @EventHandler( priority = EventPriority.NORMAL )
     public void onPlayerJoin( PlayerJoinEvent event )
     {
-        plugin.getUtil().setPlayerPrefix( event.getPlayer() );
+        //plugin.getUtil().setPlayerPrefix( event.getPlayer() ); //TODO
+        if ( plugin.getDwarfManager().getDwarf(event.getPlayer()) == null ) {
+            plugin.getDwarfManager().createDwarf(event.getPlayer());
+        }
 
-        DwarfPlayer dwarfPlayer = plugin.getDataManager().find( event.getPlayer() );
+        DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf(event.getPlayer());
+        dwarfPlayer.setPlayer(event.getPlayer());
+        plugin.getDwarfManager().addDwarf(event.getPlayer().getUniqueId(), dwarfPlayer);
+
         if ( dwarfPlayer.getRace().getId().isEmpty() )
-            plugin.getOut().sendMessage( dwarfPlayer.getPlayer(), Messages.chooseARace );
+            plugin.getOut().sendMessage( dwarfPlayer.getPlayer(), ConfigManager.getMessage("Trainer Messages.Choose Race") );
 
         if ( plugin.getConfigManager().sendGreeting )
             plugin.getOut().welcome( dwarfPlayer );
@@ -65,7 +71,7 @@ public class DwarfPlayerListener implements Listener
         // Spawn tutorial book on first join
         if ( !event.getPlayer().hasPlayedBefore() && plugin.getConfigManager().spawnTutorialBook )
         {
-            DwarfPlayer dcPlayer = plugin.getDataManager().find( event.getPlayer() );
+            DwarfPlayer dcPlayer = plugin.getDwarfManager().getDwarf( event.getPlayer() );
 
             // Add Written Book to Players Inventory
             CommandTutorial commandTutorial = new CommandTutorial( "tutorial", plugin );
@@ -75,7 +81,7 @@ public class DwarfPlayerListener implements Listener
             plugin.getLogger().log( Level.INFO, event.getPlayer().getDisplayName() + " is new to the server! Spawning DwarfCraft Tutorial Book..." );
         }
 
-        if ( dwarfPlayer.isDwarfCraftDev() ) {
+        if ( dwarfPlayer.isDeveloper() ) {
             plugin.getServer().getScheduler().runTaskLater( plugin, new AuraSpawnTask( plugin ), 10 );
         }
     }
@@ -92,7 +98,7 @@ public class DwarfPlayerListener implements Listener
             return;
 
         Player player = event.getPlayer();
-        DwarfPlayer dwarfPlayer = plugin.getDataManager().find( player );
+        DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( player );
         HashMap<String, DwarfSkill> skills = dwarfPlayer.getSkills();
 
         // ItemStack item = player.getItemInHand(); Does this work the same as
@@ -172,7 +178,7 @@ public class DwarfPlayerListener implements Listener
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
         Material mat = item.getType();
-        DwarfPlayer dwarfPlayer = plugin.getDataManager().find( player );
+        DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( player );
         HashMap<String, DwarfSkill> skills = dwarfPlayer.getSkills();
         int lvl = Util.FoodLevel.getLvl( mat );
         
@@ -216,7 +222,7 @@ public class DwarfPlayerListener implements Listener
 
         Player player = event.getPlayer();
         Entity entity = event.getEntity();
-        DwarfPlayer dwarfPlayer = plugin.getDataManager().find( player );
+        DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( player );
         HashMap<String, DwarfSkill> skills = dwarfPlayer.getSkills();
         boolean changed = false;
 
@@ -320,7 +326,7 @@ public class DwarfPlayerListener implements Listener
 
         if ( event.getState() == State.CAUGHT_FISH )
         {
-            DwarfPlayer player = plugin.getDataManager().find( event.getPlayer() );
+            DwarfPlayer player = plugin.getDwarfManager().getDwarf( event.getPlayer() );
             ItemStack item = ( ( Item ) event.getCaught() ).getItemStack();
             Location loc = player.getPlayer().getLocation();
 

@@ -13,7 +13,7 @@
   "effects": [
     {
       "type": "FALLDAMAGE",
-      "description": "&6You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> &6damage from falling",
+      "description": "You take <effect.level.color><effect.damage.taken>% <effect.damage.suffix> damage from falling",
       "origin_material": "AIR",
       "output_material": "AIR",
       "base": 1.5,

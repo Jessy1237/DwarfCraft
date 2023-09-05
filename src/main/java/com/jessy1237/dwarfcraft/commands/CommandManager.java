@@ -21,13 +21,33 @@ public class CommandManager {
         try
         {
             if ( setupPermissions() )
-                plugin.getUtil().consoleLog( "Success! Hooked into a Vault permissions plugin!", ChatColor.GREEN );
+                plugin.getUtil().consoleLog( "Hooked into a Vault permissions plugin!", ChatColor.GREEN );
         }
         catch ( Exception e )
         {
             plugin.getUtil().consoleLog( "Something went wrong! Unable to find a permissions plugin.", Level.SEVERE );
             plugin.onDisable();
         }
+    }
+
+    public void init() {
+        plugin.getCommand("dwarfcraft").setExecutor( new DwarfCommandExecutor( plugin ) );
+        plugin.getCommand("dwarfcraft").setTabCompleter( new DwarfCommandExecutor( plugin ) );
+        registerCommands();
+    }
+
+    public void registerCommands() {
+        registerCommand( new CommandSkillSheet( "skillsheet", plugin ) );
+        registerCommand( new CommandTutorial( "tutorial", plugin ) );
+        registerCommand( new CommandInfo( "info", plugin ) );
+        registerCommand( new CommandSkill( "skill", plugin ) );
+        registerCommand( new CommandRace( "race", plugin ) );
+        registerCommand( new CommandHelp( "help", plugin ) );
+        registerCommand( new CommandDebug( "debug", plugin ) );
+        registerCommand( new CommandList( "list", plugin ) );
+        registerCommand( new CommandSetSkill( "set_skill", plugin ) );
+        registerCommand( new CommandCreate( "create", plugin ) );
+        registerCommand( new CommandReload( "reload", plugin ) );
     }
 
     public void registerCommand( DwarfCommand command ) {

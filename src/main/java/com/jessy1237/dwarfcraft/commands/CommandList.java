@@ -45,7 +45,8 @@ public class CommandList extends DwarfCommand
         {
             if ( sender instanceof Player )
             {
-                DwarfPlayer dwarfPlayer = new DwarfPlayer( plugin, ( Player ) sender );
+                Player player = (Player) sender;
+                DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( player.getUniqueId() );
                 ListGUI listTrainersGUI = new ListGUI( plugin, dwarfPlayer );
                 plugin.getDwarfInventoryListener().addDwarfGUI( dwarfPlayer.getPlayer(), listTrainersGUI );
                 return true;

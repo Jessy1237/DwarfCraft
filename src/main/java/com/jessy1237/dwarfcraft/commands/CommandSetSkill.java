@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -59,7 +60,7 @@ public class CommandSetSkill extends DwarfCommand implements TabCompleter
                 List<Object> desiredArguments = new ArrayList<>();
                 List<Object> outputList;
 
-                DwarfPlayer dCPlayer = new DwarfPlayer( plugin, null );
+                DwarfPlayer dCPlayer = new DwarfPlayer( plugin, new UUID(0, 0) );
                 DwarfSkill skill = new DwarfSkill( plugin,"", null, new LinkedHashMap<>(), 0, null, null, null, null, null );
                 int level = 0;
                 String name;
@@ -97,8 +98,6 @@ public class CommandSetSkill extends DwarfCommand implements TabCompleter
                 }
                 if ( skill == null )
                 {
-                    DwarfSkill[] skills = new DwarfSkill[dCPlayer.getSkills().values().size()];
-                    int i = 0;
                     for ( DwarfSkill s : dCPlayer.getSkills().values() )
                     {
                         int oldLevel = s.getLevel();
@@ -106,23 +105,21 @@ public class CommandSetSkill extends DwarfCommand implements TabCompleter
 
                         DwarfLevelUpEvent event = new DwarfLevelUpEvent( dCPlayer, null, s );
                         plugin.getServer().getPluginManager().callEvent( event );
-                        dCPlayer.runLevelUpCommands( skill );
 
                         if ( !event.isCancelled() )
                         {
                             s.setDeposit( 0, 1 );
                             s.setDeposit( 0, 2 );
                             s.setDeposit( 0, 3 );
-                            skills[i] = s;
-                            i++;
                         }
                         else
                         {
                             s.setLevel( oldLevel );
                         }
+                        dCPlayer.setSkill(s);
                     }
+                    plugin.getDwarfManager().saveDwarf( dCPlayer );
                     plugin.getOut().sendMessage(sender, "&eAll skills for player &9" + name + "&e have been set to level &3" + level);
-                    plugin.getDataManager().saveDwarfData( dCPlayer, skills );
                 }
                 else
                 {
@@ -131,17 +128,15 @@ public class CommandSetSkill extends DwarfCommand implements TabCompleter
 
                     DwarfLevelUpEvent event = new DwarfLevelUpEvent( dCPlayer, null, skill );
                     plugin.getServer().getPluginManager().callEvent( event );
-                    dCPlayer.runLevelUpCommands( skill );
 
                     if ( !event.isCancelled() )
                     {
                         skill.setDeposit( 0, 1 );
                         skill.setDeposit( 0, 2 );
                         skill.setDeposit( 0, 3 );
-                        DwarfSkill[] skills = new DwarfSkill[1];
-                        skills[0] = skill;
+                        dCPlayer.setSkill(skill);
                         plugin.getOut().sendMessage(sender, "&b" + skill.getDisplayName() + " &eskill for player &9" + name + "&e has been set to level &3" + level);
-                        plugin.getDataManager().saveDwarfData( dCPlayer, skills );
+                        plugin.getDwarfManager().saveDwarf( dCPlayer );
                     }
                     else
                     {

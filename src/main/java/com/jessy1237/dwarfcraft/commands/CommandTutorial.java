@@ -13,6 +13,7 @@ package com.jessy1237.dwarfcraft.commands;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -26,8 +27,8 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
-import com.jessy1237.dwarfcraft.Messages;
 import com.jessy1237.dwarfcraft.commands.CommandException.Type;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.models.DwarfCommand;
 import com.jessy1237.dwarfcraft.models.DwarfPlayer;
 
@@ -53,7 +54,7 @@ public class CommandTutorial extends DwarfCommand
             {
                 Player player = ( Player ) sender;
                 // Add Written Book to Players Inventory
-                HashMap<Integer, ItemStack> overflow = player.getInventory().addItem( createTutorialBook( plugin.getDataManager().find( player ) ) );
+                HashMap<Integer, ItemStack> overflow = player.getInventory().addItem( createTutorialBook( plugin.getDwarfManager().getDwarf( player ) ) );
                 dropBookIfInventoryFull( player, overflow );
 
                 return true;
@@ -73,7 +74,7 @@ public class CommandTutorial extends DwarfCommand
                 List<Object> desiredArguments = new ArrayList<Object>();
                 List<Object> outputList = null;
 
-                DwarfPlayer target = new DwarfPlayer( plugin, null );
+                DwarfPlayer target = new DwarfPlayer( plugin, new UUID(0, 0) );
                 desiredArguments.add( target );
 
                 outputList = parser.parse( desiredArguments, false );
@@ -102,9 +103,9 @@ public class CommandTutorial extends DwarfCommand
         // Set the BookMeta onto the Written Book
         BookMeta bookMeta = ( BookMeta ) book.getItemMeta();
         bookMeta.setTitle( "DwarfCraft Pocket Guide" );
-        bookMeta.setAuthor( "Jessy1237" );
+        bookMeta.setAuthor( "Jessy1237 and Drekryan" );
 
-        for ( String readPage : Messages.tutorial )
+        for ( String readPage : ConfigManager.getTutorialBookPages() )
         {
 
             String page = plugin.getOut().parseColors( dwarfPlayer.toString( readPage ) );

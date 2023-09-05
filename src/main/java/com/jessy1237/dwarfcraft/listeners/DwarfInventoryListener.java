@@ -50,7 +50,7 @@ public class DwarfInventoryListener implements Listener
     public void onFurnaceExtractEvent( FurnaceExtractEvent event )
     {
         Player player = event.getPlayer();
-        DwarfPlayer dCPlayer = plugin.getDataManager().find( player );
+        DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( player );
         ItemStack result = new ItemStack( event.getItemType(), event.getItemAmount() );
 
         if ( !plugin.getUtil().isWorldAllowed( player.getWorld() ) )
@@ -108,7 +108,7 @@ public class DwarfInventoryListener implements Listener
     public void onCraftItem( CraftItemEvent event )
     {
         HumanEntity player = event.getWhoClicked();
-        DwarfPlayer dCPlayer = plugin.getDataManager().find( ( Player ) event.getWhoClicked() );
+        DwarfPlayer dCPlayer = plugin.getDwarfManager().getDwarf( ( Player ) event.getWhoClicked() );
         ItemStack result = event.getRecipe().getResult();
         boolean isShiftClick = event.getClick().isShiftClick();
 
@@ -266,7 +266,7 @@ public class DwarfInventoryListener implements Listener
         // This code is kinda ugly but still needs to happen this way as far as im aware.
         if ( event.getSlotType() == SlotType.CRAFTING && event.getSlot() < 3 && event.getSlot() >= 0 && event.getClickedInventory().getHolder() instanceof BrewingStand )
         {
-            DwarfPlayer dwarfPlayer = plugin.getDataManager().find( ( Player ) event.getWhoClicked() );
+            DwarfPlayer dwarfPlayer = plugin.getDwarfManager().getDwarf( ( Player ) event.getWhoClicked() );
             HashMap<String, DwarfSkill> skills = dwarfPlayer.getSkills();
             ItemStack item = event.getCurrentItem();
             final int amount = item.getAmount();

@@ -22,6 +22,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.jessy1237.dwarfcraft.DwarfCraft;
+import com.jessy1237.dwarfcraft.data.ConfigManager;
 import com.jessy1237.dwarfcraft.models.DwarfCommand;
 
 public class CommandDebug extends DwarfCommand implements TabCompleter
@@ -57,10 +58,18 @@ public class CommandDebug extends DwarfCommand implements TabCompleter
                 desiredArguments.add( i );
                 outputList = parser.parse( desiredArguments, false );
 
-                DwarfCraft.debugMessagesThreshold = ( Integer ) outputList.get( 0 );
-                plugin.getUtil().consoleLog( "*** DC DEBUG LEVEL CHANGED TO " + DwarfCraft.debugMessagesThreshold + " ***", Level.FINE );
+                if (outputList.size() < 1) {
+                    sender.sendMessage( getUsage() );
+                    return false;
+                }
+
+                plugin.getConfig().set( "Debug Level", outputList.get( 0 ) );
+                plugin.saveConfig();
+                plugin.debugMessagesThreshold = (Integer) plugin.getConfig().get("Debug Level");
+
+                plugin.getUtil().consoleLog( "*** DC DEBUG LEVEL CHANGED TO " + plugin.debugMessagesThreshold + " ***", Level.FINE );
                 if ( sender instanceof Player )
-                    plugin.getOut().sendMessage( sender, "Debug messaging level set to " + DwarfCraft.debugMessagesThreshold );
+                    plugin.getOut().sendMessage( sender, "Debug messaging level set to " + plugin.debugMessagesThreshold );
             }
             catch ( CommandException e )
             {
