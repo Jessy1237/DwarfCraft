@@ -7,8 +7,8 @@
     <groupId>com.jessy1237</groupId>
     <artifactId>dwarfcraft</artifactId>
     <name>DwarfCraft</name>
+    <version>4.4</version>
     <packaging>jar</packaging>
-    <version>4.3</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,13 +17,13 @@
         <java.version>17</java.version>
 
         <!--    Minecraft Version    -->
-        <minecraft.version>1.20.1</minecraft.version>
-        <plugin.api.version>1.20</plugin.api.version>
+        <minecraft.version>1.21.5</minecraft.version>
+        <plugin.api.version>1.21</plugin.api.version>
 
         <!--    Dependency Version    -->
-        <citizens.version>2.0.32-SNAPSHOT</citizens.version>
+        <citizens.version>2.0.38-SNAPSHOT</citizens.version>
         <vault.version>1.7</vault.version>
-        <placeholderapi.version>2.11.3</placeholderapi.version>
+        <placeholderapi.version>2.11.6</placeholderapi.version>
     </properties>
 
     <repositories>
@@ -41,8 +41,8 @@
             <url>https://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
         <repository>
-            <id>placeholderapi</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+            <id>helpchat-repo-releases</id>
+            <url>https://repo.helpch.at/releases</url>
         </repository>
     </repositories>
 
@@ -57,23 +57,30 @@
         <!--Citizens API-->
         <dependency>
             <groupId>net.citizensnpcs</groupId>
-            <artifactId>citizensapi</artifactId>
+            <artifactId>citizens-main</artifactId>
             <version>${citizens.version}</version>
-            <scope>compile</scope>
+            <type>jar</type>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--Vault API-->
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>${vault.version}</version>
-            <scope>compile</scope>
+            <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <!--Placeholder API-->
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>${placeholderapi.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -104,12 +111,4 @@
             </resource>
         </resources>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/jessy1237/dwarfcraft</url>
-        </repository>
-    </distributionManagement>
 </project>
