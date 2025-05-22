@@ -27,9 +27,9 @@ import com.jessy1237.dwarfcraft.models.*;
 
 public class DataManager
 {
-    List<DwarfPlayer> dwarves = new ArrayList<>();
-    public HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>();
-    public HashMap<Integer, DwarfTrainer> trainerList = new HashMap<>();
+    List<DwarfPlayer> dwarves = new ArrayList<>(); //TODO: Make private
+    public HashMap<Integer, DwarfVehicle> vehicleMap = new HashMap<>(); //TODO: Make private
+    public HashMap<Integer, DwarfTrainer> trainerList = new HashMap<>(); //TODO: Make private
     private final DwarfCraft plugin;
     private final DBWrapper dbWrapper;
     private final String type;

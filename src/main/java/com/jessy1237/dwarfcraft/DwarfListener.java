@@ -56,7 +56,7 @@ public class DwarfListener implements Listener
             player.getPlayer().playSound( player.getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 0.5f, 1.0f );
 
             plugin.getServer().broadcastMessage( message );
-            player.getPlayer().getWorld().spawnParticle( Particle.ENCHANTMENT_TABLE, player.getPlayer().getLocation(), 100 );
+            player.getPlayer().getWorld().spawnParticle( Particle.ENCHANT, player.getPlayer().getLocation(), 100 );
         }
     }
 

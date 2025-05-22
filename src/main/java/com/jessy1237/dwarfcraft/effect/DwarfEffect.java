@@ -261,9 +261,9 @@ public class DwarfEffect
         
         // Some code taken from net.minecraft.server.ItemStack line 165.
         // Checks to see if damage should be skipped.
-        if ( tool.containsEnchantment( Enchantment.DURABILITY ) )
+        if ( tool.containsEnchantment( Enchantment.UNBREAKING ) )
         {
-            int level = tool.getEnchantmentLevel( Enchantment.DURABILITY );
+            int level = tool.getEnchantmentLevel( Enchantment.UNBREAKING );
             Random r = new Random();
             if ( level > 0 && r.nextInt( level + 1 ) > 0 )
             {

@@ -105,7 +105,7 @@ public class DwarfPlayerListener implements Listener
             Block block = event.getClickedBlock();
             Material material = block.getType();
 
-            if ( material == Material.DIRT || material == Material.GRASS )
+            if ( material == Material.DIRT || material == Material.GRASS_BLOCK )
             {
                 for ( DwarfSkill s : skills.values() )
                 {
@@ -256,7 +256,7 @@ public class DwarfPlayerListener implements Listener
                         }
                     }
                 }
-                else if ( entity.getType() == EntityType.MUSHROOM_COW && ( entity.getType() == effect.getEntity() ) )
+                else if ( entity.getType() == EntityType.MOOSHROOM && ( entity.getType() == effect.getEntity() ) )
                 {
                     MushroomCow mooshroom = ( MushroomCow ) entity;
                     if ( mooshroom.isAdult() )
@@ -382,7 +382,7 @@ class AuraSpawnTask implements Runnable {
     @Override
     public void run() {
         for (DwarfTrainer trainer : plugin.getDataManager().trainerList.values()) {
-            trainer.getWorld().spawnParticle( Particle.ENCHANTMENT_TABLE, trainer.getLocation(), 100 );
+            trainer.getWorld().spawnParticle( Particle.ENCHANT, trainer.getLocation(), 100 );
         }
     }
 

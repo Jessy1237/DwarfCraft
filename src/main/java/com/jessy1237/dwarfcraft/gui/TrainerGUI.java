@@ -267,7 +267,6 @@ public class TrainerGUI extends DwarfGUI
             meta.addItemFlags( ItemFlag.HIDE_ENCHANTS );
             meta.addItemFlags( ItemFlag.HIDE_DESTROYS );
             meta.addItemFlags( ItemFlag.HIDE_PLACED_ON );
-            meta.addItemFlags( ItemFlag.HIDE_POTION_EFFECTS );
             meta.addItemFlags( ItemFlag.HIDE_UNBREAKABLE );
             item.setItemMeta( meta );
 

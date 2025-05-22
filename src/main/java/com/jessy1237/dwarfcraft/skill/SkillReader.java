@@ -21,6 +21,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.Strictness;
 import com.google.gson.stream.JsonReader;
 
 public
@@ -58,8 +59,8 @@ class SkillReader
                     }
 
                     JsonReader reader = new JsonReader( new StringReader( content.trim() ) );
-                    reader.setLenient( true );
-                    JsonElement element = new JsonParser().parse( reader );
+                    reader.setStrictness(Strictness.LENIENT);
+                    JsonElement element = JsonParser.parseReader( reader );
                     JsonObject json = element.getAsJsonObject();
 
                     // Skill ID

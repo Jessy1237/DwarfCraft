@@ -47,7 +47,7 @@ public class CommandReload extends DwarfCommand
             plugin.getConfigManager().clearCommands();
             plugin.onDisable();
             plugin.reloadConfig();
-            plugin.onEnable( true );
+            plugin.onEnable( );
 
             if ( sender instanceof Player )
                 plugin.getOut().sendMessage( sender, "&aReload complete" );

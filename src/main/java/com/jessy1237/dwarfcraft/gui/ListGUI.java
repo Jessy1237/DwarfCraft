@@ -45,7 +45,6 @@ public class ListGUI extends DwarfGUI
     @Override
     public void init()
     {
-
         initTrainers();
         inventory = plugin.getServer().createInventory( dwarfPlayer.getPlayer(), inventorySize, "Trainers List" );
         initItems();

@@ -45,7 +45,7 @@ class RaceReader {
 
         if ( vanillaEnabled ) {
             System.out.println("Adding vanilla race");
-            manager.addRace( new DwarfRace( "vanilla", "Vanilla", "The all around balanced race (vanilla).", Material.GRASS ) );
+            manager.addRace( new DwarfRace( "vanilla", "Vanilla", "The all around balanced race (vanilla).", Material.GRASS_BLOCK ) );
         }
 
         int maxAllowed = vanillaEnabled ? 44 : 45;

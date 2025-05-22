@@ -11,6 +11,7 @@
 package com.jessy1237.dwarfcraft.models;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -23,11 +24,11 @@ import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.AbstractNPC;
 import net.citizensnpcs.api.persistence.Persist;
 import net.citizensnpcs.api.trait.Trait;
+import net.citizensnpcs.api.trait.TraitName;
 import net.citizensnpcs.api.util.DataKey;
-
+@TraitName("DwarfTrainer")
 public class DwarfTrainerTrait extends Trait
 {
-
     private DwarfCraft plugin;
     private Material mHeldItem;
     @Persist( required = true )
@@ -36,34 +37,6 @@ public class DwarfTrainerTrait extends Trait
     private int mMaxLevel;
     @Persist( required = true )
     private int mMinLevel;
-
-    @Override
-    public void load( DataKey key )
-    {
-        if ( mSkillID.equals( "" ) )
-            this.mSkillID = key.getString( "mSkillID" );
-        if ( mSkillID.equals( "" ) )
-            this.mMaxLevel = key.getInt( "mMaxLevel" );
-        if ( mSkillID.equals( "" ) )
-            this.mMinLevel = key.getInt( "mMinLevel" );
-        loadHeldItem();
-
-        // Adding the trainer to DwarfCraft DB
-        DwarfTrainer trainer = new DwarfTrainer( plugin, ( AbstractNPC ) npc );
-        plugin.getDataManager().trainerList.put( getNPC().getId(), trainer );
-    }
-
-    @Override
-    public void onSpawn()
-    {
-        loadHeldItem();
-    }
-
-    @Override
-    public void onRemove()
-    {
-        plugin.getDataManager().trainerList.remove( this.getNPC().getId() );
-    }
 
     public DwarfTrainerTrait()
     {
@@ -79,6 +52,37 @@ public class DwarfTrainerTrait extends Trait
         this.mMaxLevel = maxLevel;
         this.mMinLevel = minLevel;
         loadHeldItem();
+    }
+
+    @Override
+    public void load( DataKey key )
+    {
+        if ( mSkillID.equals( "" ) )
+            this.mSkillID = key.getString( "mSkillID" );
+        if ( mSkillID.equals( "" ) )
+            this.mMaxLevel = key.getInt( "mMaxLevel" );
+        if ( mSkillID.equals( "" ) )
+            this.mMinLevel = key.getInt( "mMinLevel" );
+        
+        this.mHeldItem = plugin.getSkillManager().getSkill( this.mSkillID ).getTrainerHeldMaterial();
+
+
+        // Adding the trainer to DwarfCraft DB
+        DwarfTrainer trainer = new DwarfTrainer( plugin, ( AbstractNPC ) npc );
+        //plugin.getDataManager().trainerList.put( getNPC().getId(), trainer ); //TODO: Fix this
+    }
+
+    @Override
+    public void onSpawn()
+    {
+        loadHeldItem();
+    }
+
+    @Override
+    public void onRemove()
+    {
+        plugin.getDataManager().trainerList.remove( this.getNPC().getId() );
+        plugin.getUtil().consoleLog( "Dwarf trainer removed", ChatColor.GREEN );
     }
 
     @EventHandler

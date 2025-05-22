@@ -162,7 +162,7 @@ public class Util
             }
             else if ( tagName.equalsIgnoreCase( "grass" ) )
             {
-                Material[] newMats = { Material.DEAD_BUSH, Material.GRASS, Material.TALL_GRASS, Material.FERN, Material.LARGE_FERN };
+                Material[] newMats = { Material.SHORT_GRASS, Material.TALL_GRASS, Material.FERN, Material.LARGE_FERN };
                 tag = createDCTag( "grass", newMats );
             }
 
@@ -533,7 +533,7 @@ public class Util
                         {
                             // Reruns the code that registers the CitizensNPC
                             // into DwarfCraft
-                            npc.getTrait( DwarfTrainerTrait.class ).loadHeldItem();
+                            npc.getTraitNullable( DwarfTrainerTrait.class ).loadHeldItem();
                             DwarfTrainer trainer = new DwarfTrainer( plugin, ( AbstractNPC ) npc );
                             plugin.getDataManager().trainerList.put( npc.getId(), trainer );
                         }

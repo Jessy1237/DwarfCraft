@@ -180,7 +180,7 @@ public class DwarfBlockListener implements Listener
                                 case COAL_ORE:
                                 case REDSTONE_ORE:
                                 case GLOWSTONE:
-                                case GRASS:
+                                case GRASS_BLOCK:
                                 case LAPIS_ORE:
                                     item1 = new ItemStack(block.getType(), 1);
                                     break;
@@ -196,7 +196,7 @@ public class DwarfBlockListener implements Listener
                                 case COAL_ORE:
                                 case REDSTONE_ORE:
                                 case GLOWSTONE:
-                                case GRASS:
+                                case GRASS_BLOCK:
                                 case LAPIS_ORE:
                                     item = new ItemStack(block.getType(), 1);
                                     break;
@@ -209,10 +209,10 @@ public class DwarfBlockListener implements Listener
                     // Checks for Fortune tools and adds it to the
                     // Dwarfcraft drops
                     Material type = block.getType();
-                    if (type == Material.DIAMOND_ORE || type == Material.COAL_ORE || type == Material.REDSTONE_ORE || type == Material.EMERALD_ORE || type == Material.NETHER_QUARTZ_ORE || type == Material.GRASS || type == Material.STONE || type == Material.LAPIS_ORE
+                    if (type == Material.DIAMOND_ORE || type == Material.COAL_ORE || type == Material.REDSTONE_ORE || type == Material.EMERALD_ORE || type == Material.NETHER_QUARTZ_ORE || type == Material.SHORT_GRASS || type == Material.STONE || type == Material.LAPIS_ORE
                             || type == Material.GLOWSTONE) {
-                        if (tool.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
-                            int lvl = tool.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+                        if (tool.containsEnchantment(Enchantment.FORTUNE)) {
+                            int lvl = tool.getEnchantmentLevel(Enchantment.FORTUNE);
                             Random r = new Random();
                             int num = r.nextInt(99) + 1;
                             switch (lvl) {
